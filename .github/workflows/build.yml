@@ -18,12 +18,7 @@ jobs:
       - name: Setup Kinect SDK2
         run: |
           Set-ExecutionPolicy Bypass -Scope Process -Force
-          Invoke-Expression (Get-Content .dockerkinect -Raw)
-
-      - name: Setup Dependencies
-        run: |
-          Set-ExecutionPolicy Bypass -Scope Process -Force
-          Invoke-Expression (Get-Content .dockerdeps -Raw)
+          Invoke-Expression (Get-Content .dockerprep -Raw)
 
       - name: Build Samples
         run: |

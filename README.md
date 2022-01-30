@@ -101,22 +101,9 @@ Follow these steps:
   This will install Microsoft Visual Studio Build Tools 2022 in the default location.<br>
   Nothing will be displayed during the process (just the PID & stats), just wait for it.
 
-- Install ```chocolatey``` and ```cmake```, ```7zip.install```, ```sed```, ```git```<br>
-  (If you already have ```chocolatey``` set up, **please only install packages**)<br>
-  ```powershell
-  > Set-ExecutionPolicy Bypass -Scope Process -Force
-  > Invoke-Expression (Get-Content .dockerprepchoco -Raw)
-  ```
-  This will install ```chocolatey``` and download all needed libraries.<br>
-  If you had vcpkg already set up, install ```cmake```, ```7zip.install```, ```sed``` and ```git```:
-  ```powershell
-  > choco install -y cmake 7zip.install sed git
-  ```
-
 - Clone latest Eigen3 to ```external/```<br>
   ```powershell
-  > Set-ExecutionPolicy Bypass -Scope Process -Force
-  > Invoke-Expression (Get-Content .dockerdeps -Raw)
+  > git clone https://gitlab.com/libeigen/eigen ./external/eigen
   ```
 
 - Build Samples:<br>
