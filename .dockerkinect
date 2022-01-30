@@ -1,0 +1,2 @@
+cd external/KinectMSI
+Get-ChildItem . -Filter *.msi | Foreach-Object { Start-Process msiexec.exe -Wait -ArgumentList "/i $_ /qn /norestart" }
