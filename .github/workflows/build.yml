@@ -1,0 +1,44 @@
+name: K2TrackingDevice Samples Workflow
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2.1.0
+        id: checkout_code
+
+      - name: Setup Chocolatey
+        run: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+          Invoke-Expression (Get-Content .dockerprepchoco -Raw)
+
+      - name: Setup Kinect SDK2
+        run: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+          Invoke-Expression (Get-Content .dockerkinect -Raw)
+
+      - name: Setup Dependencies
+        run: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+          Invoke-Expression (Get-Content .dockerdeps -Raw)
+
+      - name: Build Samples
+        run: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+          Invoke-Expression (Get-Content .dockerbuild -Raw)
+
+      - name: Get short commit SHA
+        id: slug
+        run: "$slug = '::set-output name=slug::' + $env:GITHUB_SHA.SubString(0,7); echo $slug"
+
+      - name: Upload Devices' Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Samples-Release-${{ steps.slug.outputs.slug }}
+          path: x64/Release/devices
+          if-no-files-found: error
+
+      
