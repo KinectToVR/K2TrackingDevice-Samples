@@ -46,7 +46,12 @@ Devices in Amethyst are like drivers in OpenVR. They are going to be scanned and
 Therefore, each device must have a ```void* TrackingDeviceBaseFactory``` function, you'll find it in samples too.<br>
 <br>
 After playing with samples you should have enough knowledge to write a device plugin yourself.<br>
-Please remember that ```initialize()```, ```update()``` and ```shutdown()``` are the most ever important functions.
+Please remember that ```initialize()```, ```update()``` and ```shutdown()``` are the most ever important functions.<br>
+<br>
+**Note:** every device has various helper internal functions, e.g. for getting the HMD position in VRSystem,<br>
+that may be called if it was initialized properly (loaded by Amethyst).<br>
+These functions may help in plugin development, as for example loading the whole OpenVR API<br>
+only to get the head position may be skipped by calling an appropriate function.
 
 ## OK, but what's actually in ```external/vendor```?
 Ah yes. For the sake of K2API's simplicity in its current state, it's been split into 3 parts.<br>
