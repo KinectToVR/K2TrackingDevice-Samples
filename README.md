@@ -27,7 +27,7 @@ Such behaviour will allow us to use in-app automatic calibration, so-called ```f
 ```K2TrackingDevice_KinectBasis``` must update a provided, fixed array of joints (```ITrackedJoint```s)<br>
 with its own positions. How many joints will the device provide is a matter of its ```Characteristics```.<br>
 And so, ```K2_Character_Full``` has to provide every possible joint, making them count 25.<br>
-```K2_Character_Simple``` has to update head, waist, knees, ankles and foot (tip) joints.<br>
+```K2_Character_Simple``` has to update head, elbows, waist, knees, ankles and foot (tip) joints.<br>
 The last characteristics, ```K2_Character_Basic``` only has to provide head, waist and ankles;<br>
 devices using the ```Basic``` character also won't be allowed to use ```AppOrientation```, or so-called math-based.<br>
 <br>

@@ -177,9 +177,11 @@ void KinectV2Handler::updateParseFrame()
 			kinectBodies[i]->GetJointOrientations(JointType_Count, boneOrientations);
 
 			/* Create a helper list with _Simple only used joints */
-			const std::array<uint32_t, 8>
+			const std::array<uint32_t, 10>
 				_simpleJointsArray{
 					ktvr::Joint_Head,
+					ktvr::Joint_ElbowLeft,
+					ktvr::Joint_ElbowRight,
 					ktvr::Joint_SpineWaist,
 					ktvr::Joint_KneeLeft,
 					ktvr::Joint_KneeRight,
