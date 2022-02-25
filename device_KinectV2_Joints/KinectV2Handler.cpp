@@ -66,9 +66,14 @@ void KinectV2Handler::initializeSkeleton()
 	trackedJoints.clear();
 
 	using namespace std::literals;
+	trackedJoints.push_back(ktvr::K2TrackedJoint("Joint 3 (H)")); // Add the joint to K2App's vector, Waist
 	trackedJoints.push_back(ktvr::K2TrackedJoint("Joint 16 (W)")); // Add the joint to K2App's vector, Waist
 	trackedJoints.push_back(ktvr::K2TrackedJoint("Joint 19 (L)")); // Add the joint to K2App's vector, Left Foot
 	trackedJoints.push_back(ktvr::K2TrackedJoint("Joint 23 (R)")); // Add the joint to K2App's vector, Right Foot
+	trackedJoints.push_back(ktvr::K2TrackedJoint("Joint 5 (LE)")); // Add the joint to K2App's vector, Left Elbow
+	trackedJoints.push_back(ktvr::K2TrackedJoint("Joint 9 (RE)")); // Add the joint to K2App's vector, Right Elbow
+	trackedJoints.push_back(ktvr::K2TrackedJoint("Joint 13 (LK)")); // Add the joint to K2App's vector, Left Knee
+	trackedJoints.push_back(ktvr::K2TrackedJoint("Joint 17 (RK)")); // Add the joint to K2App's vector, Right Knee
 }
 
 void KinectV2Handler::terminateSkeleton()
@@ -185,54 +190,33 @@ void KinectV2Handler::updateParseFrame()
 			kinectBodies[i]->GetJointOrientations(JointType_Count, boneOrientations);
 
 			/* Create a helper list with _Joints only used joints */
-			const std::array<uint32_t, 8>
-				_JointsJointsArray{
-					ktvr::Joint_Head,
-					ktvr::Joint_SpineWaist,
-					ktvr::Joint_AnkleLeft,
-					ktvr::Joint_AnkleRight
-				};
+			std::array<JointType, 8> _joints
+			{
+				JointType_Head,
+				JointType_SpineBase,
+				JointType_AnkleLeft,
+				JointType_AnkleRight,
+				JointType_ElbowLeft,
+				JointType_ElbowRight,
+				JointType_KneeLeft,
+				JointType_KneeRight
+			};
 
 			/* Copy joint positions */
-			trackedJoints.at(0).update( // Waist
-				Eigen::Vector3f( // Position
-					joints[JointType_SpineBase].Position.X,
-					joints[JointType_SpineBase].Position.Y,
-					joints[JointType_SpineBase].Position.Z),
-				Eigen::Quaternionf( // Rotation
-					boneOrientations[JointType_SpineBase].Orientation.w,
-					boneOrientations[JointType_SpineBase].Orientation.x,
-					boneOrientations[JointType_SpineBase].Orientation.y,
-					boneOrientations[JointType_SpineBase].Orientation.z),
-				joints[JointType_SpineBase].TrackingState // State
-			);
+			for (uint32_t i_j = 0; i_j < 8; i_j++)
+				trackedJoints.at(i_j).update( // Waist
+					Eigen::Vector3f( // Position
+						joints[_joints[i_j]].Position.X,
+						joints[_joints[i_j]].Position.Y,
+						joints[_joints[i_j]].Position.Z),
+					Eigen::Quaternionf( // Rotation
+						boneOrientations[_joints[i_j]].Orientation.w,
+						boneOrientations[_joints[i_j]].Orientation.x,
+						boneOrientations[_joints[i_j]].Orientation.y,
+						boneOrientations[_joints[i_j]].Orientation.z),
+					joints[_joints[i_j]].TrackingState // State
+				);
 
-			trackedJoints.at(0).update( // Left Foot
-				Eigen::Vector3f( // Position
-					joints[JointType_AnkleLeft].Position.X,
-					joints[JointType_AnkleLeft].Position.Y,
-					joints[JointType_AnkleLeft].Position.Z),
-				Eigen::Quaternionf( // Rotation
-					boneOrientations[JointType_AnkleLeft].Orientation.w,
-					boneOrientations[JointType_AnkleLeft].Orientation.x,
-					boneOrientations[JointType_AnkleLeft].Orientation.y,
-					boneOrientations[JointType_AnkleLeft].Orientation.z),
-				joints[JointType_AnkleLeft].TrackingState // State
-			);
-
-			trackedJoints.at(0).update( // Right Foot
-				Eigen::Vector3f( // Position
-					joints[JointType_AnkleRight].Position.X,
-					joints[JointType_AnkleRight].Position.Y,
-					joints[JointType_AnkleRight].Position.Z),
-				Eigen::Quaternionf( // Rotation
-					boneOrientations[JointType_AnkleRight].Orientation.w,
-					boneOrientations[JointType_AnkleRight].Orientation.x,
-					boneOrientations[JointType_AnkleRight].Orientation.y,
-					boneOrientations[JointType_AnkleRight].Orientation.z),
-				joints[JointType_AnkleRight].TrackingState // State
-			);
-			
 			newBodyFrameArrived = false;
 			break; // Only first skeleton
 		}
