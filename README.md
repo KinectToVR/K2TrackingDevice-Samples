@@ -45,8 +45,14 @@ for the app to be accessed by calling ```getJointName()``` before adding it to t
 Devices in Amethyst are like drivers in OpenVR. They are going to be scanned and constructed at startup.<br>
 Therefore, each device must have a ```void* TrackingDeviceBaseFactory``` function, you'll find it in samples too.<br>
 <br>
+Additional device type which may be used for third-party plugins is the `K2TrackingDevice_Spectator`.<br>
+As the name suggests, it's gonna be used only for grabbing data from Amethyst, and nothing else.<br>
+You can pull states, names, roles and positions of all 7 trackers (as of now).<br>
+To save time on interfacing with OpenVR, you can pull HMD's pose & additional, extracted yaw.<br>
+<br>
 After playing with samples you should have enough knowledge to write a device plugin yourself.<br>
 Please remember that ```initialize()```, ```update()``` and ```shutdown()``` are the most ever important functions.<br>
+(At least for the devices which actually provide tracking and not only grab it from the app)<br>
 <br>
 **Note:** every device has various helper internal functions, e.g. for getting the HMD position in VRSystem,<br>
 that may be called if it was initialized properly (loaded by Amethyst).<br>
@@ -92,8 +98,8 @@ Follow these steps:
 ## **Build manually**
 You'll need:
  - The ```K2TrackingDevice-Samples``` repo cloned somewhere and ```cd```'d into
- - Kinect SDK 2.0 installed and visible in PATH
- - Working installation of SteamVR for testing
+ - Kinect SDK 2.0 installed and visible in PATH (exclude if building `Spectator` only)
+ - Working installation of Amethyst/KTVR1 and SteamVR for testing
 
 Follow these steps:
 
@@ -125,3 +131,6 @@ Follow these steps:
 The whole output can be found in ```x64/Release``` directory<br>
 (or ```x64/Debug``` if you're building for ```Debug```, naturally) and:
  - Devices (plugins) are inside ```devices/``` folder
+
+Note: Debug builds will only work with a debug host,<br>
+the same schema applies to OpenVR for the API and Amethyst.
