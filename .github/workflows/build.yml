@@ -13,17 +13,25 @@ jobs:
       - name: Setup Chocolatey
         run: |
           Set-ExecutionPolicy Bypass -Scope Process -Force
-          Invoke-Expression (Get-Content .dockerprepchoco -Raw)
+          [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+          Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
-      - name: Setup Kinect SDK2
+          choco install -y sed
+          Import-Module "$env:ProgramData\Chocolatey\helpers\chocolateyProfile.psm1"
+          Update-SessionEnvironment
+
+      - name: Setup Eigen
         run: |
-          Set-ExecutionPolicy Bypass -Scope Process -Force
-          Invoke-Expression (Get-Content .dockerprep -Raw)
+          git clone https://gitlab.com/libeigen/eigen "${env:GITHUB_WORKSPACE}/external/eigen"
 
       - name: Build Samples
         run: |
-          Set-ExecutionPolicy Bypass -Scope Process -Force
-          Invoke-Expression (Get-Content .dockerbuild -Raw)
+          Invoke-WebRequest -Uri 'https://github.com/microsoft/vswhere/releases/latest/download/vswhere.exe' -OutFile './vswhere.exe'
+          $msbuild = "$("$(.\vswhere.exe -legacy -prerelease -products * -format json | Select-String -Pattern "2022" | `
+               Select-String -Pattern "Studio" | Select-Object -First 1 | Select-String -Pattern "installationPath")" `
+              -replace('"installationPath": "','') -replace('",',''))".Trim() + "\\MSBuild\\Current\\Bin\\MSBuild.exe"
+          
+          &"$msbuild" K2TrackingDevice_Samples.sln "/p:Configuration=Release;Platform=x64"
 
       - name: Get short commit SHA
         id: slug
