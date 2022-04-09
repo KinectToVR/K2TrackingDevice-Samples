@@ -1,0 +1,5 @@
+{
+	"device_name": "KinectBasis_Basic",
+	"device_type": "KinectBasis",
+	"linked_dll_path": [ "C:/Windows/System32/Kinect20.dll" ]
+}
