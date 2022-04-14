@@ -32,7 +32,7 @@ public:
 		// You can put anything here,
 		// from textblocks (labels) to numberboxes
 		// Just remember to register handlers
-		//   and optionally cache the pointers ash shared
+		//   and optionally cache the pointers as shared
 		layoutRoot->AppendSingleElement(
 			CreateTextBlock(
 				"In the beginning was the Word."));
