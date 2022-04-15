@@ -55,8 +55,8 @@ void DeviceHandler::update()
 			trackingStates[i] = ktvr::State_Tracked;
 		}
 		
-		// Mark the device as initialized
-		initialized = true;
+		// Mark that we see the user
+		skeletonTracked = true;
 	}
 }
 
