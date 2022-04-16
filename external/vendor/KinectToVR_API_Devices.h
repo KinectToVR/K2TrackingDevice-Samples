@@ -110,8 +110,8 @@ namespace ktvr
 		{
 		}
 
-		K2TrackedJoint(Eigen::Vector3f const& pos, Eigen::Quaternionf const& rot,
-		               JointTrackingState const& state, std::string const& name) :
+		K2TrackedJoint(const Eigen::Vector3f& pos, const Eigen::Quaternionf& rot,
+		               const JointTrackingState& state, const std::string& name) :
 			jointOrientation{rot}, jointPosition{pos},
 			trackingState{state}, jointName{name}
 		{
@@ -160,10 +160,31 @@ namespace ktvr
 
 			/* XAML-Derived functions & handlers */
 
+			// Visibility Get and Set
+			virtual bool Visibility() { return true; }
+
+			virtual void Visibility(const bool& visibility)
+			{
+			}
+
+			// Width Get and Set
+			virtual uint32_t Width() { return 0; }
+
+			virtual void Width(const uint32_t& width)
+			{
+			}
+
+			// Height Get and Set
+			virtual uint32_t Height() { return 0; }
+
+			virtual void Height(const uint32_t& height)
+			{
+			}
+
 			// Text Get and Set
 			virtual std::string Text() { return ""; }
 
-			virtual void Text(std::string const& text)
+			virtual void Text(const std::string& text)
 			{
 			}
 		};
@@ -177,15 +198,36 @@ namespace ktvr
 
 			/* XAML-Derived functions & handlers */
 
+			// Visibility Get and Set
+			virtual bool Visibility() { return true; }
+
+			virtual void Visibility(const bool& visibility)
+			{
+			}
+
+			// Width Get and Set
+			virtual uint32_t Width() { return 0; }
+
+			virtual void Width(const uint32_t& width)
+			{
+			}
+
+			// Height Get and Set
+			virtual uint32_t Height() { return 0; }
+
+			virtual void Height(const uint32_t& height)
+			{
+			}
+
 			// IsEnabled Get and Set
 			virtual bool IsEnabled() { return true; }
 
-			virtual void IsEnabled(bool const& enabled)
+			virtual void IsEnabled(const bool& enabled)
 			{
 			}
 
 			// Label Set (No Get here, sadly)
-			virtual void Content(std::string const& content)
+			virtual void Content(const std::string& content)
 			{
 			}
 
@@ -203,22 +245,43 @@ namespace ktvr
 
 			/* XAML-Derived functions & handlers */
 
+			// Visibility Get and Set
+			virtual bool Visibility() { return true; }
+
+			virtual void Visibility(const bool& visibility)
+			{
+			}
+
+			// Width Get and Set
+			virtual uint32_t Width() { return 0; }
+
+			virtual void Width(const uint32_t& width)
+			{
+			}
+
+			// Height Get and Set
+			virtual uint32_t Height() { return 0; }
+
+			virtual void Height(const uint32_t& height)
+			{
+			}
+
 			// IsEnabled Get and Set
 			virtual bool IsEnabled() { return true; }
 
-			virtual void IsEnabled(bool const& enabled)
+			virtual void IsEnabled(const bool& enabled)
 			{
 			}
 
 			// Value Get and Set
 			virtual int Value() { return 0; }
 
-			virtual void Value(int const& value)
+			virtual void Value(const int& value)
 			{
 			}
 
 			// Function handlers for plugin to use
-			std::function<void(NumberBox*, int const&)> OnValueChanged;
+			std::function<void(NumberBox*, const int&)> OnValueChanged;
 			//void (*OnValueChanged)(NumberBox* this_number_box, int const& new_value);
 		};
 
@@ -231,17 +294,38 @@ namespace ktvr
 
 			/* XAML-Derived functions & handlers */
 
+			// Visibility Get and Set
+			virtual bool Visibility() { return true; }
+
+			virtual void Visibility(const bool& visibility)
+			{
+			}
+
+			// Width Get and Set
+			virtual uint32_t Width() { return 0; }
+
+			virtual void Width(const uint32_t& width)
+			{
+			}
+
+			// Height Get and Set
+			virtual uint32_t Height() { return 0; }
+
+			virtual void Height(const uint32_t& height)
+			{
+			}
+
 			// IsEnabled Get and Set
 			virtual bool IsEnabled() { return true; }
 
-			virtual void IsEnabled(bool const& enabled)
+			virtual void IsEnabled(const bool& enabled)
 			{
 			}
 
 			// Selected Index Get and Set
 			virtual uint32_t SelectedIndex() { return 0; }
 
-			virtual void SelectedIndex(uint32_t const& value)
+			virtual void SelectedIndex(const uint32_t& value)
 			{
 			}
 
@@ -249,12 +333,12 @@ namespace ktvr
 			virtual std::vector<std::string> Items() { return {}; }
 
 			// WARNING: DON'T CALL THIS DURING ANY OTHER MODIFICATION LIKE SELECTIONCHANGED
-			virtual void Items(std::vector<std::string> const& entries)
+			virtual void Items(const std::vector<std::string>& entries)
 			{
 			}
 
 			// Function handlers for plugin to use
-			std::function<void(ComboBox*, uint32_t const&)> OnSelectionChanged;
+			std::function<void(ComboBox*, const uint32_t&)> OnSelectionChanged;
 			//void (*OnSelectionChanged)(ComboBox* this_combo_box, uint32_t const& new_value);
 		};
 
@@ -267,17 +351,38 @@ namespace ktvr
 
 			/* XAML-Derived functions & handlers */
 
+			// Visibility Get and Set
+			virtual bool Visibility() { return true; }
+
+			virtual void Visibility(const bool& visibility)
+			{
+			}
+
+			// Width Get and Set
+			virtual uint32_t Width() { return 0; }
+
+			virtual void Width(const uint32_t& width)
+			{
+			}
+
+			// Height Get and Set
+			virtual uint32_t Height() { return 0; }
+
+			virtual void Height(const uint32_t& height)
+			{
+			}
+
 			// IsEnabled Get and Set
 			virtual bool IsEnabled() { return true; }
 
-			virtual void IsEnabled(bool const& enabled)
+			virtual void IsEnabled(const bool& enabled)
 			{
 			}
 
 			// IsChecked Get and Set
 			virtual bool IsChecked() { return false; }
 
-			virtual void IsChecked(bool const& is_checked)
+			virtual void IsChecked(const bool& is_checked)
 			{
 			}
 
@@ -297,17 +402,38 @@ namespace ktvr
 
 			/* XAML-Derived functions & handlers */
 
+			// Visibility Get and Set
+			virtual bool Visibility() { return true; }
+
+			virtual void Visibility(const bool& visibility)
+			{
+			}
+
+			// Width Get and Set
+			virtual uint32_t Width() { return 0; }
+
+			virtual void Width(const uint32_t& width)
+			{
+			}
+
+			// Height Get and Set
+			virtual uint32_t Height() { return 0; }
+
+			virtual void Height(const uint32_t& height)
+			{
+			}
+
 			// IsEnabled Get and Set
 			virtual bool IsEnabled() { return true; }
 
-			virtual void IsEnabled(bool const& enabled)
+			virtual void IsEnabled(const bool& enabled)
 			{
 			}
 
 			// IsChecked Get and Set
 			virtual bool IsChecked() { return false; }
 
-			virtual void IsChecked(bool const& is_checked)
+			virtual void IsChecked(const bool& is_checked)
 			{
 			}
 
@@ -327,16 +453,127 @@ namespace ktvr
 
 			/* XAML-Derived functions & handlers */
 
+			// Visibility Get and Set
+			virtual bool Visibility() { return true; }
+
+			virtual void Visibility(const bool& visibility)
+			{
+			}
+
+			// Width Get and Set
+			virtual uint32_t Width() { return 0; }
+
+			virtual void Width(const uint32_t& width)
+			{
+			}
+
+			// Height Get and Set
+			virtual uint32_t Height() { return 0; }
+
+			virtual void Height(const uint32_t& height)
+			{
+			}
+
 			// Text Get and Set
 			virtual std::string Text() { return ""; }
 
-			virtual void Text(std::string const& text)
+			virtual void Text(const std::string& text)
 			{
 			}
 
 			// Function handlers for plugin to use
 			std::function<void(TextBox*)> OnEnterKeyDown;
 			//void (*OnEnterKeyDown)(TextBox* this_text_box);
+		};
+
+		// ProgressRing Class : (Same as XAMLs)
+		class ProgressRing
+		{
+		public:
+			ProgressRing() = default;
+			virtual ~ProgressRing() = default;
+
+			/* XAML-Derived functions & handlers */
+
+			// Visibility Get and Set
+			virtual bool Visibility() { return true; }
+
+			virtual void Visibility(const bool& visibility)
+			{
+			}
+
+			// Width Get and Set
+			virtual uint32_t Width() { return 0; }
+
+			virtual void Width(const uint32_t& width)
+			{
+			}
+
+			// Height Get and Set
+			virtual uint32_t Height() { return 0; }
+
+			virtual void Height(const uint32_t& height)
+			{
+			}
+
+			// Progress Get and Set (Set <0 to mark as indeterminate)
+			virtual int32_t Progress() { return -1; }
+
+			virtual void Progress(const int32_t& progress)
+			{
+			}
+		};
+
+		// ProgressBar Class : (Same as XAMLs)
+		class ProgressBar
+		{
+		public:
+			ProgressBar() = default;
+			virtual ~ProgressBar() = default;
+
+			/* XAML-Derived functions & handlers */
+
+			// Visibility Get and Set
+			virtual bool Visibility() { return true; }
+
+			virtual void Visibility(const bool& visibility)
+			{
+			}
+
+			// Width Get and Set
+			virtual uint32_t Width() { return 0; }
+
+			virtual void Width(const uint32_t& width)
+			{
+			}
+
+			// Height Get and Set
+			virtual uint32_t Height() { return 0; }
+
+			virtual void Height(const uint32_t& height)
+			{
+			}
+
+			// Progress Get and Set (Set <0 to mark as indeterminate)
+			virtual int32_t Progress() { return -1; }
+
+			virtual void Progress(const int32_t& progress)
+			{
+			}
+
+			// Paused Get and Set
+			virtual bool ShowPaused() { return false; }
+
+			virtual void ShowPaused(const bool& show_paused)
+			{
+			}
+
+			// Error Get and Set
+			virtual bool ShowError() { return false; }
+
+			virtual void ShowError(const bool& show_error)
+			{
+			}
 		};
 
 		// LayoutRoot appending enum:
@@ -357,14 +594,16 @@ namespace ktvr
 		// an std variant around all currently possible ui elements
 		// Note: To achieve an empty element (spacer),
 		//       you should use a TextBlock with empty text
-		typedef std::variant<
+		using Element = std::variant<
 			TextBlock*,
 			Button*,
 			NumberBox*,
 			ComboBox*,
 			CheckBox*,
 			ToggleSwitch*,
-			TextBox*> Element;
+			TextBox*,
+			ProgressRing*,
+			ProgressBar*>;
 
 		// PluginSettings layout's root pane
 		// This is a xaml vertical stack panel,
@@ -379,22 +618,22 @@ namespace ktvr
 
 			// Append a One-Row single element
 			virtual void AppendSingleElement(
-				Element const& element,
-				SingleLayoutHorizontalAlignment const& alignment =
+				const Element& element,
+				const SingleLayoutHorizontalAlignment& alignment =
 					SingleLayoutHorizontalAlignment::Left)
 			{
 			}
 
 			// Append a One-Row element pair : */* column space
 			virtual void AppendElementPair(
-				Element const& first_element,
-				Element const& second_element)
+				const Element& first_element,
+				const Element& second_element)
 			{
 			}
 
 			// Append a One-Row element vector : */* column space
 			virtual void AppendElementVector(
-				std::vector<Element> const& element_vector)
+				const std::vector<Element>& element_vector)
 			{
 			}
 		};
@@ -471,8 +710,11 @@ namespace ktvr
 
 		/* Helper functions which may be internally called by the device plugin */
 		Eigen::Vector3f (*getHMDPosition)(); // Get the HMD Position
+		Eigen::Vector3f (*getHMDPositionCalibrated)(); // Get the HMD Position, calibrated
 		Eigen::Quaternionf (*getHMDOrientation)(); // Get the HMD Rotation
+		Eigen::Quaternionf (*getHMDOrientationCalibrated)(); // Get the HMD Rotation, calibrated
 		float (*getHMDOrientationYaw)(); // Get the HMD Yaw, exclusively
+		float (*getHMDOrientationYawCalibrated)(); // Get the HMD Yaw, exclusively & calibrated
 
 		/*
 		 * Helper to get all joints' positions from the app,
@@ -497,16 +739,16 @@ namespace ktvr
 		Interface::LayoutRoot* layoutRoot;
 
 		// Create a text block
-		Interface::TextBlock* (*CreateTextBlock)(std::string const& text);
+		Interface::TextBlock* (*CreateTextBlock)(const std::string& text);
 
 		// Create a labeled button
-		Interface::Button* (*CreateButton)(std::string const& content);
+		Interface::Button* (*CreateButton)(const std::string& content);
 
 		// Create a number box
-		Interface::NumberBox* (*CreateNumberBox)(int const& value);
+		Interface::NumberBox* (*CreateNumberBox)(const int& value);
 
 		// Create a combo box
-		Interface::ComboBox* (*CreateComboBox)(std::vector<std::string> const& entries);
+		Interface::ComboBox* (*CreateComboBox)(const std::vector<std::string>& entries);
 
 		// Create a check box
 		Interface::CheckBox* (*CreateCheckBox)();
@@ -516,6 +758,12 @@ namespace ktvr
 
 		// Create a text box
 		Interface::TextBox* (*CreateTextBox)();
+
+		// Create a progress ring
+		Interface::ProgressRing* (*CreateProgressRing)();
+
+		// Create a progress bar
+		Interface::ProgressBar* (*CreateProgressBar)();
 
 	protected:
 		K2DeviceCharacteristics deviceCharacteristics = K2_Character_Unknown;
@@ -591,7 +839,7 @@ namespace ktvr
 
 		class FailedKinectInitialization : public std::exception
 		{
-			[[nodiscard]] virtual const char* what() const throw()
+			[[nodiscard]] const char* what() const throw() override
 			{
 				return "Failure to initialize the Tracking Device. Is it set up properly?";
 			}
@@ -659,8 +907,11 @@ namespace ktvr
 
 		/* Helper functions which may be internally called by the device plugin */
 		Eigen::Vector3f (*getHMDPosition)(); // Get the HMD Position
+		Eigen::Vector3f (*getHMDPositionCalibrated)(); // Get the HMD Position, calibrated
 		Eigen::Quaternionf (*getHMDOrientation)(); // Get the HMD Rotation
+		Eigen::Quaternionf (*getHMDOrientationCalibrated)(); // Get the HMD Rotation, calibrated
 		float (*getHMDOrientationYaw)(); // Get the HMD Yaw, exclusively
+		float (*getHMDOrientationYawCalibrated)(); // Get the HMD Yaw, exclusively & calibrated
 
 		/*
 		 * Helper to get all joints' positions from the app,
@@ -685,16 +936,16 @@ namespace ktvr
 		Interface::LayoutRoot* layoutRoot;
 
 		// Create a text block
-		Interface::TextBlock* (*CreateTextBlock)(std::string const& text);
+		Interface::TextBlock* (*CreateTextBlock)(const std::string& text);
 
 		// Create a labeled button
-		Interface::Button* (*CreateButton)(std::string const& content);
+		Interface::Button* (*CreateButton)(const std::string& content);
 
 		// Create a number box
-		Interface::NumberBox* (*CreateNumberBox)(int const& value);
+		Interface::NumberBox* (*CreateNumberBox)(const int& value);
 
 		// Create a combo box
-		Interface::ComboBox* (*CreateComboBox)(std::vector<std::string> const& entries);
+		Interface::ComboBox* (*CreateComboBox)(const std::vector<std::string>& entries);
 
 		// Create a check box
 		Interface::CheckBox* (*CreateCheckBox)();
@@ -704,6 +955,12 @@ namespace ktvr
 
 		// Create a text box
 		Interface::TextBox* (*CreateTextBox)();
+
+		// Create a progress ring
+		Interface::ProgressRing* (*CreateProgressRing)();
+
+		// Create a progress bar
+		Interface::ProgressBar* (*CreateProgressBar)();
 
 	protected:
 		K2DeviceType deviceType = K2_Unknown;
@@ -718,7 +975,7 @@ namespace ktvr
 
 		class FailedJointsInitialization : public std::exception
 		{
-			[[nodiscard]] virtual const char* what() const throw()
+			[[nodiscard]] const char* what() const throw() override
 			{
 				return "Failure to initialize the Tracking Device. Is it set up properly?";
 			}
@@ -740,8 +997,11 @@ namespace ktvr
 
 		/* Helper functions which may be internally called by the device plugin */
 		Eigen::Vector3f (*getHMDPosition)(); // Get the HMD Position
+		Eigen::Vector3f (*getHMDPositionCalibrated)(); // Get the HMD Position, calibrated
 		Eigen::Quaternionf (*getHMDOrientation)(); // Get the HMD Rotation
+		Eigen::Quaternionf (*getHMDOrientationCalibrated)(); // Get the HMD Rotation, calibrated
 		float (*getHMDOrientationYaw)(); // Get the HMD Yaw, exclusively
+		float (*getHMDOrientationYawCalibrated)(); // Get the HMD Yaw, exclusively & calibrated
 
 		/*
 		 * Helper to get all joints' positions from the app,

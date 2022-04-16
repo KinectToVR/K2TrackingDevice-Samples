@@ -21,7 +21,8 @@ This repository contains sample projects of devices / plugins in terms of `Ameth
 Each project in the solution is an example of a different possible implementation<br>
 of a tracking device (Later referred to as `K2TrackingDevice`), and an additional one with settings.<br>
 
-<ins>[You can find a detailed description about every single plugin and device type here.](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/DEVICES.md)</ins>
+<ins>[You can find a detailed description about every single plugin and device type here.](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/DEVICES.md)</ins><br>
+[As for a real-world example, please check out this. (JointsBasis w/ custom settings)](https://github.com/KimihikoAkayasaki/device_owoTrackVR)
 
 Briefly, currently supported device types are:
 - Tracking providers:
