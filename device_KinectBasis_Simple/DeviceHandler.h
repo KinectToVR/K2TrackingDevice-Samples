@@ -1,5 +1,5 @@
 #pragma once
-#include "KinectToVR_API_Devices.h"
+#include "Amethyst_API_Devices.h"
 
 /* Not exported */
 

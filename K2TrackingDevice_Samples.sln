@@ -15,7 +15,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "device_JointsBasis", "devic
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendor", "vendor", "{30CE0DE4-2ACF-4D79-B46D-5802D63D3DCF}"
 	ProjectSection(SolutionItems) = preProject
-		external\vendor\KinectToVR_API_Devices.h = external\vendor\KinectToVR_API_Devices.h
+		external\vendor\Amethyst_API_Devices.h = external\vendor\Amethyst_API_Devices.h
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "device_KinectBasis_Full_Settings", "device_KinectBasis_Full_Settings\device_KinectBasis_Full_Settings.vcxproj", "{EADA45D7-36D0-4425-ABDE-72A21E00AFFA}"

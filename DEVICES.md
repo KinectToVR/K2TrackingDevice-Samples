@@ -2,7 +2,7 @@
 <text>(</text>
 <text style="color:#9966cc;">Amethyst</text>
 <text>)</text>
-<b>KinectToVR API Devices</b>
+<b>Amethyst API Devices</b>
 </h1>
 Before we start: <ins>please make sure to read this all, it's really important.</ins><br>
 Every secion is equally important, so make sure you don't skip any.
@@ -44,10 +44,10 @@ for the app to be accessed by calling `getJointName()` before adding it the join
 When a device reports itself as a spectator, it states that it won't be providing any tracking.<br>
 Spectator devices, and generally all device types can poll tracking data from the host (`Amethyst`).<br>
 There are several helper functions to make that easier:
-- [`getHMDPosition()`](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/external/vendor/KinectToVR_API_Devices.h#L428) - grab the VR Headset position (in meters, xyz)
-- [`getHMDOrientation()`](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/external/vendor/KinectToVR_API_Devices.h#L429) - get the VR Headset orientation (quaternion)
-- [`getHMDOrientationYaw()`](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/external/vendor/KinectToVR_API_Devices.h#L430) - get VR Headset's extracted orientation yaw (in radians, +y)
-- [`getAppJointPoses()`](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/external/vendor/KinectToVR_API_Devices.h#L438) - the most useful one, returns an array of joints from `Amethyst`,<br>
+- [`getHMDPosition()`](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/external/vendor/Amethyst_API_Devices.h#L428) - grab the VR Headset position (in meters, xyz)
+- [`getHMDOrientation()`](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/external/vendor/Amethyst_API_Devices.h#L429) - get the VR Headset orientation (quaternion)
+- [`getHMDOrientationYaw()`](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/external/vendor/Amethyst_API_Devices.h#L430) - get VR Headset's extracted orientation yaw (in radians, +y)
+- [`getAppJointPoses()`](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/external/vendor/Amethyst_API_Devices.h#L438) - the most useful one, returns an array of joints from `Amethyst`,<br>
   with their final (composed) names, roles, positions & orientations and states.
 <br>
 <br>
@@ -135,7 +135,7 @@ Just make sure to follow the function's template, it's always named like `On[Som
 ## OK, but what's actually in `external/vendor`?
 Ah yes. For the sake of K2API's simplicity in its current state, it's been split into 3 parts.<br>
 The currently used part, `devices` part, allows us to make device plugins and provide the whole tracking.<br>
-It's been grabbed from the newest `KinectToVR API` project files and put here for simplicity reasons.<br>
+It's been grabbed from the newest `Amethyst API` project files and put here for simplicity reasons.<br>
 If this part will ever get an interface update, you're going to see in logs that your device<br>
 has provided an incorrect `IK2API_Devices_Version` of the interface, and you'll be able to update it.
 <br> <br>
