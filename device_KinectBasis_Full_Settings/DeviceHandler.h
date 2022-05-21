@@ -35,15 +35,15 @@ public:
 		//   and optionally cache the pointers as shared
 		layoutRoot->AppendSingleElement(
 			CreateTextBlock(
-				"In the beginning was the Word."));
+				L"In the beginning was the Word."));
 
 		layoutRoot->AppendSingleElement(
 			CreateTextBlock(
-				"  But this device's settings are something else..."));
+				L"  But this device's settings are something else..."));
 	}
 
 	HRESULT getStatusResult() override;
-	std::string statusResultString(HRESULT stat) override;
+	std::wstring statusResultWString(HRESULT stat) override;
 
 	void initialize() override;
 	void update() override;

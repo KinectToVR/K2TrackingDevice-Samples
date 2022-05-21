@@ -10,16 +10,16 @@ HRESULT DeviceHandler::getStatusResult()
 	return S_OK;
 }
 
-std::string DeviceHandler::statusResultString(HRESULT stat)
+std::wstring DeviceHandler::statusResultWString(HRESULT stat)
 {
 	// Parse your device's status into some nice text here,
 	// it has to be formatted like [HEADER]\n[TYPE]\n[MESSAGE]
 
 	switch (stat)
 	{
-	case S_OK: return "Success!\nS_OK\nEverything's good!";
-	default: return "Undefined: " + std::to_string(stat) +
-		"\nE_UNDEFINED\nSomething weird has happened, though we can't tell what.";
+	case S_OK: return L"Success!\nS_OK\nEverything's good!";
+	default: return L"Undefined: " + std::to_wstring(stat) +
+		L"\nE_UNDEFINED\nSomething weird has happened, though we can't tell what.";
 	}
 }
 

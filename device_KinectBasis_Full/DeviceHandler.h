@@ -23,7 +23,7 @@ public:
 	}
 
 	HRESULT getStatusResult() override;
-	std::string statusResultString(HRESULT stat) override;
+	std::wstring statusResultWString(HRESULT stat) override;
 
 	void initialize() override;
 	void update() override;
