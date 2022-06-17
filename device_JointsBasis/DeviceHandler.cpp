@@ -46,8 +46,8 @@ void DeviceHandler::update()
 		// and the user's head orientation
 
 		trackedJoints.at(0).update(
-			getHMDPosition() + Eigen::Vector3f(0, 0, 1),
-			getHMDOrientation(),
+			getHMDPose().first + Eigen::Vector3f(0, 0, 1),
+			getHMDPose().second,
 			ktvr::State_Tracked);
 
 		// Mark that we see the user

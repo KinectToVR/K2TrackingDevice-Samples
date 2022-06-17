@@ -44,10 +44,11 @@ for the app to be accessed by calling `getJointName()` before adding it the join
 When a device reports itself as a spectator, it states that it won't be providing any tracking.<br>
 Spectator devices, and generally all device types can poll tracking data from the host (`Amethyst`).<br>
 There are several helper functions to make that easier:
-- [`getHMDPosition()`](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/external/vendor/Amethyst_API_Devices.h#L428) - grab the VR Headset position (in meters, xyz)
-- [`getHMDOrientation()`](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/external/vendor/Amethyst_API_Devices.h#L429) - get the VR Headset orientation (quaternion)
-- [`getHMDOrientationYaw()`](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/external/vendor/Amethyst_API_Devices.h#L430) - get VR Headset's extracted orientation yaw (in radians, +y)
-- [`getAppJointPoses()`](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/external/vendor/Amethyst_API_Devices.h#L438) - the most useful one, returns an array of joints from `Amethyst`,<br>
+- [`getHMDPose()`](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/external/vendor/Amethyst_API_Devices.h#L725) - grab the VR Headset pose (position in meters and orientation as a quaternion)  
+  Access pos via `.first` and ori via `.second`. The `Calibrated` variant makes use of your room setup.
+- [`getHMDOrientationYaw()`](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/external/vendor/Amethyst_API_Devices.h#L740) - get VR Headset's extracted orientation yaw (in radians, +y)  
+  The `Calibrated` variant makes use of your room setup, so it's generally better to use it.
+- [`getAppJointPoses()`](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/external/vendor/Amethyst_API_Devices.h#L750) - the most useful one, returns an array of joints from `Amethyst`,<br>
   with their final (composed) names, roles, positions & orientations and states.
 <br>
 <br>

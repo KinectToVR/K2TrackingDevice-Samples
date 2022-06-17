@@ -49,8 +49,8 @@ void DeviceHandler::update()
 			//       which are [ head, waist, ankles ]
 			//       (But the sample updates all)
 
-			jointPositions[i] = getHMDPosition() + Eigen::Vector3f(i, 0, 1);
-			jointOrientations[i] = getHMDOrientation();
+			jointPositions[i] = getHMDPose().first + Eigen::Vector3f(i, 0, 1);
+			jointOrientations[i] = getHMDPose().second;
 
 			trackingStates[i] = ktvr::State_Tracked;
 		}

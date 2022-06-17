@@ -44,8 +44,8 @@ void DeviceHandler::update()
 
 		for (uint32_t i = 0; i < ktvr::Joint_Total; i++)
 		{
-			jointPositions[i] = getHMDPosition() + Eigen::Vector3f(i, 0, 1);
-			jointOrientations[i] = getHMDOrientation();
+			jointPositions[i] = getHMDPose().first + Eigen::Vector3f(i, 0, 1);
+			jointOrientations[i] = getHMDPose().second;
 
 			trackingStates[i] = ktvr::State_Tracked;
 		}
