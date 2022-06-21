@@ -22,7 +22,9 @@ Each project in the solution is an example of a different possible implementatio
 of a tracking device (Later referred to as `K2TrackingDevice`), and an additional one with settings.<br>
 
 <ins>[You can find a detailed description about every single plugin and device type here.](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/DEVICES.md)</ins><br>
-[As for a real-world example, please check out this. (JointsBasis w/ custom settings)](https://github.com/KimihikoAkayasaki/device_owoTrackVR)
+[As for a real-world example, please check out this. (JointsBasis w/ custom settings)](https://github.com/KimihikoAkayasaki/device_owoTrackVR)  
+
+BTW: If you prefer C# to C++ for your device/plugin, please check out [this branch](https://github.com/KinectToVR/K2TrackingDevice-Samples/tree/managed).
 
 Briefly, currently supported device types are:
 - Tracking providers:

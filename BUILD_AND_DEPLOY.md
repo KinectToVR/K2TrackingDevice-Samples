@@ -8,14 +8,9 @@ Follow these steps:
 - [Install tools for the Windows App development](https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/set-up-your-development-environment?tabs=vs-2022-17-1-a%2Cvs-2022-17-1-b).<br>
   You'll have to install Visual Studio 2022 or its Build Tools.
 
-- Clone `Eigen3` to `external/`<br>
+- Set up external dependencies
   ```powershell
-  > git clone https://gitlab.com/libeigen/eigen ./external/eigen
-  # Reset Eigen to the latest OK state
-  > cd ./external/eigen
-  > git reset --hard 1fd5ce1002a6f30e1169b529b291216a18be2f7e
-  # Go back
-  > cd ../..
+  git submodule update --init
   ```
 
 - Build Samples:<br>

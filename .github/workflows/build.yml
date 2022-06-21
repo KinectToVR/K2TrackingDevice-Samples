@@ -9,20 +9,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2.1.0
         id: checkout_code
-
-      - name: Setup Chocolatey
-        run: |
-          Set-ExecutionPolicy Bypass -Scope Process -Force
-          [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-          Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-
-          choco install -y sed
-          Import-Module "$env:ProgramData\Chocolatey\helpers\chocolateyProfile.psm1"
-          Update-SessionEnvironment
-
+        
       - name: Setup Eigen
         run: |
-          git clone https://gitlab.com/libeigen/eigen "${env:GITHUB_WORKSPACE}/external/eigen"
+          git submodule update --init
 
       - name: Build Samples
         run: |
