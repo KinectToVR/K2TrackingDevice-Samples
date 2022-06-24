@@ -5,8 +5,6 @@
 <text>'s plugins )</text>
 </h1>
 
-## <ins>__[Discord server](https://discord.gg/YBQCRDG)__</ins> and I'm **公彦赤屋先#5023**
-
 ## **License**
 This project is licensed under the GNU GPL v3 License 
 
@@ -14,12 +12,14 @@ This project is licensed under the GNU GPL v3 License
 You're going to find built plugins in [repo Actions](https://github.com/KinectToVR/K2TrackingDevice-Samples/actions), in the run artifact's section.
 
 ## **Build & Deploy**
-Both build and deployment instructions [are available here](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/BUILD_AND_DEPLOY.md).
+Both build and deployment instructions [are available here](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/managed/BUILD_AND_DEPLOY.md).
 
-## **Overview (K2API Devices Docs)**
-This repository contains sample projects of devices / plugins in terms of `Amethyst` project.<br>
-Each project in the solution is an example of a different possible implementation<br>
-of a tracking device (Later referred to as `K2TrackingDevice`), and an additional one with settings.<br>
+## **Overview (Managed Amethyst API)**
+This repository contains a sample projection of Amethyst API to Managed (CLR and C#)  
+If you wanna use C# for an Amethyst plugin, I just thought it may help a bit.  
+(Note: API functions are highly limited currently, this applies to device types too)  
+
+You're the best off just cloning this branch and trying things out yourself.  
 
 <ins>[You can find a detailed description about every single plugin and device type here.](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/DEVICES.md)</ins><br>
 [As for a real-world example, please check out this. (JointsBasis w/ custom settings)](https://github.com/KimihikoAkayasaki/device_owoTrackVR)

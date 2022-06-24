@@ -6,7 +6,8 @@ You'll need:
 Follow these steps:
 
 - [Install tools for the Windows App development](https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/set-up-your-development-environment?tabs=vs-2022-17-1-a%2Cvs-2022-17-1-b).<br>
-  You'll have to install Visual Studio 2022 or its Build Tools.
+  You'll have to install Visual Studio 2022 or its Build Tools.  
+  Note: You have to add C++/CLI (CLR) support to tools!
 
 - Set up external dependencies
   ```powershell
@@ -23,7 +24,8 @@ Follow these steps:
         -replace('"installationPath": "','') -replace('",',''))".Trim() + "\\MSBuild\\Current\\Bin\\MSBuild.exe"
 
   # Restore NuGet packages and build everything
-  > &"$msbuild" K2TrackingDevice_Samples.sln "/p:Configuration=Release;Platform=x64"
+  # Note: Always build/rebuild the whole solution when using AME Managed!
+  > &"$msbuild" KinectBasis_Managed.sln "/p:Configuration=Release;Platform=x64"
   ```
 
 ## **Deployment**

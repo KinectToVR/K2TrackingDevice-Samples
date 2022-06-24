@@ -1,0 +1,12 @@
+H:\repos\K2TrackingDevice-Samples\Amethyst_Device_Managed\bin\Release\net6.0\Amethyst_Device_Managed.deps.json
+H:\repos\K2TrackingDevice-Samples\Amethyst_Device_Managed\bin\Release\net6.0\Amethyst_Device_Managed.dll
+H:\repos\K2TrackingDevice-Samples\Amethyst_Device_Managed\bin\Release\net6.0\Amethyst_Device_Managed.pdb
+H:\repos\K2TrackingDevice-Samples\Amethyst_Device_Managed\obj\Release\net6.0\Amethyst_Device_Managed.csproj.AssemblyReference.cache
+H:\repos\K2TrackingDevice-Samples\Amethyst_Device_Managed\obj\Release\net6.0\Amethyst_Device_Managed.GeneratedMSBuildEditorConfig.editorconfig
+H:\repos\K2TrackingDevice-Samples\Amethyst_Device_Managed\obj\Release\net6.0\Amethyst_Device_Managed.AssemblyInfoInputs.cache
+H:\repos\K2TrackingDevice-Samples\Amethyst_Device_Managed\obj\Release\net6.0\Amethyst_Device_Managed.AssemblyInfo.cs
+H:\repos\K2TrackingDevice-Samples\Amethyst_Device_Managed\obj\Release\net6.0\Amethyst_Device_Managed.csproj.CoreCompileInputs.cache
+H:\repos\K2TrackingDevice-Samples\Amethyst_Device_Managed\obj\Release\net6.0\Amethyst_Device_Managed.dll
+H:\repos\K2TrackingDevice-Samples\Amethyst_Device_Managed\obj\Release\net6.0\refint\Amethyst_Device_Managed.dll
+H:\repos\K2TrackingDevice-Samples\Amethyst_Device_Managed\obj\Release\net6.0\Amethyst_Device_Managed.pdb
+H:\repos\K2TrackingDevice-Samples\Amethyst_Device_Managed\obj\Release\net6.0\ref\Amethyst_Device_Managed.dll

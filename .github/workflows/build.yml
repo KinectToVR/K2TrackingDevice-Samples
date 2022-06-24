@@ -21,7 +21,7 @@ jobs:
                Select-String -Pattern "Studio" | Select-Object -First 1 | Select-String -Pattern "installationPath")" `
               -replace('"installationPath": "','') -replace('",',''))".Trim() + "\\MSBuild\\Current\\Bin\\MSBuild.exe"
           
-          &"$msbuild" K2TrackingDevice_Samples.sln "/p:Configuration=Release;Platform=x64"
+          &"$msbuild" KinectBasis_Managed.sln "/p:Configuration=Release;Platform=x64"
 
       - name: Get short commit SHA
         id: slug
