@@ -5,13 +5,13 @@ using Amethyst_Device_Managed.API_Projection_Files;
 
 namespace Amethyst_Device_Managed;
 
-public class AmethystDevice : AmethystManagedDevice
+public class AmethystDevice : AmethystManagedDevice_Kinect
 {
     public AmethystDevice()
     {
         // Set up the device name
-        DeviceName = "KinectBasis (Managed)";
-
+        DeviceName = "WhoKnows (Managed)";
+        
         // Provide every joint possible in Amethyst API
         DeviceCharacteristics = (uint)TrackingDeviceCharacteristics.K2_Character_Full;
 

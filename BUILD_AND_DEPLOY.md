@@ -25,7 +25,7 @@ Follow these steps:
 
   # Restore NuGet packages and build everything
   # Note: Always build/rebuild the whole solution when using AME Managed!
-  > &"$msbuild" KinectBasis_Managed.sln "/p:Configuration=Release;Platform=x64"
+  > &"$msbuild" device_Managed.sln "/p:Configuration=Release;Platform=x64"
   ```
 
 ## **Deployment**

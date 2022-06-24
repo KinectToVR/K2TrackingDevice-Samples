@@ -16,3 +16,7 @@ external/glog/
 external/openvr/
 
 *.user
+
+Amethyst_Device_Managed/bin/
+
+Amethyst_Device_Managed/obj/

@@ -1,11 +1,12 @@
-﻿using System.Numerics;
+﻿using System.Diagnostics;
+using System.Numerics;
 
 namespace Amethyst_Device_Managed.API_Projection_Files;
 
-public abstract class AmethystManagedDevice
+public abstract class AmethystManagedDevice_Kinect
 {
     public string DeviceName = "[NAME NOT SET]"; // Make sure you set this!
-    public const uint DeviceType = 1; // K2_Kinect (The only one supported for now)
+    public const uint DeviceType = (uint)TrackingDeviceType.K2_Kinect;
     public uint DeviceCharacteristics = (uint)TrackingDeviceCharacteristics.K2_Character_Unknown;
 
     public bool IsFlipSupported = false;
@@ -15,6 +16,31 @@ public abstract class AmethystManagedDevice
     public Vector3[] JointPositions = new Vector3[25]; // Vector3<float>
     public Quaternion[] JointOrientations = new Quaternion[25]; // Quaternion<float>
     public uint[] JointTrackingStates = new uint[25]; // TrackedJointState
+
+    public abstract bool Initialize();
+
+    public abstract void Update();
+
+    public abstract bool Shutdown();
+
+    public abstract long GetDeviceStatus();
+
+    public abstract string GetDeviceStatusString();
+}
+
+public abstract class AmethystManagedDevice_Joints
+{
+    public string DeviceName = "[NAME NOT SET]"; // Make sure you set this!
+    public const uint DeviceType = (uint)TrackingDeviceType.K2_Joints;
+
+    public bool IsSkeletonTracked = false;
+
+    public List<Tuple<
+        Vector3, // Position
+        Quaternion, // Orientation
+        uint, // Tracking state (TrackedJointState)
+        string // Joint name
+    >> JointsList = new();
 
     public abstract bool Initialize();
 
@@ -47,4 +73,11 @@ internal enum TrackedJointState
     State_NotTracked,
     State_Inferred,
     State_Tracked
+};
+
+internal enum TrackingDeviceType
+{
+    K2_Unknown,
+    K2_Kinect,
+    K2_Joints
 };

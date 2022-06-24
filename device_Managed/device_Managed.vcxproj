@@ -22,9 +22,9 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{0fb1e875-cbc0-48c4-b670-a6bfad3a7b04}</ProjectGuid>
-    <RootNamespace>deviceKinectBasis_Full</RootNamespace>
+    <RootNamespace>device_Managed</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>device_KinectBasis</ProjectName>
+    <ProjectName>device_Managed</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -142,18 +142,18 @@
       <AdditionalDependencies>Amethyst_API_Managed.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir "$(SolutionDir)$(Platform)\$(Configuration)\devices\KinectBasis"
+      <Command>mkdir "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed"
 
-xcopy /y /d "$(ProjectDir)device_resources\*" "$(SolutionDir)$(Platform)\$(Configuration)\devices\KinectBasis\"
+xcopy /y /d "$(ProjectDir)device_resources\*" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\"
 
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)" "$(SolutionDir)$(Platform)\$(Configuration)\devices\KinectBasis\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
 
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\KinectBasis\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\KinectBasis\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed.runtimeconfig.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\KinectBasis\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_Device_Managed.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\KinectBasis\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_Device_Managed.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\KinectBasis\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Ijwhost.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\KinectBasis\bin\win64\"</Command>
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed.runtimeconfig.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_Device_Managed.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_Device_Managed.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Ijwhost.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -179,18 +179,18 @@ xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Ijwhost.dll" "$(Solution
       <AdditionalDependencies>Amethyst_API_Managed.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir "$(SolutionDir)$(Platform)\$(Configuration)\devices\KinectBasis"
+      <Command>mkdir "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed"
 
-xcopy /y /d "$(ProjectDir)device_resources\*" "$(SolutionDir)$(Platform)\$(Configuration)\devices\KinectBasis\"
+xcopy /y /d "$(ProjectDir)device_resources\*" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\"
 
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)" "$(SolutionDir)$(Platform)\$(Configuration)\devices\KinectBasis\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
 
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\KinectBasis\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\KinectBasis\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed.runtimeconfig.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\KinectBasis\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_Device_Managed.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\KinectBasis\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_Device_Managed.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\KinectBasis\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Ijwhost.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\KinectBasis\bin\win64\"</Command>
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed.runtimeconfig.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_Device_Managed.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_Device_Managed.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Ijwhost.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32120.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "device_KinectBasis", "device_KinectBasis\device_KinectBasis.vcxproj", "{0FB1E875-CBC0-48C4-B670-A6BFAD3A7B04}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "device_Managed", "device_Managed\device_Managed.vcxproj", "{0FB1E875-CBC0-48C4-B670-A6BFAD3A7B04}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vendor Files", "Vendor Files", "{30CE0DE4-2ACF-4D79-B46D-5802D63D3DCF}"
 	ProjectSection(SolutionItems) = preProject

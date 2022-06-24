@@ -34,4 +34,4 @@ Briefly, currently supported device types are:
 - `Spectator` - Only poll data from the app
 
 Please note that `KinectBasis` types can use automatic calibration, whereas `JointsBasis` cannot.<br>
-Additionally, plugins (devices) can provide their own settings, as [described here](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/DEVICES.md#device-settings) and [shown here](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/device_KinectBasis_Full_Settings/DeviceHandler.h#L28).
+Additionally, plugins (devices) can provide their own settings, as [described here](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/DEVICES.md#device-settings) and [shown here](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/device_Managed_Full_Settings/DeviceHandler.h#L28).
