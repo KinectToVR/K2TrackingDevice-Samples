@@ -20,3 +20,11 @@ external/openvr/
 Amethyst_Device_Managed/bin/
 
 Amethyst_Device_Managed/obj/
+
+Device_Managed_JointsBasis/obj/
+
+Device_Managed_KinectBasis/obj/
+
+Managed_JointsBasis_Handler/obj/
+
+Managed_KinectBasis_Handler/obj/

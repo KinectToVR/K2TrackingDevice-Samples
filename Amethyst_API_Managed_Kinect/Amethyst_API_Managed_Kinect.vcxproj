@@ -19,21 +19,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Amethyst_Device_Managed\Amethyst_Device_Managed.csproj">
-      <Project>{5686cfae-e172-4c56-85d3-56f5fe5b8732}</Project>
+    <ClInclude Include="Amethyst_API_Managed_Kinect.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Amethyst_API_Managed_Kinect.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Managed_KinectBasis_Handler\Managed_KinectBasis_Handler.csproj">
+      <Project>{a5e4f998-8739-4165-9317-2d0b049ba3da}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Amethyst_API_Managed.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Amethyst_API_Managed.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <ProjectGuid>{7F2F50D1-C2D6-45D4-9E04-DDDB96EA8AD4}</ProjectGuid>
     <Keyword>NetCoreCProj</Keyword>
-    <RootNamespace>AmethystAPIManaged</RootNamespace>
+    <RootNamespace>AmethystAPIManagedKinect</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>

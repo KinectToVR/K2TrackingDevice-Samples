@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
-using Amethyst_Device_Managed.API_Projection_Files;
+using Device_Managed_JointsBasis.API_Projection_Files;
 
-namespace Amethyst_Device_Managed;
+namespace Device_Managed_JointsBasis;
 
-public class AmethystDevice : AmethystManagedDevice_Kinect
+public class AmethystDevice : AmethystManagedDevice_Joints
 {
     public AmethystDevice()
     {
         // Set up the device name
-        DeviceName = "WhoKnows (Managed)";
-        
-        // Provide every joint possible in Amethyst API
-        DeviceCharacteristics = (uint)TrackingDeviceCharacteristics.K2_Character_Full;
-
-        IsFlipSupported = false; // No flip for us :(
-        IsAppOrientationSupported = false; // Neither MathBased
+        DeviceName = "JointsBasis (Managed)";
     }
 
     public override bool Initialize()
@@ -24,7 +18,15 @@ public class AmethystDevice : AmethystManagedDevice_Kinect
         // Set up or refresh your device here,
         // I suggest you use additional BOOLs
         // to check if you've already done that
-        return true;
+
+        // Rebuild the joint list
+        JointsList.Clear(); // Erase all
+
+        // Add 5 dummy joints
+        for (uint i = 0; i < 5; i++)
+            JointsList.Add(new TrackedJoint { JointName = $"Joint {i}" });
+
+        return true; // We're done
     }
 
     public override void Update()
@@ -32,6 +34,22 @@ public class AmethystDevice : AmethystManagedDevice_Kinect
         // Update your tracking here,
         // to mark if the user is tracked
         // use the IsSkeletonTracked BOOL
+
+        // Use a dummy random position for each joint
+        var random = new Random();
+        
+        foreach (var joint in JointsList)
+        {
+            // Random position (max 3sqrt2m from 0,0,0)
+            joint.Position.X = random.Next(-300, 300) / 100f;
+            joint.Position.Y = random.Next(-300, 300) / 100f;
+            joint.Position.Z = random.Next(-300, 300) / 100f;
+
+            // This joint is being tracked atm
+            joint.TrackingState = (uint)TrackedJointState.State_Tracked;
+        }
+
+        // Mark skeleton as tracked
         IsSkeletonTracked = true;
 
         return; // No proper return

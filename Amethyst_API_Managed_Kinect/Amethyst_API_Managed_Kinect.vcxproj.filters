@@ -15,12 +15,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Amethyst_API_Managed.h">
+    <ClInclude Include="Amethyst_API_Managed_Kinect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Amethyst_API_Managed.cpp">
+    <ClCompile Include="Amethyst_API_Managed_Kinect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

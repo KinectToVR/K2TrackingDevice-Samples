@@ -93,7 +93,7 @@ namespace Amethyst_API_Managed_Wrapper
 		}
 
 	private:
-		Amethyst_Device_Managed::AmethystDevice device_handler_;
+		Device_Managed_KinectBasis::AmethystDevice device_handler_;
 	};
 }
 

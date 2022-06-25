@@ -21,10 +21,10 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{0fb1e875-cbc0-48c4-b670-a6bfad3a7b04}</ProjectGuid>
-    <RootNamespace>device_Managed</RootNamespace>
+    <ProjectGuid>{92D93851-7802-4B31-ACFD-C9D75A8D741B}</ProjectGuid>
+    <RootNamespace>device_Managed_JointsBasis</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>device_Managed</ProjectName>
+    <ProjectName>device_Managed_JointsBasis</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -93,7 +93,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;DEVICEKINECTBASISFULL_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;DEVICEJOINTSBASIS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -110,7 +110,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;DEVICEKINECTBASISFULL_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;DEVICEJOINTSBASIS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -127,7 +127,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;DEVICEKINECTBASISFULL_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;DEVICEJOINTSBASIS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -139,21 +139,21 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Amethyst_API_Managed.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Amethyst_API_Managed_Joints.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed"
+      <Command>mkdir "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_JointsBasis"
 
-xcopy /y /d "$(ProjectDir)device_resources\*" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\"
+xcopy /y /d "$(ProjectDir)device_resources\*" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_JointsBasis\"
 
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_JointsBasis\bin\win64\"
 
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed.runtimeconfig.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_Device_Managed.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_Device_Managed.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Ijwhost.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"</Command>
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed_Joints.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_JointsBasis\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed_Joints.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_JointsBasis\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed_Joints.runtimeconfig.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_JointsBasis\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Managed_JointsBasis_Handler.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_JointsBasis\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Managed_JointsBasis_Handler.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_JointsBasis\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Ijwhost.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_JointsBasis\bin\win64\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -162,7 +162,7 @@ xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Ijwhost.dll" "$(Solution
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;DEVICEKINECTBASISFULL_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;DEVICEJOINTSBASIS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -176,21 +176,21 @@ xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Ijwhost.dll" "$(Solution
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Amethyst_API_Managed.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Amethyst_API_Managed_Joints.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed"
+      <Command>mkdir "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_JointsBasis"
 
-xcopy /y /d "$(ProjectDir)device_resources\*" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\"
+xcopy /y /d "$(ProjectDir)device_resources\*" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_JointsBasis\"
 
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_JointsBasis\bin\win64\"
 
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed.runtimeconfig.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_Device_Managed.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_Device_Managed.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Ijwhost.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed\bin\win64\"</Command>
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed_Joints.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_JointsBasis\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed_Joints.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_JointsBasis\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed_Joints.runtimeconfig.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_JointsBasis\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Managed_JointsBasis_Handler.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_JointsBasis\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Managed_JointsBasis_Handler.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_JointsBasis\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Ijwhost.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_JointsBasis\bin\win64\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -212,11 +212,8 @@ xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Ijwhost.dll" "$(Solution
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Amethyst_API_Managed\Amethyst_API_Managed.vcxproj">
-      <Project>{7f2f50d1-c2d6-45d4-9e04-dddb96ea8ad4}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Amethyst_Device_Managed\Amethyst_Device_Managed.csproj">
-      <Project>{5686cfae-e172-4c56-85d3-56f5fe5b8732}</Project>
+    <ProjectReference Include="..\Amethyst_API_Managed_Joints\Amethyst_API_Managed_Joints.vcxproj">
+      <Project>{035d6cf5-fc9d-409e-89bf-ab737bb43de0}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

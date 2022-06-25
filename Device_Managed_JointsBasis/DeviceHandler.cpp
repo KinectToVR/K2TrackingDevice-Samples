@@ -17,6 +17,9 @@ std::wstring DeviceHandler::statusResultWString(HRESULT stat)
 void DeviceHandler::initialize()
 {
 	// Initialize your device here
+
+	trackedJoints = Amethyst_API_Managed::GetTrackedJoints();
+
 	initialized = Amethyst_API_Managed::Initialize();
 }
 
@@ -30,10 +33,9 @@ void DeviceHandler::update()
 		// Update the managed tracking device
 		Amethyst_API_Managed::Update();
 
-		// Copy positions and states
-		jointPositions = Amethyst_API_Managed::GetJointPositions();
-		jointOrientations = Amethyst_API_Managed::GetJointOrientations();
-		trackingStates = Amethyst_API_Managed::GetJointTrackingStates();
+		// Copy poses and states
+		// (Assignment is fine since joints don't have GUIDs)
+		trackedJoints = Amethyst_API_Managed::GetTrackedJoints();
 
 		// Mark if we see the user
 		skeletonTracked = Amethyst_API_Managed::GetIsSkeletonTracked();

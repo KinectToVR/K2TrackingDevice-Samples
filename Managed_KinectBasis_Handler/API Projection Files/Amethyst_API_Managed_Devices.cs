@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Numerics;
 
-namespace Amethyst_Device_Managed.API_Projection_Files;
+namespace Device_Managed_KinectBasis.API_Projection_Files;
 
 public abstract class AmethystManagedDevice_Kinect
 {
@@ -16,31 +16,6 @@ public abstract class AmethystManagedDevice_Kinect
     public Vector3[] JointPositions = new Vector3[25]; // Vector3<float>
     public Quaternion[] JointOrientations = new Quaternion[25]; // Quaternion<float>
     public uint[] JointTrackingStates = new uint[25]; // TrackedJointState
-
-    public abstract bool Initialize();
-
-    public abstract void Update();
-
-    public abstract bool Shutdown();
-
-    public abstract long GetDeviceStatus();
-
-    public abstract string GetDeviceStatusString();
-}
-
-public abstract class AmethystManagedDevice_Joints
-{
-    public string DeviceName = "[NAME NOT SET]"; // Make sure you set this!
-    public const uint DeviceType = (uint)TrackingDeviceType.K2_Joints;
-
-    public bool IsSkeletonTracked = false;
-
-    public List<Tuple<
-        Vector3, // Position
-        Quaternion, // Orientation
-        uint, // Tracking state (TrackedJointState)
-        string // Joint name
-    >> JointsList = new();
 
     public abstract bool Initialize();
 
