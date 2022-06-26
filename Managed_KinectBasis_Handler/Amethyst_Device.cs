@@ -19,6 +19,14 @@ public class AmethystDevice : AmethystManagedDevice_Kinect
         IsAppOrientationSupported = false; // Neither MathBased
     }
 
+    public override void OnLoad()
+    {
+        // You can use everything from the managed API
+        // only after this function has been called
+
+        Log("[Managed Kinect] Loading...", 0);
+    }
+
     public override bool Initialize()
     {
         // Set up or refresh your device here,

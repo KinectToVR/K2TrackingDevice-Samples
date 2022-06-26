@@ -18,6 +18,8 @@ namespace Amethyst_API_Managed
 	__declspec(dllimport) void Register_getHMDOrientationYawCalibrated(std::function<float()> handler);
 	__declspec(dllimport) void Register_getAppJointPoses(std::function<std::array<ktvr::K2TrackedJoint, 7>()> handler);
 
+	__declspec(dllimport) void OnLoad();
+
 	__declspec(dllimport) bool Initialize();
 	__declspec(dllimport) void Update();
 	__declspec(dllimport) bool Shutdown();
@@ -77,6 +79,8 @@ public:
 		Amethyst_API_Managed::Register_getHMDOrientationYaw(getHMDOrientationYaw);
 		Amethyst_API_Managed::Register_getHMDOrientationYawCalibrated(getHMDOrientationYawCalibrated);
 		Amethyst_API_Managed::Register_getAppJointPoses(getAppJointPoses);
+
+		Amethyst_API_Managed::OnLoad();
 	}
 
 	virtual ~DeviceHandler()

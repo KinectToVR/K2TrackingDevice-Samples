@@ -54,6 +54,8 @@ public abstract class AmethystManagedDevice_Kinect
         LoggerAction?.Invoke(msg, (uint)sev);
     }
 
+    public abstract void OnLoad();
+
     public abstract bool Initialize();
 
     public abstract void Update();

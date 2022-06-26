@@ -13,6 +13,14 @@ public class AmethystDevice : AmethystManagedDevice_Joints
         DeviceName = "JointsBasis (Managed)";
     }
 
+    public override void OnLoad()
+    {
+        // You can use everything from the managed API
+        // only after this function has been called
+
+        Log("[Managed Joints] Loading...", 0);
+    }
+
     public override bool Initialize()
     {
         // Set up or refresh your device here,

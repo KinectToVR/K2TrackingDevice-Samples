@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Numerics;
 
-namespace Device_Managed_JointsBasis.API_Projection_Files;
+namespace Device_Managed_Spectator.API_Projection_Files;
 
 public class TrackedJoint
 {
@@ -22,15 +22,8 @@ public class TrackedJoint
     public string JointName = "[NAME NOT SET]";
 }
 
-public abstract class AmethystManagedDevice_Joints
+public abstract class AmethystManagedDevice_Spectator
 {
-    public string DeviceName = "[NAME NOT SET]"; // Make sure you set this!
-    public const uint DeviceType = (uint)TrackingDeviceType.K2_Joints;
-
-    public bool IsSkeletonTracked = false;
-
-    public List<TrackedJoint> JointsList = new();
-
     // Log a message to Amethyst logs : handler
     public Action<string, uint>? LoggerAction;
 
@@ -51,32 +44,7 @@ public abstract class AmethystManagedDevice_Joints
     }
 
     public abstract void OnLoad();
-
-    public abstract bool Initialize();
-
-    public abstract void Update();
-
-    public abstract bool Shutdown();
-
-    public abstract long GetDeviceStatus();
-
-    public abstract string GetDeviceStatusString();
 }
-
-public enum TrackingDeviceCharacteristics
-{
-    // Not set???
-    K2_Character_Unknown,
-
-    // NO mathbased, only [ head, waist, ankles ]
-    K2_Character_Basic,
-
-    // SUP mathbased, only [ head, elbows, waist, knees, ankles, foot_tips ]
-    K2_Character_Simple,
-
-    // SUP mathbased, [ everything ]
-    K2_Character_Full
-};
 
 public enum TrackedJointState
 {
@@ -85,12 +53,6 @@ public enum TrackedJointState
     State_Tracked
 };
 
-public enum TrackingDeviceType
-{
-    K2_Unknown,
-    K2_Kinect,
-    K2_Joints
-};
 public enum LogSeverity
 {
     INFO, // 0

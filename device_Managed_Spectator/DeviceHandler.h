@@ -19,26 +19,6 @@ namespace Amethyst_API_Managed
 	__declspec(dllimport) void Register_getAppJointPoses(std::function<std::array<ktvr::K2TrackedJoint, 7>()> handler);
 
 	__declspec(dllimport) void OnLoad();
-
-	__declspec(dllimport) bool Initialize();
-	__declspec(dllimport) void Update();
-	__declspec(dllimport) bool Shutdown();
-
-	__declspec(dllimport) std::string GetDeviceName();
-
-	__declspec(dllimport) long GetDeviceStatus();
-	__declspec(dllimport) std::wstring GetDeviceStatusWString();
-
-	__declspec(dllimport) uint32_t GetDeviceType();
-	__declspec(dllimport) uint32_t GetDeviceCharacteristics();
-
-	__declspec(dllimport) bool GetIsFlipSupported();
-	__declspec(dllimport) bool GetIsAppOrientationSupported();
-	__declspec(dllimport) bool GetIsSkeletonTracked();
-
-	__declspec(dllimport) std::array<Eigen::Vector3f, ktvr::ITrackedJointType::Joint_Total> GetJointPositions();
-	__declspec(dllimport) std::array<Eigen::Quaternionf, ktvr::ITrackedJointType::Joint_Total> GetJointOrientations();
-	__declspec(dllimport) std::array<ktvr::JointTrackingState, ktvr::ITrackedJointType::Joint_Total> GetJointTrackingStates();
 }
 
 inline void log_to_ame(const std::string& message, unsigned severity)
@@ -60,7 +40,7 @@ inline void log_to_ame(const std::string& message, unsigned severity)
 
 /* Not exported */
 
-class DeviceHandler : public ktvr::K2TrackingDeviceBase_KinectBasis
+class DeviceHandler : public ktvr::K2TrackingDeviceBase_Spectator
 {
 public:
 	/* K2API's things, which KTVR will make use of */
@@ -68,13 +48,6 @@ public:
 	DeviceHandler()
 	{
 		Amethyst_API_Managed::RegisterLogger(log_to_ame);
-		
-		deviceType = Amethyst_API_Managed::GetDeviceType();
-		deviceName = Amethyst_API_Managed::GetDeviceName();
-
-		deviceCharacteristics = Amethyst_API_Managed::GetDeviceCharacteristics();
-		flipSupported = Amethyst_API_Managed::GetIsFlipSupported();
-		appOrientationSupported = Amethyst_API_Managed::GetIsAppOrientationSupported();
 	}
 
 	void onLoad() override
@@ -92,16 +65,9 @@ public:
 		Amethyst_API_Managed::OnLoad();
 	}
 
-	~DeviceHandler() override
+	virtual ~DeviceHandler()
 	{
 	}
-
-	HRESULT getStatusResult() override;
-	std::wstring statusResultWString(HRESULT) override;
-
-	void initialize() override;
-	void update() override;
-	void shutdown() override;
 };
 
 /* Exported for dynamic linking */

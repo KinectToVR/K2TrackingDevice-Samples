@@ -214,6 +214,11 @@ namespace Amethyst_API_Managed_Wrapper
 				Device_Managed_JointsBasis::API_Projection_Files::TrackedJoint^>^>(&GetAppJointPoses);
 		}
 
+		void OnLoad()
+		{
+			device_handler_.OnLoad();
+		}
+
 		bool Initialize()
 		{
 			return device_handler_.Initialize();
@@ -403,5 +408,10 @@ namespace Amethyst_API_Managed
 		}
 
 		return cluster_joints;
+	}
+
+	__declspec(dllexport) void OnLoad()
+	{
+		IAmethyst_API_Managed::wrapper->OnLoad();
 	}
 }
