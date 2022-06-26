@@ -44,15 +44,17 @@ inline System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>^ G
 {
 	const auto& [position, orientation] = GetHMDPose_Handler();
 	return gcnew System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>(
-		System::Numerics::Vector3(
+		System::Numerics::Vector3{
 			position.x(),
 			position.y(),
-			position.z()),
-		System::Numerics::Quaternion(
+			position.z()
+		},
+		System::Numerics::Quaternion{
+			orientation.w(),
 			orientation.x(),
 			orientation.y(),
-			orientation.z(),
-			orientation.w())
+			orientation.z()
+		}
 	);
 }
 
@@ -60,15 +62,17 @@ inline System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>^ G
 {
 	const auto& [position, orientation] = GetHMDPoseCalibrated_Handler();
 	return gcnew System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>(
-		System::Numerics::Vector3(
+		System::Numerics::Vector3{
 			position.x(),
 			position.y(),
-			position.z()),
-		System::Numerics::Quaternion(
+			position.z()
+		},
+		System::Numerics::Quaternion{
+			orientation.w(),
 			orientation.x(),
 			orientation.y(),
-			orientation.z(),
-			orientation.w())
+			orientation.z()
+		}
 	);
 }
 
@@ -76,15 +80,17 @@ inline System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>^ G
 {
 	const auto& [position, orientation] = GetLeftControllerPose_Handler();
 	return gcnew System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>(
-		System::Numerics::Vector3(
+		System::Numerics::Vector3{
 			position.x(),
 			position.y(),
-			position.z()),
-		System::Numerics::Quaternion(
+			position.z()
+		},
+		System::Numerics::Quaternion{
+			orientation.w(),
 			orientation.x(),
 			orientation.y(),
-			orientation.z(),
-			orientation.w())
+			orientation.z()
+		}
 	);
 }
 
@@ -92,15 +98,17 @@ inline System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>^ G
 {
 	const auto& [position, orientation] = GetLeftControllerPoseCalibrated_Handler();
 	return gcnew System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>(
-		System::Numerics::Vector3(
+		System::Numerics::Vector3{
 			position.x(),
 			position.y(),
-			position.z()),
-		System::Numerics::Quaternion(
+			position.z()
+		},
+		System::Numerics::Quaternion{
+			orientation.w(),
 			orientation.x(),
 			orientation.y(),
-			orientation.z(),
-			orientation.w())
+			orientation.z()
+		}
 	);
 }
 
@@ -108,15 +116,17 @@ inline System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>^ G
 {
 	const auto& [position, orientation] = GetRightControllerPose_Handler();
 	return gcnew System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>(
-		System::Numerics::Vector3(
+		System::Numerics::Vector3{
 			position.x(),
 			position.y(),
-			position.z()),
-		System::Numerics::Quaternion(
+			position.z()
+		},
+		System::Numerics::Quaternion{
+			orientation.w(),
 			orientation.x(),
 			orientation.y(),
-			orientation.z(),
-			orientation.w())
+			orientation.z()
+		}
 	);
 }
 
@@ -124,15 +134,17 @@ inline System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>^ G
 {
 	const auto& [position, orientation] = GetRightControllerPoseCalibrated_Handler();
 	return gcnew System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>(
-		System::Numerics::Vector3(
+		System::Numerics::Vector3{
 			position.x(),
 			position.y(),
-			position.z()),
-		System::Numerics::Quaternion(
+			position.z()
+		},
+		System::Numerics::Quaternion{
+			orientation.w(),
 			orientation.x(),
 			orientation.y(),
-			orientation.z(),
-			orientation.w())
+			orientation.z()
+		}
 	);
 }
 
@@ -157,15 +169,17 @@ inline array<Device_Managed_KinectBasis::API_Projection_Files::TrackedJoint^>^ G
 		const auto& orientation = joints[i].getJointOrientation();
 
 		tracker_array[i] = gcnew Device_Managed_KinectBasis::API_Projection_Files::TrackedJoint{
-			System::Numerics::Vector3(
+			System::Numerics::Vector3{
 				position.x(),
 				position.y(),
-				position.z()),
-			System::Numerics::Quaternion(
+				position.z()
+			},
+			System::Numerics::Quaternion{
+				orientation.w(),
 				orientation.x(),
 				orientation.y(),
-				orientation.z(),
-				orientation.w()),
+				orientation.z()
+			},
 			gcnew System::String(joints[i].getJointName().c_str())
 		};
 	}
