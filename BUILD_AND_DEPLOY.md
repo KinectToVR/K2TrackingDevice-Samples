@@ -14,6 +14,25 @@ Follow these steps:
   git submodule update --init
   ```
 
+- Set up `GLog` & `GFlags` (For this step you must have cmake installed and visible in PATH)<br>
+  ```powershell
+  # Build GLog
+  > cd ./external/glog
+  > mkdir builds; cd ./builds
+  > cmake .. -DBUILD_SHARED_LIBS=ON
+  > &"$msbuild" glog.vcxproj "/p:Configuration=Release;Platform=x64"
+  # Go back
+  > cd ../../..
+  
+  # Build GFlags
+  > cd ./external/gflags
+  > mkdir builds; cd ./builds
+  > cmake .. -DBUILD_SHARED_LIBS=ON
+  > &"$msbuild" gflags.vcxproj "/p:Configuration=Release;Platform=x64"
+  # Go back
+  > cd ../../..
+  ```
+
 - Build Samples:<br>
   ```powershell
   # Download the vswhere tool to find msbuild without additional interactions
