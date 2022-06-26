@@ -66,7 +66,17 @@ public:
 	DeviceHandler()
 	{
 		Amethyst_API_Managed::RegisterLogger(log_to_ame);
+		
+		deviceType = Amethyst_API_Managed::GetDeviceType();
+		deviceName = Amethyst_API_Managed::GetDeviceName();
 
+		deviceCharacteristics = Amethyst_API_Managed::GetDeviceCharacteristics();
+		flipSupported = Amethyst_API_Managed::GetIsFlipSupported();
+		appOrientationSupported = Amethyst_API_Managed::GetIsAppOrientationSupported();
+	}
+
+	void onLoad() override
+	{
 		Amethyst_API_Managed::Register_getHMDPose(getHMDPose);
 		Amethyst_API_Managed::Register_getHMDPoseCalibrated(getHMDPoseCalibrated);
 		Amethyst_API_Managed::Register_getLeftControllerPose(getLeftControllerPose);
@@ -76,13 +86,6 @@ public:
 		Amethyst_API_Managed::Register_getHMDOrientationYaw(getHMDOrientationYaw);
 		Amethyst_API_Managed::Register_getHMDOrientationYawCalibrated(getHMDOrientationYawCalibrated);
 		Amethyst_API_Managed::Register_getAppJointPoses(getAppJointPoses);
-
-		deviceType = Amethyst_API_Managed::GetDeviceType();
-		deviceName = Amethyst_API_Managed::GetDeviceName();
-
-		deviceCharacteristics = Amethyst_API_Managed::GetDeviceCharacteristics();
-		flipSupported = Amethyst_API_Managed::GetIsFlipSupported();
-		appOrientationSupported = Amethyst_API_Managed::GetIsAppOrientationSupported();
 	}
 
 	~DeviceHandler() override
