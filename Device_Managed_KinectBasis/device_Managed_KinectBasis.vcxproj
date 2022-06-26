@@ -131,7 +131,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)external\Kinect;$(SolutionDir)external\vendor;$(SolutionDir)external\eigen;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)external\Kinect;$(SolutionDir)external\vendor;$(SolutionDir)external\eigen;$(SolutionDir)external\gflags\builds\include;$(SolutionDir)external\glog\src;$(SolutionDir)external\glog\builds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -139,7 +139,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Amethyst_API_Managed_Kinect.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Amethyst_API_Managed_Kinect.lib;$(SolutionDir)external\glog\builds\$(Configuration)\glogd.lib;$(SolutionDir)external\gflags\builds\lib\$(Configuration)\gflags_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>mkdir "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_KinectBasis"
@@ -166,7 +166,7 @@ xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Ijwhost.dll" "$(Solution
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)external\Kinect;$(SolutionDir)external\vendor;$(SolutionDir)external\eigen;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)external\Kinect;$(SolutionDir)external\vendor;$(SolutionDir)external\eigen;$(SolutionDir)external\gflags\builds\include;$(SolutionDir)external\glog\src;$(SolutionDir)external\glog\builds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -176,7 +176,7 @@ xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Ijwhost.dll" "$(Solution
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Amethyst_API_Managed_Kinect.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Amethyst_API_Managed_Kinect.lib;$(SolutionDir)external\glog\builds\$(Configuration)\glog.lib;$(SolutionDir)external\gflags\builds\lib\$(Configuration)\gflags.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>mkdir "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_KinectBasis"

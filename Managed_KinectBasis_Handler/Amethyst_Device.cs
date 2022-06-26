@@ -24,6 +24,8 @@ public class AmethystDevice : AmethystManagedDevice_Kinect
         // Set up or refresh your device here,
         // I suggest you use additional BOOLs
         // to check if you've already done that
+        Log("[Managed Kinect] Initalizing...", 0);
+
         return true;
     }
 
@@ -41,6 +43,7 @@ public class AmethystDevice : AmethystManagedDevice_Kinect
     {
         // Shut your device down here
         // (This will likely be called only once)
+        Log("[Managed Kinect] Shutting down...", 0);
 
         return true; // Return the result (not checked)
     }

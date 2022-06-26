@@ -18,6 +18,7 @@ public class AmethystDevice : AmethystManagedDevice_Joints
         // Set up or refresh your device here,
         // I suggest you use additional BOOLs
         // to check if you've already done that
+        Log("[Managed Joints] Initalizing...", 0);
 
         // Rebuild the joint list
         JointsList.Clear(); // Erase all
@@ -59,6 +60,7 @@ public class AmethystDevice : AmethystManagedDevice_Joints
     {
         // Shut your device down here
         // (This will likely be called only once)
+        Log("[Managed Joints] Shutting down...", 0);
 
         return true; // Return the result (not checked)
     }
