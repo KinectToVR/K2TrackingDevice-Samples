@@ -30,7 +30,7 @@ inline std::string WStringToString(const std::wstring& s)
 namespace ktvr
 {
 	// Interface Version
-	static const char* IK2API_Devices_Version = "IK2API_Version_010";
+	static const char* IK2API_Devices_Version = "IK2API_Version_011";
 
 	// Return messaging types
 	enum K2InitErrorType
@@ -174,6 +174,13 @@ namespace ktvr
 			virtual bool Visibility() { return true; }
 
 			virtual void Visibility(const bool& visibility)
+			{
+			}
+
+			// IsPrimary (White/Gray) Get and Set
+			virtual bool IsPrimary() { return true; }
+
+			virtual void IsPrimary(const bool& primary)
 			{
 			}
 
@@ -641,8 +648,21 @@ namespace ktvr
 			{
 			}
 
+			// Append a One-Row element pair : horizontal stack
+			virtual void AppendElementPairStack(
+				const Element& first_element,
+				const Element& second_element)
+			{
+			}
+
 			// Append a One-Row element vector : */* column space
 			virtual void AppendElementVector(
+				const std::vector<Element>& element_vector)
+			{
+			}
+
+			// Append a One-Row element vector : horizontal stack
+			virtual void AppendElementVectorStack(
 				const std::vector<Element>& element_vector)
 			{
 			}
@@ -754,6 +774,8 @@ namespace ktvr
 		// -> will lead to showing an additional 'settings' button
 		// Note: each device has to save its settings independently
 		//       and may use the K2AppData from the Paths' header
+		// Tip: you can hide your device's settings by marking this as 'false',
+		//      and change it back to 'true' when you're ready
 		[[nodiscard]] bool isSettingsDaemonSupported() const { return settingsSupported; }
 
 		/*
@@ -966,6 +988,8 @@ namespace ktvr
 		// -> will lead to showing an additional 'settings' button
 		// Note: each device has to save its settings independently
 		//       and may use the K2AppData from the Paths' header
+		// Tip: you can hide your device's settings by marking this as 'false',
+		//      and change it back to 'true' when you're ready
 		[[nodiscard]] bool isSettingsDaemonSupported() const { return settingsSupported; }
 
 		/*
