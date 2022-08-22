@@ -110,7 +110,7 @@ extern "C" __declspec(dllexport) void* TrackingDeviceBaseFactory(
 {
 	// Return the device handler for tracking
 	// but only if interfaces are the same / up-to-date
-	if (0 == strcmp(ktvr::IK2API_Devices_Version, pVersionName))
+	if (0 == strcmp(ktvr::IAME_API_Devices_Version, pVersionName))
 	{
 		static DeviceHandler TrackingHandler; // Create a new device handler -> KinectV2
 
