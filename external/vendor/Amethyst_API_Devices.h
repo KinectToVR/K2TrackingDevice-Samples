@@ -30,7 +30,7 @@ inline std::string WStringToString(const std::wstring& s)
 namespace ktvr
 {
 	// Interface Version
-	static const char* IK2API_Devices_Version = "IK2API_Version_012";
+	static const char* IK2API_Devices_Version = "IK2API_Version_013";
 
 	// Return messaging types
 	enum K2InitErrorType
@@ -637,7 +637,7 @@ namespace ktvr
 			virtual void AppendSingleElement(
 				const Element& element,
 				const SingleLayoutHorizontalAlignment& alignment =
-				SingleLayoutHorizontalAlignment::Left)
+					SingleLayoutHorizontalAlignment::Left)
 			{
 			}
 
@@ -723,7 +723,10 @@ namespace ktvr
 		// Both should be updated either on call or as frequent as possible
 		virtual HRESULT getStatusResult() { return E_NOTIMPL; }
 		// Device status wide string: to get system locale/language, use GetUserDefaultUILanguage
-		virtual std::wstring statusResultWString(HRESULT stat) { return L"Not Defined\nE_NOT_DEFINED\nstatusResultWString behaviour not defined"; }
+		virtual std::wstring statusResultWString(HRESULT stat)
+		{
+			return L"Not Defined\nE_NOT_DEFINED\nstatusResultWString behaviour not defined";
+		}
 
 		// This should be updated on every frame,
 		// along with joint devices
@@ -772,6 +775,12 @@ namespace ktvr
 		// Request a refresh of the status/name/etc. interface
 		std::function<void()> requestStatusUIRefresh;
 
+		// Request a code of the currently selected language, i.e. en | fr | ja
+		std::function<std::wstring()> requestLanguageCode;
+
+		// Request a string from AME resources, empty for no match
+		std::function<std::wstring(std::wstring)> requestLocalizedString;
+
 		// To support settings daemon and register the layout root,
 		// the device must properly report it first
 		// -> will lead to showing an additional 'settings' button
@@ -789,31 +798,31 @@ namespace ktvr
 		Interface::LayoutRoot* layoutRoot;
 
 		// Create a text block
-		std::function<Interface::TextBlock* (const std::wstring& text)> CreateTextBlock;
+		std::function<Interface::TextBlock*(const std::wstring& text)> CreateTextBlock;
 
 		// Create a labeled button
-		std::function<Interface::Button* (const std::wstring& content)> CreateButton;
+		std::function<Interface::Button*(const std::wstring& content)> CreateButton;
 
 		// Create a number box
-		std::function<Interface::NumberBox* (const int& value)> CreateNumberBox;
+		std::function<Interface::NumberBox*(const int& value)> CreateNumberBox;
 
 		// Create a combo box
-		std::function<Interface::ComboBox* (const std::vector<std::wstring>& entries)> CreateComboBox;
+		std::function<Interface::ComboBox*(const std::vector<std::wstring>& entries)> CreateComboBox;
 
 		// Create a check box
-		std::function<Interface::CheckBox* ()> CreateCheckBox;
+		std::function<Interface::CheckBox*()> CreateCheckBox;
 
 		// Create a toggle switch
-		std::function<Interface::ToggleSwitch* ()> CreateToggleSwitch;
+		std::function<Interface::ToggleSwitch*()> CreateToggleSwitch;
 
 		// Create a text box
-		std::function<Interface::TextBox* ()> CreateTextBox;
+		std::function<Interface::TextBox*()> CreateTextBox;
 
 		// Create a progress ring
-		std::function<Interface::ProgressRing* ()> CreateProgressRing;
+		std::function<Interface::ProgressRing*()> CreateProgressRing;
 
 		// Create a progress bar
-		std::function<Interface::ProgressBar* ()> CreateProgressBar;
+		std::function<Interface::ProgressBar*()> CreateProgressBar;
 
 	protected:
 		K2DeviceCharacteristics deviceCharacteristics = K2_Character_Unknown;
@@ -943,7 +952,10 @@ namespace ktvr
 		// Both should be updated either on call or as frequent as possible
 		virtual HRESULT getStatusResult() { return E_NOTIMPL; }
 		// Device status wide string: to get system locale/language, use GetUserDefaultUILanguage
-		virtual std::wstring statusResultWString(HRESULT stat) { return L"Not Defined\nE_NOT_DEFINED\nstatusResultWString behaviour not defined"; }
+		virtual std::wstring statusResultWString(HRESULT stat)
+		{
+			return L"Not Defined\nE_NOT_DEFINED\nstatusResultWString behaviour not defined";
+		}
 
 		// Signal the joint eg psm_id0 that it's being selected
 		virtual void signalJoint(uint32_t at)
@@ -989,6 +1001,12 @@ namespace ktvr
 		// Request a refresh of the status/name/etc. interface
 		std::function<void()> requestStatusUIRefresh;
 
+		// Request a code of the currently selected language, i.e. en | fr | ja
+		std::function<std::wstring()> requestLanguageCode;
+
+		// Request a string from AME resources, empty for no match
+		std::function<std::wstring(std::wstring)> requestLocalizedString;
+
 		// To support settings daemon and register the layout root,
 		// the device must properly report it first
 		// -> will lead to showing an additional 'settings' button
@@ -1006,31 +1024,31 @@ namespace ktvr
 		Interface::LayoutRoot* layoutRoot;
 
 		// Create a text block
-		std::function<Interface::TextBlock* (const std::wstring& text)> CreateTextBlock;
+		std::function<Interface::TextBlock*(const std::wstring& text)> CreateTextBlock;
 
 		// Create a labeled button
-		std::function<Interface::Button* (const std::wstring& content)> CreateButton;
+		std::function<Interface::Button*(const std::wstring& content)> CreateButton;
 
 		// Create a number box
-		std::function<Interface::NumberBox* (const int& value)> CreateNumberBox;
+		std::function<Interface::NumberBox*(const int& value)> CreateNumberBox;
 
 		// Create a combo box
-		std::function<Interface::ComboBox* (const std::vector<std::wstring>& entries)> CreateComboBox;
+		std::function<Interface::ComboBox*(const std::vector<std::wstring>& entries)> CreateComboBox;
 
 		// Create a check box
-		std::function<Interface::CheckBox* ()> CreateCheckBox;
+		std::function<Interface::CheckBox*()> CreateCheckBox;
 
 		// Create a toggle switch
-		std::function<Interface::ToggleSwitch* ()> CreateToggleSwitch;
+		std::function<Interface::ToggleSwitch*()> CreateToggleSwitch;
 
 		// Create a text box
-		std::function<Interface::TextBox* ()> CreateTextBox;
+		std::function<Interface::TextBox*()> CreateTextBox;
 
 		// Create a progress ring
-		std::function<Interface::ProgressRing* ()> CreateProgressRing;
+		std::function<Interface::ProgressRing*()> CreateProgressRing;
 
 		// Create a progress bar
-		std::function<Interface::ProgressBar* ()> CreateProgressBar;
+		std::function<Interface::ProgressBar*()> CreateProgressBar;
 
 	protected:
 		K2DeviceType deviceType = K2_Unknown;
@@ -1096,5 +1114,11 @@ namespace ktvr
 		 * Note: Waist,LFoot,RFoot,LElbow,RElbow,LKnee,RKnee
 		 */
 		std::function<std::array<K2TrackedJoint, 7>()> getAppJointPoses;
+
+		// Request a code of the currently selected language, i.e. en | fr | ja
+		std::function<std::wstring()> requestLanguageCode;
+
+		// Request a string from AME resources, empty for no match
+		std::function<std::wstring(const std::wstring&)> requestLocalizedString;
 	};
 }
