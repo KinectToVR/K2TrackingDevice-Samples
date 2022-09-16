@@ -28,7 +28,7 @@ void DeviceHandler::initialize()
 	// Initialize your device here
 
 	// For the sample's sake, we'll add one dummy joint
-	trackedJoints.push_back(ktvr::K2TrackedJoint("Default Joint"));
+	trackedJoints.push_back(ktvr::K2TrackedJoint(L"Default Joint"));
 
 	// Mark the device as initialized
 	initialized = true;

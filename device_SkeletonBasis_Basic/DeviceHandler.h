@@ -3,19 +3,18 @@
 
 /* Not exported */
 
-class DeviceHandler : public ktvr::K2TrackingDeviceBase_KinectBasis
+class DeviceHandler : public ktvr::K2TrackingDeviceBase_SkeletonBasis
 {
 public:
 	/* K2API's things, which KTVR will make use of */
 
 	DeviceHandler()
 	{
-		deviceType = ktvr::K2_Kinect;
-		deviceName = "KinectBasis (Simple)";
+		deviceName = L"SkeletonBasis (Basic)";
 
-		deviceCharacteristics = ktvr::K2_Character_Simple;
+		deviceCharacteristics = ktvr::K2_Character_Basic;
 		flipSupported = true;
-		appOrientationSupported = true;
+		appOrientationSupported = false; // No math-based here :(
 	}
 
 	virtual ~DeviceHandler()
@@ -38,7 +37,7 @@ extern "C" __declspec(dllexport) void* TrackingDeviceBaseFactory(
 	// but only if interfaces are the same / up-to-date
 	if (0 == strcmp(ktvr::IAME_API_Devices_Version, pVersionName))
 	{
-		static DeviceHandler TrackingHandler; // Create a new device handler -> KinectBasis_Simple
+		static DeviceHandler TrackingHandler; // Create a new device handler -> KinectV2
 
 		*pReturnCode = ktvr::K2InitError_None;
 		return &TrackingHandler;

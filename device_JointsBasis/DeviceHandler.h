@@ -10,8 +10,7 @@ public:
 
 	DeviceHandler()
 	{
-		deviceType = ktvr::K2_Joints;
-		deviceName = "KinectBasis (Joints)";
+		deviceName = L"JointsBasis (Joints)";
 	}
 
 	virtual ~DeviceHandler()

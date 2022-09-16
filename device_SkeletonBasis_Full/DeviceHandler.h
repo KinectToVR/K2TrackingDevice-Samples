@@ -3,15 +3,14 @@
 
 /* Not exported */
 
-class DeviceHandler : public ktvr::K2TrackingDeviceBase_KinectBasis
+class DeviceHandler : public ktvr::K2TrackingDeviceBase_SkeletonBasis
 {
 public:
 	/* K2API's things, which KTVR will make use of */
 
 	DeviceHandler()
 	{
-		deviceType = ktvr::K2_Kinect;
-		deviceName = "KinectBasis (Full)";
+		deviceName = L"SkeletonBasis (Full)";
 
 		deviceCharacteristics = ktvr::K2_Character_Full;
 		flipSupported = true;

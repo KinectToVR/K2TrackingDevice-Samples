@@ -11,21 +11,21 @@ Every secion is equally important, so make sure you don't skip any.
 ## **Device types**
 As introduced [here](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/README.md#overview-k2api-devices-docs), there are 2 base tracking provider types and a spectator type.
 
-All `device_KinectBasis_*` projects represent a `K2TrackingDevice_KinectBasis` implementation,<br>
+All `device_SkeletonBasis_*` projects represent a `K2TrackingDevice_SkeletonBasis` implementation,<br>
 except the `device_JointsBasis` which represents a `K2TrackingDevice_JointsBasis`,<br>
 and the `device_Spectator`, which shows how to use the `K2TrackingDevice_Spectator` class.<br>
 <br>
 
-### `K2TrackingDevice_KinectBasis`
+### `K2TrackingDevice_SkeletonBasis`
 These devices will have to provide selected joints and always the head position.<br>
 Such behaviour will allow us to use in-app automatic calibration, so-called `flip`<br>
 (which is a big deal for Kinects) and sometimes custom-calculated orientation.<br>
 <br>
-`K2TrackingDevice_KinectBasis` must update a provided, fixed array of joints (`ITrackedJoint`s)<br>
+`K2TrackingDevice_SkeletonBasis` must update a provided, fixed array of joints (`ITrackedJoint`s)<br>
 with its own positions. How many joints will the device provide is a matter of its `Characteristics`.<br>
-And so, `K2_Character_Full` ([sample](https://github.com/KinectToVR/K2TrackingDevice-Samples/tree/main/device_KinectBasis_Full)) has to provide every possible joint, count `Joint_Total` (25).<br>
-`K2_Character_Simple` ([sample](https://github.com/KinectToVR/K2TrackingDevice-Samples/tree/main/device_KinectBasis_Simple)) has to update head, elbows, waist, knees, ankles and foot (tip) joints.<br>
-The last characteristics, `K2_Character_Basic` ([sample](https://github.com/KinectToVR/K2TrackingDevice-Samples/tree/main/device_KinectBasis_Basic)) only has to provide head, waist and ankles.<br>
+And so, `K2_Character_Full` ([sample](https://github.com/KinectToVR/K2TrackingDevice-Samples/tree/main/device_SkeletonBasis_Full)) has to provide every possible joint, count `Joint_Total` (25).<br>
+`K2_Character_Simple` ([sample](https://github.com/KinectToVR/K2TrackingDevice-Samples/tree/main/device_SkeletonBasis_Simple)) has to update head, elbows, waist, knees, ankles and foot (tip) joints.<br>
+The last characteristics, `K2_Character_Basic` ([sample](https://github.com/KinectToVR/K2TrackingDevice-Samples/tree/main/device_SkeletonBasis_Basic)) only has to provide head, waist and ankles.<br>
 Devices using the `Basic` character also won't be allowed to use `AppOrientation`, or so-called math-based.<br>
 <br>
 
@@ -74,7 +74,7 @@ You create elements (element pointers), set them up, and push to the UI via sele
 Of course you can manage them later, either via their pointers or inside handler functions.<br>
 
 When Amethyst is ready for plugin-wise UI construction, it's gonna call the `OnLoad()` function,<br>
-[you can override it to set your UI up](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/device_KinectBasis_Full_Settings/DeviceHandler.h#L28). Remember your device must report `settingsSupported` as true!<br>
+[you can override it to set your UI up](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/device_SkeletonBasis_Full_Settings/DeviceHandler.h#L28). Remember your device must report `settingsSupported` as true!<br>
 <br>
 ### `AppendSingleElement`
 This function will append a single `UIElement` to the UI layout. It will appear on a single line,<br>

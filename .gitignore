@@ -16,3 +16,9 @@ external/glog/
 external/openvr/
 
 *.user
+
+Managed_JointsBasis_Handler/obj/
+
+Managed_SkeletonBasis_Handler/obj/
+
+Managed_Spectator_Handler/obj/

@@ -3,43 +3,22 @@
 
 /* Not exported */
 
-class DeviceHandler : public ktvr::K2TrackingDeviceBase_KinectBasis
+class DeviceHandler : public ktvr::K2TrackingDeviceBase_SkeletonBasis
 {
 public:
 	/* K2API's things, which KTVR will make use of */
 
 	DeviceHandler()
 	{
-		deviceType = ktvr::K2_Kinect;
-		deviceName = "KinectBasis (Full, Settings)";
+		deviceName = L"SkeletonBasis (Simple)";
 
-		deviceCharacteristics = ktvr::K2_Character_Full;
+		deviceCharacteristics = ktvr::K2_Character_Simple;
 		flipSupported = true;
 		appOrientationSupported = true;
-
-		// Mark that our device supports settings
-		settingsSupported = true;
 	}
 
 	virtual ~DeviceHandler()
 	{
-	}
-
-	void onLoad() override
-	{
-		// Construct the device's settings here
-
-		// You can put anything here,
-		// from textblocks (labels) to numberboxes
-		// Just remember to register handlers
-		//   and optionally cache the pointers as shared
-		layoutRoot->AppendSingleElement(
-			CreateTextBlock(
-				L"In the beginning was the Word."));
-
-		layoutRoot->AppendSingleElement(
-			CreateTextBlock(
-				L"  But this device's settings are something else..."));
 	}
 
 	HRESULT getStatusResult() override;
@@ -58,7 +37,7 @@ extern "C" __declspec(dllexport) void* TrackingDeviceBaseFactory(
 	// but only if interfaces are the same / up-to-date
 	if (0 == strcmp(ktvr::IAME_API_Devices_Version, pVersionName))
 	{
-		static DeviceHandler TrackingHandler; // Create a new device handler -> KinectV2
+		static DeviceHandler TrackingHandler; // Create a new device handler -> SkeletonBasis_Simple
 
 		*pReturnCode = ktvr::K2InitError_None;
 		return &TrackingHandler;

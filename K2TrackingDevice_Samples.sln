@@ -5,11 +5,11 @@ VisualStudioVersion = 17.1.32120.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "device_Spectator", "device_Spectator\device_Spectator.vcxproj", "{E2271632-A2B4-4D77-8340-B9F54F67EE30}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "device_KinectBasis_Basic", "device_KinectBasis_Basic\device_KinectBasis_Basic.vcxproj", "{2A4DA772-24D2-4A30-95D8-8AF17B31A041}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "device_SkeletonBasis_Basic", "device_SkeletonBasis_Basic\device_SkeletonBasis_Basic.vcxproj", "{2A4DA772-24D2-4A30-95D8-8AF17B31A041}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "device_KinectBasis_Full", "device_KinectBasis_Full\device_KinectBasis_Full.vcxproj", "{0FB1E875-CBC0-48C4-B670-A6BFAD3A7B04}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "device_SkeletonBasis_Full", "device_SkeletonBasis_Full\device_SkeletonBasis_Full.vcxproj", "{0FB1E875-CBC0-48C4-B670-A6BFAD3A7B04}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "device_KinectBasis_Simple", "device_KinectBasis_Simple\device_KinectBasis_Simple.vcxproj", "{D454B8CD-81CD-4D3D-B5C1-3D182468B361}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "device_SkeletonBasis_Simple", "device_SkeletonBasis_Simple\device_SkeletonBasis_Simple.vcxproj", "{D454B8CD-81CD-4D3D-B5C1-3D182468B361}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "device_JointsBasis", "device_JointsBasis\device_JointsBasis.vcxproj", "{6CD0605D-B492-43DC-B952-9B3CBA809AF9}"
 EndProject
@@ -18,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendor", "vendor", "{30CE0D
 		external\vendor\Amethyst_API_Devices.h = external\vendor\Amethyst_API_Devices.h
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "device_KinectBasis_Full_Settings", "device_KinectBasis_Full_Settings\device_KinectBasis_Full_Settings.vcxproj", "{EADA45D7-36D0-4425-ABDE-72A21E00AFFA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "device_SkeletonBasis_Full_Settings", "device_SkeletonBasis_Full_Settings\device_SkeletonBasis_Full_Settings.vcxproj", "{EADA45D7-36D0-4425-ABDE-72A21E00AFFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
