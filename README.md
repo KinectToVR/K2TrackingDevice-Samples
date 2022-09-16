@@ -16,7 +16,7 @@ You're going to find built plugins in [repo Actions](https://github.com/KinectTo
 ## **Build & Deploy**
 Both build and deployment instructions [are available here](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/BUILD_AND_DEPLOY.md).
 
-## **Overview (K2API Devices Docs)**
+## **Overview (AME API Devices Docs)**
 This repository contains sample projects of devices / plugins in terms of `Amethyst` project.<br>
 Each project in the solution is an example of a different possible implementation<br>
 of a tracking device (Later referred to as `K2TrackingDevice`), and an additional one with settings.<br>
