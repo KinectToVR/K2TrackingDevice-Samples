@@ -20,9 +20,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Amethyst_API_Managed_Joints
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "device_Managed_JointsBasis", "device_Managed_JointsBasis\device_Managed_JointsBasis.vcxproj", "{92D93851-7802-4B31-ACFD-C9D75A8D741B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "device_Managed_KinectBasis", "device_Managed_KinectBasis\device_Managed_KinectBasis.vcxproj", "{55E55113-2654-4763-AD18-D6217C59F5B5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "device_Managed_SkeletonBasis", "device_Managed_SkeletonBasis\device_Managed_SkeletonBasis.vcxproj", "{55E55113-2654-4763-AD18-D6217C59F5B5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Managed_KinectBasis_Handler", "Managed_KinectBasis_Handler\Managed_KinectBasis_Handler.csproj", "{A5E4F998-8739-4165-9317-2D0B049BA3DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Managed_SkeletonBasis_Handler", "Managed_SkeletonBasis_Handler\Managed_SkeletonBasis_Handler.csproj", "{A5E4F998-8739-4165-9317-2D0B049BA3DA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Managed_JointsBasis_Handler", "Managed_JointsBasis_Handler\Managed_JointsBasis_Handler.csproj", "{5254558D-C06E-4582-8BE2-F93AA2C8F457}"
 EndProject

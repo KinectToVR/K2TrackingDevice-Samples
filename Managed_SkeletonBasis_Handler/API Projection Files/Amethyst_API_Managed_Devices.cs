@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace Device_Managed_KinectBasis.API_Projection_Files;
+namespace Device_Managed_SkeletonBasis.API_Projection_Files;
 
 public class TrackedJoint
 {

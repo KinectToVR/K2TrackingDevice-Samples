@@ -25,7 +25,7 @@
     <ClCompile Include="Amethyst_API_Managed_Kinect.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Managed_KinectBasis_Handler\Managed_KinectBasis_Handler.csproj">
+    <ProjectReference Include="..\Managed_SkeletonBasis_Handler\Managed_SkeletonBasis_Handler.csproj">
       <Project>{a5e4f998-8739-4165-9317-2d0b049ba3da}</Project>
     </ProjectReference>
   </ItemGroup>

@@ -1,14 +1,6 @@
 ﻿#pragma once
 #include <Amethyst_API_Devices.h>
 
-inline void MarshalString(System::String^ s, std::string& os)
-{
-	auto chars =
-		static_cast<const char*>((System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(s)).ToPointer());
-	os = chars;
-	System::Runtime::InteropServices::Marshal::FreeHGlobal(System::IntPtr((void*)chars));
-}
-
 inline void MarshalString(System::String^ s, std::wstring& os)
 {
 	auto chars =
@@ -18,7 +10,7 @@ inline void MarshalString(System::String^ s, std::wstring& os)
 }
 
 // Logging handler (native)
-inline std::function<void(std::string, unsigned)> LogToAme_Handler;
+inline std::function<void(std::wstring, unsigned)> LogToAme_Handler;
 
 inline std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> GetHMDPose_Handler;
 inline std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> GetHMDPoseCalibrated_Handler;
@@ -28,12 +20,12 @@ inline std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> GetRightC
 inline std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> GetRightControllerPoseCalibrated_Handler;
 inline std::function<float()> GetHMDOrientationYaw_Handler;
 inline std::function<float()> GetHMDOrientationYawCalibrated_Handler;
-inline std::function<std::array<ktvr::K2TrackedJoint, 7>()> GetAppJointPoses_Handler;
+inline std::function<std::vector<ktvr::K2TrackedJoint>()> GetAppJointPoses_Handler;
 
 // Logging handler (managed)
 inline void LogToAme(System::String^ message, unsigned severity)
 {
-	std::string out; // Dummy placeholder
+	std::wstring out; // Dummy placeholder
 	MarshalString(message, out);
 
 	// Finally call the logger
@@ -232,7 +224,7 @@ ref struct IAmethyst_API_Managed
 
 namespace Amethyst_API_Managed
 {
-	__declspec(dllexport) void RegisterLogger(std::function<void(std::string, unsigned)> handler)
+	__declspec(dllexport) void RegisterLogger(std::function<void(std::wstring, unsigned)> handler)
 	{
 		LogToAme_Handler = handler;
 	}
@@ -283,7 +275,7 @@ namespace Amethyst_API_Managed
 		GetHMDOrientationYawCalibrated_Handler = handler;
 	}
 
-	__declspec(dllexport) void Register_getAppJointPoses(std::function<std::array<ktvr::K2TrackedJoint, 7>()> handler)
+	__declspec(dllexport) void Register_getAppJointPoses(std::function<std::vector<ktvr::K2TrackedJoint>()> handler)
 	{
 		GetAppJointPoses_Handler = handler;
 	}

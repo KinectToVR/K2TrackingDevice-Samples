@@ -1,14 +1,6 @@
 ﻿#pragma once
 #include <Amethyst_API_Devices.h>
 
-inline void MarshalString(System::String^ s, std::string& os)
-{
-	auto chars =
-		(const char*)(System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(s)).ToPointer();
-	os = chars;
-	System::Runtime::InteropServices::Marshal::FreeHGlobal(System::IntPtr((void*)chars));
-}
-
 inline void MarshalString(System::String^ s, std::wstring& os)
 {
 	auto chars =
@@ -18,7 +10,7 @@ inline void MarshalString(System::String^ s, std::wstring& os)
 }
 
 // Logging handler (native)
-inline std::function<void(std::string, unsigned)> LogToAme_Handler;
+inline std::function<void(std::wstring, unsigned)> LogToAme_Handler;
 
 inline std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> GetHMDPose_Handler;
 inline std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> GetHMDPoseCalibrated_Handler;
@@ -28,12 +20,12 @@ inline std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> GetRightC
 inline std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> GetRightControllerPoseCalibrated_Handler;
 inline std::function<float()> GetHMDOrientationYaw_Handler;
 inline std::function<float()> GetHMDOrientationYawCalibrated_Handler;
-inline std::function<std::array<ktvr::K2TrackedJoint, 7>()> GetAppJointPoses_Handler;
+inline std::function<std::vector<ktvr::K2TrackedJoint>()> GetAppJointPoses_Handler;
 
 // Logging handler (managed)
 inline void LogToAme(System::String^ message, unsigned severity)
 {
-	std::string out; // Dummy placeholder
+	std::wstring out; // Dummy placeholder
 	MarshalString(message, out);
 
 	// Finally call the logger
@@ -158,17 +150,17 @@ inline float GetHMDOrientationYawCalibrated()
 	return GetHMDOrientationYawCalibrated();
 }
 
-inline array<Device_Managed_KinectBasis::API_Projection_Files::TrackedJoint^>^ GetAppJointPoses()
+inline array<Device_Managed_SkeletonBasis::API_Projection_Files::TrackedJoint^>^ GetAppJointPoses()
 {
 	auto joints = GetAppJointPoses_Handler();
-	auto tracker_array = gcnew array<Device_Managed_KinectBasis::API_Projection_Files::TrackedJoint^>(joints.size());
+	auto tracker_array = gcnew array<Device_Managed_SkeletonBasis::API_Projection_Files::TrackedJoint^>(joints.size());
 
 	for (size_t i = 0; i < joints.size(); i++)
 	{
 		const auto& position = joints[i].getJointPosition();
 		const auto& orientation = joints[i].getJointOrientation();
 
-		tracker_array[i] = gcnew Device_Managed_KinectBasis::API_Projection_Files::TrackedJoint{
+		tracker_array[i] = gcnew Device_Managed_SkeletonBasis::API_Projection_Files::TrackedJoint{
 			System::Numerics::Vector3{
 				position.x(),
 				position.y(),
@@ -211,7 +203,7 @@ namespace Amethyst_API_Managed_Wrapper
 			device_handler_.GetHMDOrientationYaw = gcnew System::Func<float>(&GetHMDOrientationYaw);
 			device_handler_.GetHMDOrientationYawCalibrated = gcnew System::Func<float>(&GetHMDOrientationYawCalibrated);
 			device_handler_.GetAppJointPoses = gcnew System::Func<array<
-				Device_Managed_KinectBasis::API_Projection_Files::TrackedJoint^>^>(&GetAppJointPoses);
+				Device_Managed_SkeletonBasis::API_Projection_Files::TrackedJoint^>^>(&GetAppJointPoses);
 		}
 
 		void OnLoad()
@@ -290,7 +282,7 @@ namespace Amethyst_API_Managed_Wrapper
 		}
 
 	private:
-		Device_Managed_KinectBasis::AmethystDevice device_handler_;
+		Device_Managed_SkeletonBasis::AmethystDevice device_handler_;
 	};
 }
 
@@ -302,7 +294,7 @@ ref struct IAmethyst_API_Managed
 
 namespace Amethyst_API_Managed
 {
-	__declspec(dllexport) void RegisterLogger(std::function<void(std::string, unsigned)> handler)
+	__declspec(dllexport) void RegisterLogger(std::function<void(std::wstring, unsigned)> handler)
 	{
 		LogToAme_Handler = handler;
 	}
@@ -353,7 +345,7 @@ namespace Amethyst_API_Managed
 		GetHMDOrientationYawCalibrated_Handler = handler;
 	}
 
-	__declspec(dllexport) void Register_getAppJointPoses(std::function<std::array<ktvr::K2TrackedJoint, 7>()> handler)
+	__declspec(dllexport) void Register_getAppJointPoses(std::function<std::vector<ktvr::K2TrackedJoint>()> handler)
 	{
 		GetAppJointPoses_Handler = handler;
 	}
@@ -373,9 +365,9 @@ namespace Amethyst_API_Managed
 		return IAmethyst_API_Managed::wrapper->Shutdown();
 	}
 
-	__declspec(dllexport) std::string GetDeviceName()
+	__declspec(dllexport) std::wstring GetDeviceName()
 	{
-		std::string out; // Dummy placeholder
+		std::wstring out; // Dummy placeholder
 		MarshalString(IAmethyst_API_Managed::wrapper->GetDeviceName(), out);
 		return out; // Return what we've got
 	}
@@ -448,14 +440,14 @@ namespace Amethyst_API_Managed
 		return cluster_orientations;
 	}
 
-	__declspec(dllexport) std::array<ktvr::JointTrackingState, ktvr::ITrackedJointType::Joint_Total>
+	__declspec(dllexport) std::array<ktvr::ITrackedJointState, ktvr::ITrackedJointType::Joint_Total>
 	GetJointTrackingStates()
 	{
-		std::array<ktvr::JointTrackingState, ktvr::Joint_Total> cluster_states;
+		std::array<ktvr::ITrackedJointState, ktvr::Joint_Total> cluster_states;
 		const auto& states = IAmethyst_API_Managed::wrapper->GetJointTrackingStates();
 
 		for (size_t i = 0; i < ktvr::Joint_Total; i++)
-			cluster_states[i] = states[i];
+			cluster_states[i] = static_cast<ktvr::ITrackedJointState>(states[i]);
 
 		return cluster_states;
 	}

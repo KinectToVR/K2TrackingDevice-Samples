@@ -6,6 +6,8 @@
 #include <variant>
 #include <array>
 
+#include <filesystem>
+
 #include <Eigen/Dense>
 
 /*
@@ -17,20 +19,30 @@
  *
  */
 
-inline std::wstring StringToWString(const std::string& s)
+// https://stackoverflow.com/a/59617138
+
+// String to Wide String (The better one)
+inline std::wstring StringToWString(const std::string& str)
 {
-	return std::wstring(s.begin(), s.end());
+	const int count = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), str.length(), nullptr, 0);
+	std::wstring w_str(count, 0);
+	MultiByteToWideChar(CP_UTF8, 0, str.c_str(), str.length(), &w_str[0], count);
+	return w_str;
 }
 
-inline std::string WStringToString(const std::wstring& s)
+// Wide String to UTF8 String (The cursed one)
+inline std::string WStringToString(const std::wstring& w_str)
 {
-	return std::string(s.begin(), s.end());
+	const int count = WideCharToMultiByte(CP_UTF8, 0, w_str.c_str(), w_str.length(), nullptr, 0, nullptr, nullptr);
+	std::string str(count, 0);
+	WideCharToMultiByte(CP_UTF8, 0, w_str.c_str(), -1, &str[0], count, nullptr, nullptr);
+	return str;
 }
 
 namespace ktvr
 {
 	// Interface Version
-	static const char* IAME_API_Devices_Version = "IAME_API_Version_013";
+	static const char* IAME_API_Devices_Version = "IAME_API_Version_015";
 
 	// Return messaging types
 	enum K2InitErrorType
@@ -82,15 +94,6 @@ namespace ktvr
 		State_Tracked
 	};
 
-	// Device types for tracking
-	enum ITrackingDeviceType
-	{
-		K2_Unknown,
-		K2_Kinect,
-		K2_Joints,
-		K2_Override
-	};
-
 	// Device types for joints [KINECT]
 	enum ITrackingDeviceCharacteristics
 	{
@@ -104,9 +107,6 @@ namespace ktvr
 		K2_Character_Full
 	};
 
-	// Alias for code readability
-	typedef int JointTrackingState, K2DeviceType, K2DeviceCharacteristics, MessageType, MessageCode;
-
 	// Tracking Device Joint class for client plugins
 	class K2TrackedJoint
 	{
@@ -116,27 +116,27 @@ namespace ktvr
 		{
 		}
 
-		K2TrackedJoint(std::string name) : jointName{std::move(name)}
+		K2TrackedJoint(std::wstring name) : jointName{std::move(name)}
 		{
 		}
 
 		K2TrackedJoint(const Eigen::Vector3f& pos, const Eigen::Quaternionf& rot,
-		               const JointTrackingState& state, const std::string& name) :
+		               const ITrackedJointState& state, const std::wstring& name) :
 			jointOrientation{rot}, jointPosition{pos},
 			trackingState{state}, jointName{name}
 		{
 		}
 
-		std::string getJointName() { return jointName; } // Custom name
+		std::wstring getJointName() { return jointName; } // Custom name
 
 		Eigen::Vector3f getJointPosition() { return jointPosition; }
 		Eigen::Quaternionf getJointOrientation() { return jointOrientation; }
-		JointTrackingState getTrackingState() { return trackingState; } // ITrackedJointState
+		ITrackedJointState getTrackingState() { return trackingState; } // ITrackedJointState
 
 		// For servers!
 		void update(Eigen::Vector3f position,
 		            Eigen::Quaternionf orientation,
-		            JointTrackingState state)
+		            ITrackedJointState state)
 		{
 			jointPosition = position;
 			jointOrientation = orientation;
@@ -144,7 +144,7 @@ namespace ktvr
 		}
 
 		// For servers!
-		void update(JointTrackingState state)
+		void update(ITrackedJointState state)
 		{
 			trackingState = state;
 		}
@@ -153,9 +153,9 @@ namespace ktvr
 		// Tracker should be centered automatically
 		Eigen::Quaternionf jointOrientation = Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f);
 		Eigen::Vector3f jointPosition = Eigen::Vector3f(0.f, 0.f, 0.f);
-		JointTrackingState trackingState = State_NotTracked;
+		ITrackedJointState trackingState = State_NotTracked;
 
-		std::string jointName = "Name not set";
+		std::wstring jointName = L"Name not set";
 	};
 
 	// Namespace with settings daemon elements / Interfacing
@@ -670,10 +670,10 @@ namespace ktvr
 	}
 
 	// Tracking Device class for client plugins to base on [KINECT]
-	class K2TrackingDeviceBase_KinectBasis
+	class K2TrackingDeviceBase_SkeletonBasis
 	{
 	public:
-		virtual ~K2TrackingDeviceBase_KinectBasis()
+		virtual ~K2TrackingDeviceBase_SkeletonBasis()
 		{
 		}
 
@@ -701,20 +701,19 @@ namespace ktvr
 		}
 
 		// Should be set up at construction
-		// Kinect type must provide joints: [ head, waist, knees, ankles, foot_tips ] or [ head, waist, ankles ]
+		// Skeleton type must provide joints: [ head, waist, knees, ankles, foot_tips ] or [ head, waist, ankles ]
 		// Other type must provide joints: [ waist, ankles ] and will persuade manual calibration
 
 		// Basic character will provide the same as JointsBasis but with head to support autocalibration
 		// Simple character will provide the same as Basic but with ankles and knees to support mathbased
-		// Full character will provide every kinect joint
-		K2DeviceCharacteristics getDeviceCharacteristics() { return deviceCharacteristics; }
+		// Full character will provide every skeleton (Kinect) joint
+		ITrackingDeviceCharacteristics getDeviceCharacteristics() { return deviceCharacteristics; }
 
-		K2DeviceType getDeviceType() { return deviceType; }
-		std::string getDeviceName() { return deviceName; } // Custom name
+		std::wstring getDeviceName() { return deviceName; } // Custom name
 
 		std::array<Eigen::Vector3f, 25> getJointPositions() { return jointPositions; }
 		std::array<Eigen::Quaternionf, 25> getJointOrientations() { return jointOrientations; }
-		std::array<JointTrackingState, 25> getTrackingStates() { return trackingStates; }
+		std::array<ITrackedJointState, 25> getTrackingStates() { return trackingStates; }
 
 		// After init, this should always return true
 		[[nodiscard]] bool isInitialized() const { return initialized; }
@@ -766,11 +765,10 @@ namespace ktvr
 
 		/*
 		 * Helper to get all joints' positions from the app,
-		 * which are sent to the openvr server driver.
-		 * Note: if joint's unused, its trackingState will be ITrackedJointState::State_NotTracked
-		 * Note: Waist,LFoot,RFoot,LElbow,RElbow,LKnee,RKnee
+		 * which are added (enabled) in Amethyst.
+		 * Note: if joint's off, its trackingState will be ITrackedJointState::State_NotTracked
 		 */
-		std::function<std::array<K2TrackedJoint, 7>()> getAppJointPoses;
+		std::function<std::vector<K2TrackedJoint>()> getAppJointPoses;
 
 		// Request a refresh of the status/name/etc. interface
 		std::function<void()> requestStatusUIRefresh;
@@ -778,7 +776,15 @@ namespace ktvr
 		// Request a code of the currently selected language, i.e. en | fr | ja
 		std::function<std::wstring()> requestLanguageCode;
 
+		// Request a folder to be set as device's AME resources,
+		// you can access these resources with the lower function later (after onLoad)
+		// Warning: Resources are containerized and can't be accessed in-between devices!
+		// Warning: The default root is "[device_folder_path]/resources/Strings"!
+		// Returns: Success? Requires: STD <filesystem> support (CPP17)
+		std::function<bool(std::filesystem::path)> setLocalizationResourcesRoot;
+
 		// Request a string from AME resources, empty for no match
+		// Warning: The primarily searched resource is the device-provided one!
 		std::function<std::wstring(std::wstring)> requestLocalizedString;
 
 		// To support settings daemon and register the layout root,
@@ -825,10 +831,10 @@ namespace ktvr
 		std::function<Interface::ProgressBar*()> CreateProgressBar;
 
 	protected:
-		K2DeviceCharacteristics deviceCharacteristics = K2_Character_Unknown;
+		ITrackingDeviceCharacteristics deviceCharacteristics =
+			K2_Character_Unknown;
 
-		K2DeviceType deviceType = K2_Unknown;
-		std::string deviceName = "Name not set";
+		std::wstring deviceName = L"Name not set";
 
 		bool initialized = false;
 		bool skeletonTracked = false;
@@ -894,7 +900,7 @@ namespace ktvr
 			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f)
 		};
 
-		std::array<JointTrackingState, 25> trackingStates = {}; // State_NotTracked
+		std::array<ITrackedJointState, 25> trackingStates = {}; // State_NotTracked
 
 		class FailedKinectInitialization : public std::exception
 		{
@@ -939,8 +945,7 @@ namespace ktvr
 		// Should be set up at construction
 		// Kinect type must provide joints: [ head, waist, knees, ankles, foot_tips ]
 		// Other type must provide joints: [ waist, ankles ] and will persuade manual calibration
-		K2DeviceType getDeviceType() { return deviceType; }
-		std::string getDeviceName() { return deviceName; } // Custom name
+		std::wstring getDeviceName() { return deviceName; } // Custom name
 
 		// Joints' vector. You need to update appended joints in every update() call
 		std::vector<K2TrackedJoint> getTrackedJoints() { return trackedJoints; }
@@ -992,11 +997,10 @@ namespace ktvr
 
 		/*
 		 * Helper to get all joints' positions from the app,
-		 * which are sent to the openvr server driver.
-		 * Note: if joint's unused, its trackingState will be ITrackedJointState::State_NotTracked
-		 * Note: Waist,LFoot,RFoot,LElbow,RElbow,LKnee,RKnee
+		 * which are added (enabled) in Amethyst.
+		 * Note: if joint's off, its trackingState will be ITrackedJointState::State_NotTracked
 		 */
-		std::function<std::array<K2TrackedJoint, 7>()> getAppJointPoses;
+		std::function<std::vector<K2TrackedJoint>()> getAppJointPoses;
 
 		// Request a refresh of the status/name/etc. interface
 		std::function<void()> requestStatusUIRefresh;
@@ -1004,7 +1008,15 @@ namespace ktvr
 		// Request a code of the currently selected language, i.e. en | fr | ja
 		std::function<std::wstring()> requestLanguageCode;
 
+		// Request a folder to be set as device's AME resources,
+		// you can access these resources with the lower function later (after onLoad)
+		// Warning: Resources are containerized and can't be accessed in-between devices!
+		// Warning: The default root is "[device_folder_path]/resources/Strings"!
+		// Returns: Success? Requires: STD <filesystem> support (CPP17)
+		std::function<bool(std::filesystem::path)> setLocalizationResourcesRoot;
+
 		// Request a string from AME resources, empty for no match
+		// Warning: The primarily searched resource is the device-provided one!
 		std::function<std::wstring(std::wstring)> requestLocalizedString;
 
 		// To support settings daemon and register the layout root,
@@ -1051,8 +1063,7 @@ namespace ktvr
 		std::function<Interface::ProgressBar*()> CreateProgressBar;
 
 	protected:
-		K2DeviceType deviceType = K2_Unknown;
-		std::string deviceName = "Name not set";
+		std::wstring deviceName = L"Name not set";
 
 		bool initialized = false;
 		bool skeletonTracked = false;
@@ -1109,16 +1120,9 @@ namespace ktvr
 
 		/*
 		 * Helper to get all joints' positions from the app,
-		 * which are sent to the openvr server driver.
-		 * Note: if joint's unused, its trackingState will be ITrackedJointState::State_NotTracked
-		 * Note: Waist,LFoot,RFoot,LElbow,RElbow,LKnee,RKnee
+		 * which are added (enabled) in Amethyst.
+		 * Note: if joint's off, its trackingState will be ITrackedJointState::State_NotTracked
 		 */
-		std::function<std::array<K2TrackedJoint, 7>()> getAppJointPoses;
-
-		// Request a code of the currently selected language, i.e. en | fr | ja
-		std::function<std::wstring()> requestLanguageCode;
-
-		// Request a string from AME resources, empty for no match
-		std::function<std::wstring(const std::wstring&)> requestLocalizedString;
+		std::function<std::vector<K2TrackedJoint>()> getAppJointPoses;
 	};
 }

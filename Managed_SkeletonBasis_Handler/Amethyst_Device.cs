@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
-using Device_Managed_KinectBasis.API_Projection_Files;
+using Device_Managed_SkeletonBasis.API_Projection_Files;
 
-namespace Device_Managed_KinectBasis;
+namespace Device_Managed_SkeletonBasis;
 
 public class AmethystDevice : AmethystManagedDevice_Kinect
 {
     public AmethystDevice()
     {
         // Set up the device name
-        DeviceName = "KinectBasis (Managed)";
+        DeviceName = "SkeletonBasis (Managed)";
         
         // Provide every joint possible in Amethyst API
         DeviceCharacteristics = (uint)TrackingDeviceCharacteristics.K2_Character_Full;

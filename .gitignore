@@ -23,10 +23,12 @@ Amethyst_Device_Managed/obj/
 
 Device_Managed_JointsBasis/obj/
 
-Device_Managed_KinectBasis/obj/
+Device_Managed_SkeletonBasis/obj/
 
 Managed_JointsBasis_Handler/obj/
 
-Managed_KinectBasis_Handler/obj/
+Managed_SkeletonBasis_Handler/obj/
 
 Managed_Spectator_Handler/obj/
+
+Managed_SkeletonBasis_Handler/obj/

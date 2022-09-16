@@ -27,11 +27,11 @@ You're the best off just cloning this branch and trying things out yourself.
 Briefly, currently supported device types are:
 - Tracking providers:
   - `JointsBasis` - Provide a vector of named, tracked joints
-  - `KinectBasis` - Provide a fixed array of enumerated, tracked joints
+  - `SkeletonBasis` - Provide a fixed array of enumerated, tracked joints
     + `Full` Character - Provide Joint_Total joints (as many as Kinect V2 does)
     + `Simple` Character - Provide [ Head, Elbows, Waist, Knees, Ankles, Foot Tips ]
     + `Basic` Character - Provide [ Head, Waist, Ankles ]
 - `Spectator` - Only poll data from the app
 
-Please note that `KinectBasis` types can use automatic calibration, whereas `JointsBasis` cannot.<br>
+Please note that `SkeletonBasis` types can use automatic calibration, whereas `JointsBasis` cannot.<br>
 Additionally, plugins (devices) can provide their own settings, as [described here](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/DEVICES.md#device-settings) and [shown here](https://github.com/KinectToVR/K2TrackingDevice-Samples/blob/main/device_Managed_Full_Settings/DeviceHandler.h#L28).

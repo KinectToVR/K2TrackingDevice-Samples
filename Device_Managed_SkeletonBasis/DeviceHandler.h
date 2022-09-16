@@ -6,7 +6,7 @@
 
 namespace Amethyst_API_Managed
 {
-	__declspec(dllimport) void RegisterLogger(std::function<void(std::string, unsigned)> handler);
+	__declspec(dllimport) void RegisterLogger(std::function<void(std::wstring, unsigned)> handler);
 
 	__declspec(dllimport) void Register_getHMDPose(std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler);
 	__declspec(dllimport) void Register_getHMDPoseCalibrated(std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler);
@@ -16,7 +16,7 @@ namespace Amethyst_API_Managed
 	__declspec(dllimport) void Register_getRightControllerPoseCalibrated(std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler);
 	__declspec(dllimport) void Register_getHMDOrientationYaw(std::function<float()> handler);
 	__declspec(dllimport) void Register_getHMDOrientationYawCalibrated(std::function<float()> handler);
-	__declspec(dllimport) void Register_getAppJointPoses(std::function<std::array<ktvr::K2TrackedJoint, 7>()> handler);
+	__declspec(dllimport) void Register_getAppJointPoses(std::function<std::vector<ktvr::K2TrackedJoint>()> handler);
 
 	__declspec(dllimport) void OnLoad();
 
@@ -24,7 +24,7 @@ namespace Amethyst_API_Managed
 	__declspec(dllimport) void Update();
 	__declspec(dllimport) bool Shutdown();
 
-	__declspec(dllimport) std::string GetDeviceName();
+	__declspec(dllimport) std::wstring GetDeviceName();
 
 	__declspec(dllimport) long GetDeviceStatus();
 	__declspec(dllimport) std::wstring GetDeviceStatusWString();
@@ -38,29 +38,29 @@ namespace Amethyst_API_Managed
 
 	__declspec(dllimport) std::array<Eigen::Vector3f, ktvr::ITrackedJointType::Joint_Total> GetJointPositions();
 	__declspec(dllimport) std::array<Eigen::Quaternionf, ktvr::ITrackedJointType::Joint_Total> GetJointOrientations();
-	__declspec(dllimport) std::array<ktvr::JointTrackingState, ktvr::ITrackedJointType::Joint_Total> GetJointTrackingStates();
+	__declspec(dllimport) std::array<ktvr::ITrackedJointState, ktvr::ITrackedJointType::Joint_Total> GetJointTrackingStates();
 }
 
-inline void log_to_ame(const std::string& message, unsigned severity)
+inline void log_to_ame(const std::wstring& message, unsigned severity)
 {
 	// GLOG_INFO = 0, GLOG_WARNING = 1, GLOG_ERROR = 2
 	switch (severity)
 	{
 	case 0:
-		LOG(INFO) << message;
+		LOG(INFO) << WStringToString(message);
 		return;
 	case 1:
-		LOG(WARNING) << message;
+		LOG(WARNING) << WStringToString(message);
 		return;
 	case 2:
-		LOG(ERROR) << message;
+		LOG(ERROR) << WStringToString(message);
 		return;
 	}
 }
 
 /* Not exported */
 
-class DeviceHandler : public ktvr::K2TrackingDeviceBase_KinectBasis
+class DeviceHandler : public ktvr::K2TrackingDeviceBase_SkeletonBasis
 {
 public:
 	/* K2API's things, which KTVR will make use of */
@@ -69,10 +69,11 @@ public:
 	{
 		Amethyst_API_Managed::RegisterLogger(log_to_ame);
 		
-		deviceType = Amethyst_API_Managed::GetDeviceType();
 		deviceName = Amethyst_API_Managed::GetDeviceName();
+		deviceCharacteristics = 
+			static_cast<ktvr::ITrackingDeviceCharacteristics>(
+				Amethyst_API_Managed::GetDeviceCharacteristics());
 
-		deviceCharacteristics = Amethyst_API_Managed::GetDeviceCharacteristics();
 		flipSupported = Amethyst_API_Managed::GetIsFlipSupported();
 		appOrientationSupported = Amethyst_API_Managed::GetIsAppOrientationSupported();
 	}
