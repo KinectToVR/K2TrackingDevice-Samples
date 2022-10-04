@@ -45,10 +45,14 @@ void DeviceHandler::update()
 		// the user's head position + 1m in z (front) axis
 		// and the user's head orientation
 
-		trackedJoints.at(0).update(
-			getHMDPose().first + Eigen::Vector3f(0, 0, 1),
+		trackedJoints[0].update(
+			// Position
+			getHMDPose().first + Eigen::Vector3d(0, 0, 1),
+			// Orientation
 			getHMDPose().second,
-			ktvr::State_Tracked);
+			// State
+			ktvr::State_Tracked
+		);
 
 		// Mark that we see the user
 		skeletonTracked = true;

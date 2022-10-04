@@ -1,5 +1,4 @@
 {
 	"device_name": "SkeletonBasis_Basic",
-	"device_type": "SkeletonBasis",
-	"linked_dll_path": [ "C:/Windows/System32/Kinect20.dll" ]
+	"device_type": "SkeletonBasis"
 }

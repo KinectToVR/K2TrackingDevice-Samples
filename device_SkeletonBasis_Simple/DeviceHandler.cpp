@@ -19,7 +19,7 @@ std::wstring DeviceHandler::statusResultWString(HRESULT stat)
 	{
 	case S_OK: return L"Success!\nS_OK\nEverything's good!";
 	default: return L"Undefined: " + std::to_wstring(stat) +
-		L"\nE_UNDEFINED\nSomething weird has happened, though we can't tell what.";
+			L"\nE_UNDEFINED\nSomething weird has happened, though we can't tell what.";
 	}
 }
 
@@ -43,17 +43,19 @@ void DeviceHandler::update()
 		// & various in x and the user's head orientation
 
 		for (uint32_t i = 0; i < ktvr::Joint_Total; i++)
-		{
 			// Note: Since this device is [Simple]
 			//       it only should update joints
 			//       which are [ head, elbows, waist, knees, ankles, foot_tips ]
 			//       (But the sample updates all)
 
-			jointPositions[i] = getHMDPose().first + Eigen::Vector3f(i, 0, 1);
-			jointOrientations[i] = getHMDPose().second;
-
-			trackingStates[i] = ktvr::State_Tracked;
-		}
+			trackedJoints[i].update(
+				// Position
+				getHMDPose().first + Eigen::Vector3d(i, 0, 1),
+				// Orientation
+				getHMDPose().second,
+				// State
+				ktvr::State_Tracked
+			);
 
 		// Mark that we see the user
 		skeletonTracked = true;

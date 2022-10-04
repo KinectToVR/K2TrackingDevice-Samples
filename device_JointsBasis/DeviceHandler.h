@@ -17,6 +17,12 @@ public:
 	{
 	}
 
+	std::wstring getDeviceGUID() override
+	{
+		// This ID is unique to this plugin!
+		return L"KSAMPLES-VEND-API1-DVCE-DVCEJOINTSBS";
+	}
+
 	HRESULT getStatusResult() override;
 	std::wstring statusResultWString(HRESULT stat) override;
 

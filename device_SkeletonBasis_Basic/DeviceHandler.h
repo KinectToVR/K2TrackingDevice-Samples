@@ -13,12 +13,18 @@ public:
 		deviceName = L"SkeletonBasis (Basic)";
 
 		deviceCharacteristics = ktvr::K2_Character_Basic;
-		flipSupported = true;
-		appOrientationSupported = false; // No math-based here :(
+		Flags_FlipSupported = true;
+		Flags_AppOrientationSupported = false; // No math-based here :(
 	}
 
 	virtual ~DeviceHandler()
 	{
+	}
+
+	std::wstring getDeviceGUID() override
+	{
+		// This ID is unique to this plugin!
+		return L"KSAMPLES-VEND-API1-DVCE-DVCESKLTNBSC";
 	}
 
 	HRESULT getStatusResult() override;

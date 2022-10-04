@@ -43,18 +43,20 @@ void DeviceHandler::update()
 		// & various in x and the user's head orientation
 
 		for (uint32_t i = 0; i < ktvr::Joint_Total; i++)
-		{
 			// Note: Since this device is [Basic]
 			//       it only should update joints
 			//       which are [ head, waist, ankles ]
 			//       (But the sample updates all)
 
-			jointPositions[i] = getHMDPose().first + Eigen::Vector3f(i, 0, 1);
-			jointOrientations[i] = getHMDPose().second;
+			trackedJoints[i].update(
+				// Position
+				getHMDPose().first + Eigen::Vector3d(i, 0, 1),
+				// Orientation
+				getHMDPose().second,
+				// State
+				ktvr::State_Tracked
+			);
 
-			trackingStates[i] = ktvr::State_Tracked;
-		}
-		
 		// Mark that we see the user
 		skeletonTracked = true;
 	}

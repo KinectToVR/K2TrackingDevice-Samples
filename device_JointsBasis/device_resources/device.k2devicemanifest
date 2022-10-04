@@ -1,5 +1,4 @@
 {
 	"device_name": "JointsBasis",
-	"device_type": "JointsBasis",
-	"linked_dll_path": [ "C:/Windows/System32/Kinect20.dll" ]
+	"device_type": "JointsBasis"
 }
