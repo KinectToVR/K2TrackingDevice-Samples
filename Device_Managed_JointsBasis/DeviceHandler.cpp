@@ -18,9 +18,8 @@ void DeviceHandler::initialize()
 {
 	// Initialize your device here
 
-	trackedJoints = Amethyst_API_Managed::GetTrackedJoints();
-
 	initialized = Amethyst_API_Managed::Initialize();
+	trackedJoints = Amethyst_API_Managed::GetTrackedJoints();
 }
 
 void DeviceHandler::update()
