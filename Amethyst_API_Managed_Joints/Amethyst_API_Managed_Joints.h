@@ -12,14 +12,14 @@ inline void MarshalString(System::String^ s, std::wstring& os)
 // Logging handler (native)
 inline std::function<void(std::wstring, unsigned)> LogToAme_Handler;
 
-inline std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> GetHMDPose_Handler;
-inline std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> GetHMDPoseCalibrated_Handler;
-inline std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> GetLeftControllerPose_Handler;
-inline std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> GetLeftControllerPoseCalibrated_Handler;
-inline std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> GetRightControllerPose_Handler;
-inline std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> GetRightControllerPoseCalibrated_Handler;
-inline std::function<float()> GetHMDOrientationYaw_Handler;
-inline std::function<float()> GetHMDOrientationYawCalibrated_Handler;
+inline std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> GetHMDPose_Handler;
+inline std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> GetHMDPoseCalibrated_Handler;
+inline std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> GetLeftControllerPose_Handler;
+inline std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> GetLeftControllerPoseCalibrated_Handler;
+inline std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> GetRightControllerPose_Handler;
+inline std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> GetRightControllerPoseCalibrated_Handler;
+inline std::function<double()> GetHMDOrientationYaw_Handler;
+inline std::function<double()> GetHMDOrientationYawCalibrated_Handler;
 inline std::function<std::vector<ktvr::K2TrackedJoint>()> GetAppJointPoses_Handler;
 
 // Logging handler (managed)
@@ -37,15 +37,15 @@ inline System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>^ G
 	const auto& [position, orientation] = GetHMDPose_Handler();
 	return gcnew System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>(
 		System::Numerics::Vector3{
-			position.x(),
-			position.y(),
-			position.z()
+			static_cast<float>(position.x()),
+			static_cast<float>(position.y()),
+			static_cast<float>(position.z())
 		},
 		System::Numerics::Quaternion{
-			orientation.w(),
-			orientation.x(),
-			orientation.y(),
-			orientation.z()
+			static_cast<float>(orientation.w()),
+			static_cast<float>(orientation.x()),
+			static_cast<float>(orientation.y()),
+			static_cast<float>(orientation.z())
 		}
 	);
 }
@@ -55,15 +55,15 @@ inline System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>^ G
 	const auto& [position, orientation] = GetHMDPoseCalibrated_Handler();
 	return gcnew System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>(
 		System::Numerics::Vector3{
-			position.x(),
-			position.y(),
-			position.z()
+			static_cast<float>(position.x()),
+			static_cast<float>(position.y()),
+			static_cast<float>(position.z())
 		},
 		System::Numerics::Quaternion{
-			orientation.w(),
-			orientation.x(),
-			orientation.y(),
-			orientation.z()
+			static_cast<float>(orientation.w()),
+			static_cast<float>(orientation.x()),
+			static_cast<float>(orientation.y()),
+			static_cast<float>(orientation.z())
 		}
 	);
 }
@@ -73,15 +73,15 @@ inline System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>^ G
 	const auto& [position, orientation] = GetLeftControllerPose_Handler();
 	return gcnew System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>(
 		System::Numerics::Vector3{
-			position.x(),
-			position.y(),
-			position.z()
+			static_cast<float>(position.x()),
+			static_cast<float>(position.y()),
+			static_cast<float>(position.z())
 		},
 		System::Numerics::Quaternion{
-			orientation.w(),
-			orientation.x(),
-			orientation.y(),
-			orientation.z()
+			static_cast<float>(orientation.w()),
+			static_cast<float>(orientation.x()),
+			static_cast<float>(orientation.y()),
+			static_cast<float>(orientation.z())
 		}
 	);
 }
@@ -91,15 +91,15 @@ inline System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>^ G
 	const auto& [position, orientation] = GetLeftControllerPoseCalibrated_Handler();
 	return gcnew System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>(
 		System::Numerics::Vector3{
-			position.x(),
-			position.y(),
-			position.z()
+			static_cast<float>(position.x()),
+			static_cast<float>(position.y()),
+			static_cast<float>(position.z())
 		},
 		System::Numerics::Quaternion{
-			orientation.w(),
-			orientation.x(),
-			orientation.y(),
-			orientation.z()
+			static_cast<float>(orientation.w()),
+			static_cast<float>(orientation.x()),
+			static_cast<float>(orientation.y()),
+			static_cast<float>(orientation.z())
 		}
 	);
 }
@@ -109,15 +109,15 @@ inline System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>^ G
 	const auto& [position, orientation] = GetRightControllerPose_Handler();
 	return gcnew System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>(
 		System::Numerics::Vector3{
-			position.x(),
-			position.y(),
-			position.z()
+			static_cast<float>(position.x()),
+			static_cast<float>(position.y()),
+			static_cast<float>(position.z())
 		},
 		System::Numerics::Quaternion{
-			orientation.w(),
-			orientation.x(),
-			orientation.y(),
-			orientation.z()
+			static_cast<float>(orientation.w()),
+			static_cast<float>(orientation.x()),
+			static_cast<float>(orientation.y()),
+			static_cast<float>(orientation.z())
 		}
 	);
 }
@@ -127,50 +127,50 @@ inline System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>^ G
 	const auto& [position, orientation] = GetRightControllerPoseCalibrated_Handler();
 	return gcnew System::Tuple<System::Numerics::Vector3, System::Numerics::Quaternion>(
 		System::Numerics::Vector3{
-			position.x(),
-			position.y(),
-			position.z()
+			static_cast<float>(position.x()),
+			static_cast<float>(position.y()),
+			static_cast<float>(position.z())
 		},
 		System::Numerics::Quaternion{
-			orientation.w(),
-			orientation.x(),
-			orientation.y(),
-			orientation.z()
+			static_cast<float>(orientation.w()),
+			static_cast<float>(orientation.x()),
+			static_cast<float>(orientation.y()),
+			static_cast<float>(orientation.z())
 		}
 	);
 }
 
-inline float GetHMDOrientationYaw()
+inline double GetHMDOrientationYaw()
 {
-	return GetHMDOrientationYaw();
+	return GetHMDOrientationYaw_Handler();
 }
 
-inline float GetHMDOrientationYawCalibrated()
+inline double GetHMDOrientationYawCalibrated()
 {
-	return GetHMDOrientationYawCalibrated();
+	return GetHMDOrientationYawCalibrated_Handler();
 }
 
-inline array<Device_Managed_JointsBasis::API_Projection_Files::TrackedJoint^>^ GetAppJointPoses()
+inline array<Managed_JointsBasis_Handler::API_Projection_Files::TrackedJoint^>^ GetAppJointPoses()
 {
 	auto joints = GetAppJointPoses_Handler();
-	auto tracker_array = gcnew array<Device_Managed_JointsBasis::API_Projection_Files::TrackedJoint^>(joints.size());
+	auto tracker_array = gcnew array<Managed_JointsBasis_Handler::API_Projection_Files::TrackedJoint^>(joints.size());
 
 	for (size_t i = 0; i < joints.size(); i++)
 	{
 		const auto& position = joints[i].getJointPosition();
 		const auto& orientation = joints[i].getJointOrientation();
 
-		tracker_array[i] = gcnew Device_Managed_JointsBasis::API_Projection_Files::TrackedJoint{
+		tracker_array[i] = gcnew Managed_JointsBasis_Handler::API_Projection_Files::TrackedJoint{
 			System::Numerics::Vector3{
-				position.x(),
-				position.y(),
-				position.z()
+				static_cast<float>(position.x()),
+				static_cast<float>(position.y()),
+				static_cast<float>(position.z())
 			},
 			System::Numerics::Quaternion{
-				orientation.w(),
-				orientation.x(),
-				orientation.y(),
-				orientation.z()
+				static_cast<float>(orientation.w()),
+				static_cast<float>(orientation.x()),
+				static_cast<float>(orientation.y()),
+				static_cast<float>(orientation.z())
 			},
 			gcnew System::String(joints[i].getJointName().c_str())
 		};
@@ -200,10 +200,11 @@ namespace Amethyst_API_Managed_Wrapper
 				System::Numerics::Vector3, System::Numerics::Quaternion>^>(&GetRightControllerPose);
 			device_handler_.GetRightControllerPoseCalibrated = gcnew System::Func<System::Tuple<
 				System::Numerics::Vector3, System::Numerics::Quaternion>^>(&GetRightControllerPoseCalibrated);
-			device_handler_.GetHMDOrientationYaw = gcnew System::Func<float>(&GetHMDOrientationYaw);
-			device_handler_.GetHMDOrientationYawCalibrated = gcnew System::Func<float>(&GetHMDOrientationYawCalibrated);
+			device_handler_.GetHMDOrientationYaw = gcnew System::Func<double>(&GetHMDOrientationYaw);
+			device_handler_.GetHMDOrientationYawCalibrated = gcnew System::Func<
+				double>(&GetHMDOrientationYawCalibrated);
 			device_handler_.GetAppJointPoses = gcnew System::Func<array<
-				Device_Managed_JointsBasis::API_Projection_Files::TrackedJoint^>^>(&GetAppJointPoses);
+				Managed_JointsBasis_Handler::API_Projection_Files::TrackedJoint^>^>(&GetAppJointPoses);
 		}
 
 		void OnLoad()
@@ -231,6 +232,11 @@ namespace Amethyst_API_Managed_Wrapper
 			return device_handler_.DeviceName;
 		}
 
+		System::String^ GetDeviceGUID()
+		{
+			return device_handler_.DeviceGUID;
+		}
+
 		long GetDeviceStatus()
 		{
 			return device_handler_.GetDeviceStatus();
@@ -239,11 +245,6 @@ namespace Amethyst_API_Managed_Wrapper
 		System::String^ GetDeviceStatusString()
 		{
 			return device_handler_.GetDeviceStatusString();
-		}
-
-		unsigned GetDeviceType()
-		{
-			return device_handler_.DeviceType;
 		}
 
 		bool GetIsSkeletonTracked()
@@ -257,7 +258,7 @@ namespace Amethyst_API_Managed_Wrapper
 		}
 
 	private:
-		Device_Managed_JointsBasis::AmethystDevice device_handler_;
+		Managed_JointsBasis_Handler::AmethystDevice device_handler_;
 	};
 }
 
@@ -275,47 +276,47 @@ namespace Amethyst_API_Managed
 	}
 
 	__declspec(dllexport) void Register_getHMDPose(
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler)
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> handler)
 	{
 		GetHMDPose_Handler = handler;
 	}
 
 	__declspec(dllexport) void Register_getHMDPoseCalibrated(
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler)
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> handler)
 	{
 		GetHMDPoseCalibrated_Handler = handler;
 	}
 
 	__declspec(dllexport) void Register_getLeftControllerPose(
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler)
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> handler)
 	{
 		GetLeftControllerPose_Handler = handler;
 	}
 
 	__declspec(dllexport) void Register_getLeftControllerPoseCalibrated(
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler)
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> handler)
 	{
 		GetLeftControllerPoseCalibrated_Handler = handler;
 	}
 
 	__declspec(dllexport) void Register_getRightControllerPose(
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler)
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> handler)
 	{
 		GetRightControllerPose_Handler = handler;
 	}
 
 	__declspec(dllexport) void Register_getRightControllerPoseCalibrated(
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler)
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> handler)
 	{
 		GetRightControllerPoseCalibrated_Handler = handler;
 	}
 
-	__declspec(dllexport) void Register_getHMDOrientationYaw(std::function<float()> handler)
+	__declspec(dllexport) void Register_getHMDOrientationYaw(std::function<double()> handler)
 	{
 		GetHMDOrientationYaw_Handler = handler;
 	}
 
-	__declspec(dllexport) void Register_getHMDOrientationYawCalibrated(std::function<float()> handler)
+	__declspec(dllexport) void Register_getHMDOrientationYawCalibrated(std::function<double()> handler)
 	{
 		GetHMDOrientationYawCalibrated_Handler = handler;
 	}
@@ -347,6 +348,13 @@ namespace Amethyst_API_Managed
 		return out; // Return what we've got
 	}
 
+	__declspec(dllexport) std::wstring GetDeviceGUID()
+	{
+		std::wstring out; // Dummy placeholder
+		MarshalString(IAmethyst_API_Managed::wrapper->GetDeviceGUID(), out);
+		return out; // Return what we've got
+	}
+
 	__declspec(dllexport) long GetDeviceStatus()
 	{
 		return IAmethyst_API_Managed::wrapper->GetDeviceStatus();
@@ -357,11 +365,6 @@ namespace Amethyst_API_Managed
 		std::wstring out; // Dummy placeholder
 		MarshalString(IAmethyst_API_Managed::wrapper->GetDeviceStatusString(), out);
 		return out; // Return what we've got
-	}
-
-	__declspec(dllexport) uint32_t GetDeviceType()
-	{
-		return IAmethyst_API_Managed::wrapper->GetDeviceType();
 	}
 
 	__declspec(dllexport) bool GetIsSkeletonTracked()
@@ -379,24 +382,23 @@ namespace Amethyst_API_Managed
 			std::wstring joint_name; // Dummy placeholder
 			MarshalString(joints[i]->JointName, joint_name);
 
-			Eigen::Vector3f joint_position;
+			Eigen::Vector3d joint_position;
 			joint_position.x() = joints[i]->Position.X;
 			joint_position.y() = joints[i]->Position.Y;
 			joint_position.z() = joints[i]->Position.Z;
 
-			Eigen::Quaternionf joint_orientation;
+			Eigen::Quaterniond joint_orientation;
 			joint_orientation.w() = joints[i]->Orientation.W;
 			joint_orientation.x() = joints[i]->Orientation.X;
 			joint_orientation.y() = joints[i]->Orientation.Y;
 			joint_orientation.z() = joints[i]->Orientation.Z;
 
-			cluster_joints.push_back(
-				ktvr::K2TrackedJoint(
-					joint_position,
-					joint_orientation,
-					static_cast<ktvr::ITrackedJointState>(joints[i]->TrackingState),
-					joint_name
-				));
+			cluster_joints.push_back({
+				joint_position,
+				joint_orientation,
+				static_cast<ktvr::ITrackedJointState>(joints[i]->TrackingState),
+				joint_name
+			});
 		}
 
 		return cluster_joints;

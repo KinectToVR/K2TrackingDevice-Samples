@@ -139,7 +139,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Amethyst_API_Managed_Kinect.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Amethyst_API_Managed_Skeleton.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>mkdir "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis"
@@ -178,7 +178,7 @@ xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Ijwhost.dll" "$(Solution
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Amethyst_API_Managed_Kinect.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Amethyst_API_Managed_Skeleton.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>mkdir "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis"

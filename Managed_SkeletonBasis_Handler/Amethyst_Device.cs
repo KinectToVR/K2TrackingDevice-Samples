@@ -1,9 +1,6 @@
-﻿using System;
-using System.Numerics;
-using System.Runtime.InteropServices;
-using Device_Managed_SkeletonBasis.API_Projection_Files;
+﻿using Managed_SkeletonBasis_Handler.API_Projection_Files;
 
-namespace Device_Managed_SkeletonBasis;
+namespace Managed_SkeletonBasis_Handler;
 
 public class AmethystDevice : AmethystManagedDevice_Kinect
 {
@@ -11,7 +8,8 @@ public class AmethystDevice : AmethystManagedDevice_Kinect
     {
         // Set up the device name
         DeviceName = "SkeletonBasis (Managed)";
-        
+        DeviceGUID = "KSAMPLES-VEND-API1-DVCE-DVCESKELTMGD";
+
         // Provide every joint possible in Amethyst API
         DeviceCharacteristics = (uint)TrackingDeviceCharacteristics.K2_Character_Full;
 
@@ -43,8 +41,6 @@ public class AmethystDevice : AmethystManagedDevice_Kinect
         // to mark if the user is tracked
         // use the IsSkeletonTracked BOOL
         IsSkeletonTracked = true;
-
-        return; // No proper return
     }
 
     public override bool Shutdown()

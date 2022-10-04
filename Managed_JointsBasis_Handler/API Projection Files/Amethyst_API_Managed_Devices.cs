@@ -1,10 +1,15 @@
-﻿using System.Diagnostics;
-using System.Numerics;
+﻿using System.Numerics;
 
-namespace Device_Managed_JointsBasis.API_Projection_Files;
+namespace Managed_JointsBasis_Handler.API_Projection_Files;
 
 public class TrackedJoint
 {
+    public string JointName = "[NAME NOT SET]";
+    public Quaternion Orientation;
+
+    public Vector3 Position;
+    public uint TrackingState = 0; // State_NotTracked
+
     public TrackedJoint()
     {
     }
@@ -15,24 +20,15 @@ public class TrackedJoint
         Orientation = orientation;
         JointName = name;
     }
-
-    public Vector3 Position = new Vector3();
-    public Quaternion Orientation = new Quaternion();
-    public uint TrackingState = 0; // State_NotTracked
-    public string JointName = "[NAME NOT SET]";
 }
 
 public abstract class AmethystManagedDevice_Joints
 {
+    public string DeviceGUID = "INVALID"; // Make sure you set this!
     public string DeviceName = "[NAME NOT SET]"; // Make sure you set this!
-    public const uint DeviceType = (uint)TrackingDeviceType.K2_Joints;
-
-    public bool IsSkeletonTracked = false;
-
-    public List<TrackedJoint> JointsList = new();
-
-    // Log a message to Amethyst logs : handler
-    public Action<string, uint>? LoggerAction;
+    public Func<TrackedJoint[]>? GetAppJointPoses;
+    public Func<double>? GetHMDOrientationYaw;
+    public Func<double>? GetHMDOrientationYawCalibrated;
 
     public Func<Tuple<Vector3, Quaternion>>? GetHMDPose;
     public Func<Tuple<Vector3, Quaternion>>? GetHMDPoseCalibrated;
@@ -40,9 +36,13 @@ public abstract class AmethystManagedDevice_Joints
     public Func<Tuple<Vector3, Quaternion>>? GetLeftControllerPoseCalibrated;
     public Func<Tuple<Vector3, Quaternion>>? GetRightControllerPose;
     public Func<Tuple<Vector3, Quaternion>>? GetRightControllerPoseCalibrated;
-    public Func<float>? GetHMDOrientationYaw;
-    public Func<float>? GetHMDOrientationYawCalibrated;
-    public Func<TrackedJoint[]>? GetAppJointPoses;
+
+    public bool IsSkeletonTracked = false;
+
+    public List<TrackedJoint> JointsList = new();
+
+    // Log a message to Amethyst logs : handler
+    public Action<string, uint>? LoggerAction;
 
     // Log a message to Amethyst logs : wrapper
     public void Log(string msg, LogSeverity sev)
@@ -76,21 +76,15 @@ public enum TrackingDeviceCharacteristics
 
     // SUP mathbased, [ everything ]
     K2_Character_Full
-};
+}
 
 public enum TrackedJointState
 {
     State_NotTracked,
     State_Inferred,
     State_Tracked
-};
+}
 
-public enum TrackingDeviceType
-{
-    K2_Unknown,
-    K2_Kinect,
-    K2_Joints
-};
 public enum LogSeverity
 {
     INFO, // 0

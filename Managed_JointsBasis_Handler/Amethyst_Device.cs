@@ -1,9 +1,6 @@
-﻿using System;
-using System.Numerics;
-using System.Runtime.InteropServices;
-using Device_Managed_JointsBasis.API_Projection_Files;
+﻿using Managed_JointsBasis_Handler.API_Projection_Files;
 
-namespace Device_Managed_JointsBasis;
+namespace Managed_JointsBasis_Handler;
 
 public class AmethystDevice : AmethystManagedDevice_Joints
 {
@@ -11,6 +8,7 @@ public class AmethystDevice : AmethystManagedDevice_Joints
     {
         // Set up the device name
         DeviceName = "JointsBasis (Managed)";
+        DeviceGUID = "KSAMPLES-VEND-API1-DVCE-DVCEJOINTMGD";
     }
 
     public override void OnLoad()
@@ -46,7 +44,7 @@ public class AmethystDevice : AmethystManagedDevice_Joints
 
         // Use a dummy random position for each joint
         var random = new Random();
-        
+
         foreach (var joint in JointsList)
         {
             // Random position (max 3sqrt2m from 0,0,0)
@@ -60,8 +58,6 @@ public class AmethystDevice : AmethystManagedDevice_Joints
 
         // Mark skeleton as tracked
         IsSkeletonTracked = true;
-
-        return; // No proper return
     }
 
     public override bool Shutdown()

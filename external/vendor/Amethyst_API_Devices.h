@@ -2,6 +2,7 @@
 #include <Windows.h>
 
 #include <string>
+#include <utility>
 #include <vector>
 #include <variant>
 #include <array>
@@ -9,6 +10,10 @@
 #include <filesystem>
 
 #include <Eigen/Dense>
+
+#define AME_API_GET_TIMESTAMP_NOW \
+	std::chrono::time_point_cast<std::chrono::microseconds>	\
+	(std::chrono::system_clock::now()).time_since_epoch().count()
 
 /*
  * AME_API Devices
@@ -42,7 +47,7 @@ inline std::string WStringToString(const std::wstring& w_str)
 namespace ktvr
 {
 	// Interface Version
-	static const char* IAME_API_Devices_Version = "IAME_API_Version_015";
+	static const char* IAME_API_Devices_Version = "IAME_API_Version_017";
 
 	// Return messaging types
 	enum K2InitErrorType
@@ -107,8 +112,134 @@ namespace ktvr
 		K2_Character_Full
 	};
 
-	// Tracking Device Joint class for client plugins
-	class K2TrackedJoint
+	// Tracking Device Joint class for client plugins : SkeletonBasis
+	class K2TrackedBaseJoint
+	{
+		// Named joint, provides pos, rot, state and ofc name
+	public:
+		K2TrackedBaseJoint()
+		{
+		}
+
+		K2TrackedBaseJoint(Eigen::Vector3d pos, Eigen::Quaterniond rot,
+		                   const ITrackedJointState& state) :
+			jointPosition{std::move(pos)},
+			jointOrientation{std::move(rot)},
+			trackingState{state}
+		{
+			positionTimestamp = AME_API_GET_TIMESTAMP_NOW;
+		}
+
+		[[nodiscard]] Eigen::Vector3d getJointPosition() const { return jointPosition; }
+		[[nodiscard]] Eigen::Quaterniond getJointOrientation() const { return jointOrientation; }
+
+		[[nodiscard]] Eigen::Vector3d getJointVelocity() const { return jointVelocity; }
+		[[nodiscard]] Eigen::Vector3d getJointAcceleration() const { return jointAcceleration; }
+
+		[[nodiscard]] Eigen::Vector3d getJointAngularVelocity() const { return jointAngularVelocity; }
+		[[nodiscard]] Eigen::Vector3d getJointAngularAcceleration() const { return jointAngularAcceleration; }
+
+		[[nodiscard]] ITrackedJointState getTrackingState() const { return trackingState; } // ITrackedJointState
+		[[nodiscard]] long long getPositionTimestamp() const { return positionTimestamp; }
+
+		// For servers!
+		void update(Eigen::Vector3d position,
+		            Eigen::Quaterniond orientation,
+		            const ITrackedJointState state)
+		{
+			jointPosition = std::move(position);
+			jointOrientation = std::move(orientation);
+			trackingState = state;
+
+			// Update pose timestamp
+			positionTimestamp = AME_API_GET_TIMESTAMP_NOW;
+		}
+
+		// For servers!
+		void update(Eigen::Vector3d position,
+		            Eigen::Quaterniond orientation,
+					Eigen::Vector3d velocity,
+					Eigen::Vector3d acceleration,
+					Eigen::Vector3d angularVelocity,
+					Eigen::Vector3d angularAcceleration,
+		            const ITrackedJointState state)
+		{
+			jointPosition = std::move(position);
+			jointOrientation = std::move(orientation);
+
+			jointVelocity = std::move(velocity);
+			jointAcceleration = std::move(acceleration);
+			jointAngularVelocity = std::move(angularVelocity);
+			jointAngularAcceleration = std::move(angularAcceleration);
+
+			trackingState = state;
+
+			// Update pose timestamp
+			positionTimestamp = AME_API_GET_TIMESTAMP_NOW;
+		}
+
+		// For servers!
+		void update_position(Eigen::Vector3d position)
+		{
+			jointPosition = std::move(position);
+
+			// Update pose timestamp
+			positionTimestamp = AME_API_GET_TIMESTAMP_NOW;
+		}
+
+		// For servers!
+		void update_orientation(Eigen::Quaterniond orientation)
+		{
+			jointOrientation = std::move(orientation);
+		}
+
+		// For servers!
+		void getJointVelocity(Eigen::Vector3d velocity)
+		{
+			jointVelocity = std::move(velocity);
+		}
+
+		// For servers!
+		void getJointAcceleration(Eigen::Vector3d acceleration)
+		{
+			jointAcceleration = std::move(acceleration);
+		}
+
+		// For servers!
+		void getJointAngularVelocity(Eigen::Vector3d angularVelocity)
+		{
+			jointAngularVelocity = std::move(angularVelocity);
+		}
+
+		// For servers!
+		void getJointAngularAcceleration(Eigen::Vector3d angularAcceleration)
+		{
+			jointAngularAcceleration = std::move(angularAcceleration);
+		}
+
+		// For servers!
+		void update_state(const ITrackedJointState state)
+		{
+			trackingState = state;
+		}
+
+	protected:
+		// Tracker should be centered automatically
+		Eigen::Vector3d jointPosition = Eigen::Vector3d(0., 0., 0.);
+		Eigen::Quaterniond jointOrientation = Eigen::Quaterniond(1., 0., 0., 0.);
+
+		Eigen::Vector3d jointVelocity = Eigen::Vector3d(0., 0., 0.);
+		Eigen::Vector3d jointAcceleration = Eigen::Vector3d(0., 0., 0.);
+
+		Eigen::Vector3d jointAngularVelocity = Eigen::Vector3d(0., 0., 0.);
+		Eigen::Vector3d jointAngularAcceleration = Eigen::Vector3d(0., 0., 0.);
+
+		ITrackedJointState trackingState = State_NotTracked;
+		long long positionTimestamp = 0;
+	};
+
+	// Tracking Device Joint class for client plugins : Extended
+	class K2TrackedJoint : public K2TrackedBaseJoint
 	{
 		// Named joint, provides pos, rot, state and ofc name
 	public:
@@ -116,45 +247,22 @@ namespace ktvr
 		{
 		}
 
-		K2TrackedJoint(std::wstring name) : jointName{std::move(name)}
+		explicit K2TrackedJoint(std::wstring name) : jointName{std::move(name)}
 		{
 		}
 
-		K2TrackedJoint(const Eigen::Vector3f& pos, const Eigen::Quaternionf& rot,
-		               const ITrackedJointState& state, const std::wstring& name) :
-			jointOrientation{rot}, jointPosition{pos},
-			trackingState{state}, jointName{name}
+		K2TrackedJoint(Eigen::Vector3d pos, Eigen::Quaterniond rot,
+		               const ITrackedJointState& state, std::wstring name) :
+			jointName{std::move(name)}
 		{
-		}
-
-		std::wstring getJointName() { return jointName; } // Custom name
-
-		Eigen::Vector3f getJointPosition() { return jointPosition; }
-		Eigen::Quaternionf getJointOrientation() { return jointOrientation; }
-		ITrackedJointState getTrackingState() { return trackingState; } // ITrackedJointState
-
-		// For servers!
-		void update(Eigen::Vector3f position,
-		            Eigen::Quaternionf orientation,
-		            ITrackedJointState state)
-		{
-			jointPosition = position;
-			jointOrientation = orientation;
+			jointPosition = std::move(pos);
+			jointOrientation = std::move(rot);
 			trackingState = state;
 		}
 
-		// For servers!
-		void update(ITrackedJointState state)
-		{
-			trackingState = state;
-		}
+		[[nodiscard]] std::wstring getJointName() const { return jointName; } // Custom name
 
 	protected:
-		// Tracker should be centered automatically
-		Eigen::Quaternionf jointOrientation = Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f);
-		Eigen::Vector3f jointPosition = Eigen::Vector3f(0.f, 0.f, 0.f);
-		ITrackedJointState trackingState = State_NotTracked;
-
 		std::wstring jointName = L"Name not set";
 	};
 
@@ -709,11 +817,17 @@ namespace ktvr
 		// Full character will provide every skeleton (Kinect) joint
 		ITrackingDeviceCharacteristics getDeviceCharacteristics() { return deviceCharacteristics; }
 
+		// Return device's globally unique ID
+		// Format: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+		// Type: wide string, const for each device
+		// Note: MUST NOT overlap or repeat between devices
+		virtual std::wstring getDeviceGUID() { return L"INVALID"; } // Override this!
+
+		// Return device's name (can repeat)
 		std::wstring getDeviceName() { return deviceName; } // Custom name
 
-		std::array<Eigen::Vector3f, 25> getJointPositions() { return jointPositions; }
-		std::array<Eigen::Quaternionf, 25> getJointOrientations() { return jointOrientations; }
-		std::array<ITrackedJointState, 25> getTrackingStates() { return trackingStates; }
+		// Joints' vector. You need to update appended joints in every update() call
+		std::array<K2TrackedBaseJoint, 25> getTrackedJoints() { return trackedJoints; }
 
 		// After init, this should always return true
 		[[nodiscard]] bool isInitialized() const { return initialized; }
@@ -735,33 +849,47 @@ namespace ktvr
 
 		// Should be set up at construction
 		// Mark this as false ALSO if your device supports 360 tracking by itself
-		[[nodiscard]] bool isFlipSupported() const { return flipSupported; } // Flip block
+		[[nodiscard]] bool isFlipSupported() const { return Flags_FlipSupported; } // Flip block
 
 		// Should be set up at construction
 		// This will allow Amethyst to calculate rotations by itself, additionally
-		[[nodiscard]] bool isAppOrientationSupported() const { return appOrientationSupported; } // Math-based
+		[[nodiscard]] bool isAppOrientationSupported() const { return Flags_AppOrientationSupported; } // Math-based
+
+		// Should be set up at construction
+		// This will tell Amethyst to disable all position filters on joints managed by this plugin
+		[[nodiscard]] bool isPositionFilterBlockingEnabled() const { return Flags_BlocksPositionFiltering; }
+
+		// Should be set up at construction
+		// This will tell Amethyst not to auto-manage on joints managed by this plugin
+		// Includes: velocity, acceleration, angular velocity, angular acceleration
+		[[nodiscard]] bool isPhysicsOverrideEnabled() const { return Flags_OverridesJointPhysics; }
+
+		// Should be set up at construction
+		// This will tell Amethyst not to auto-update this device
+		// You should register some timer to update your device yourself
+		[[nodiscard]] bool isSelfUpdateEnabled() const { return Flags_ForceSelfUpdate; }
 
 		/* Helper functions which may be internally called by the device plugin */
 
 		// Get the raw openvr's HMD pose
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> getHMDPose;
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> getHMDPose;
 		// Get the openvr's HMD pose, but un-wrapped aka "calibrated" using the vr room center
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> getHMDPoseCalibrated;
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> getHMDPoseCalibrated;
 
 		// Get the raw openvr's left controller pose
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> getLeftControllerPose;
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> getLeftControllerPose;
 		// Get the openvr's left controller pose, but un-wrapped aka "calibrated" using the vr room center
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> getLeftControllerPoseCalibrated;
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> getLeftControllerPoseCalibrated;
 
 		// Get the raw openvr's right controller pose
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> getRightControllerPose;
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> getRightControllerPose;
 		// Get the openvr's right controller pose, but un-wrapped aka "calibrated" using the vr room center
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> getRightControllerPoseCalibrated;
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> getRightControllerPoseCalibrated;
 
 		// Get the HMD Yaw (exclusively)
-		std::function<float()> getHMDOrientationYaw;
+		std::function<double()> getHMDOrientationYaw;
 		// Get the HMD Yaw (exclusively), but un-wrapped aka "calibrated" using the vr room center
-		std::function<float()> getHMDOrientationYawCalibrated;
+		std::function<double()> getHMDOrientationYawCalibrated;
 
 		/*
 		 * Helper to get all joints' positions from the app,
@@ -787,6 +915,13 @@ namespace ktvr
 		// Warning: The primarily searched resource is the device-provided one!
 		std::function<std::wstring(std::wstring)> requestLocalizedString;
 
+		// Write a string to AME logs in %AppData%/Amethyst/logs/X
+		// Hint: use std::format for a nice message parsing
+		// Warning: you mustn't use this method before Loaded() is called
+		std::function<void(std::wstring)> logInfoMessage;
+		std::function<void(std::wstring)> logWarningMessage;
+		std::function<void(std::wstring)> logErrorMessage;
+
 		// To support settings daemon and register the layout root,
 		// the device must properly report it first
 		// -> will lead to showing an additional 'settings' button
@@ -794,7 +929,7 @@ namespace ktvr
 		//       and may use the K2AppData from the Paths' header
 		// Tip: you can hide your device's settings by marking this as 'false',
 		//      and change it back to 'true' when you're ready
-		[[nodiscard]] bool isSettingsDaemonSupported() const { return settingsSupported; }
+		[[nodiscard]] bool isSettingsDaemonSupported() const { return Flags_SettingsSupported; }
 
 		/*
 		 * A pointer to the default layout root registered for the device.
@@ -834,73 +969,52 @@ namespace ktvr
 		ITrackingDeviceCharacteristics deviceCharacteristics =
 			K2_Character_Unknown;
 
+		// Return device's name (may repeat or overlap)
 		std::wstring deviceName = L"Name not set";
 
+		// After init, this should always return true
+		// (Unless the device isn't ready for some reason)
 		bool initialized = false;
+
+		// This should be updated on every frame,
+		// along with joint devices
+		// -> will lead to global tracking loss notification
+		//    if set to false at runtime somewhen
 		bool skeletonTracked = false;
 
-		bool settingsSupported = false;
+		// Should be set up at construction
+		// Mark this as false ALSO if your device supports 360 tracking by itself
+		bool Flags_FlipSupported = true;
 
-		bool flipSupported = true;
-		bool appOrientationSupported = true;
+		// Should be set up at construction
+		// This will allow Amethyst to calculate rotations by itself, additionally
+		bool Flags_AppOrientationSupported = true;
 
-		std::array<Eigen::Vector3f, 25> jointPositions = {
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f),
-			Eigen::Vector3f(0.f, 0.f, 0.f)
-		};
+		// To support settings daemon and register the layout root,
+		// the device must properly report it first
+		// -> will lead to showing an additional 'settings' button
+		// Note: each device has to save its settings independently
+		//       and may use the K2AppData from the Paths' header
+		// Tip: you can hide your device's settings by marking this as 'false',
+		//      and change it back to 'true' when you're ready
+		bool Flags_SettingsSupported = false;
 
-		std::array<Eigen::Quaternionf, 25> jointOrientations = {
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f),
-			Eigen::Quaternionf(1.f, 0.f, 0.f, 0.f)
-		};
+		// Should be set up at construction
+		// This will tell Amethyst to disable all position filters on joints managed by this plugin
+		bool Flags_BlocksPositionFiltering = false;
 
-		std::array<ITrackedJointState, 25> trackingStates = {}; // State_NotTracked
+		// Should be set up at construction
+		// This will tell Amethyst not to auto-manage on joints managed by this plugin
+		// Includes: velocity, acceleration, angular velocity, angular acceleration
+		bool Flags_OverridesJointPhysics = false;
+
+		// Should be set up at construction
+		// This will tell Amethyst not to auto-update this device
+		// You should register some timer to update your device yourself
+		bool Flags_ForceSelfUpdate = false;
+
+		// The array of the device joints, mapped with ITrackedJointType
+		std::array<K2TrackedBaseJoint, 25> trackedJoints;
 
 		class FailedKinectInitialization : public std::exception
 		{
@@ -942,9 +1056,13 @@ namespace ktvr
 		{
 		}
 
-		// Should be set up at construction
-		// Kinect type must provide joints: [ head, waist, knees, ankles, foot_tips ]
-		// Other type must provide joints: [ waist, ankles ] and will persuade manual calibration
+		// Return device's globally unique ID
+		// Format: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+		// Type: wide string, const for each device
+		// Note: MUST NOT overlap or repeat between devices
+		virtual std::wstring getDeviceGUID() { return L"INVALID"; } // Override this!
+
+		// Return device's name (can repeat)
 		std::wstring getDeviceName() { return deviceName; } // Custom name
 
 		// Joints' vector. You need to update appended joints in every update() call
@@ -973,27 +1091,41 @@ namespace ktvr
 		//    if set to false at runtime somewhen
 		[[nodiscard]] bool isSkeletonTracked() const { return skeletonTracked; }
 
+		// Should be set up at construction
+		// This will tell Amethyst to disable all position filters on joints managed by this plugin
+		[[nodiscard]] bool isPositionFilterBlockingEnabled() const { return Flags_BlocksPositionFiltering; }
+
+		// Should be set up at construction
+		// This will tell Amethyst not to auto-manage on joints managed by this plugin
+		// Includes: velocity, acceleration, angular velocity, angular acceleration
+		[[nodiscard]] bool isPhysicsOverrideEnabled() const { return Flags_OverridesJointPhysics; }
+
+		// Should be set up at construction
+		// This will tell Amethyst not to auto-update this device
+		// You should register some timer to update your device yourself
+		[[nodiscard]] bool isSelfUpdateEnabled() const { return Flags_ForceSelfUpdate; }
+
 		/* Helper functions which may be internally called by the device plugin */
 
 		// Get the raw openvr's HMD pose
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> getHMDPose;
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> getHMDPose;
 		// Get the openvr's HMD pose, but un-wrapped aka "calibrated" using the vr room center
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> getHMDPoseCalibrated;
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> getHMDPoseCalibrated;
 
 		// Get the raw openvr's left controller pose
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> getLeftControllerPose;
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> getLeftControllerPose;
 		// Get the openvr's left controller pose, but un-wrapped aka "calibrated" using the vr room center
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> getLeftControllerPoseCalibrated;
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> getLeftControllerPoseCalibrated;
 
 		// Get the raw openvr's right controller pose
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> getRightControllerPose;
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> getRightControllerPose;
 		// Get the openvr's right controller pose, but un-wrapped aka "calibrated" using the vr room center
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> getRightControllerPoseCalibrated;
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> getRightControllerPoseCalibrated;
 
 		// Get the HMD Yaw (exclusively)
-		std::function<float()> getHMDOrientationYaw;
+		std::function<double()> getHMDOrientationYaw;
 		// Get the HMD Yaw (exclusively), but un-wrapped aka "calibrated" using the vr room center
-		std::function<float()> getHMDOrientationYawCalibrated;
+		std::function<double()> getHMDOrientationYawCalibrated;
 
 		/*
 		 * Helper to get all joints' positions from the app,
@@ -1019,6 +1151,13 @@ namespace ktvr
 		// Warning: The primarily searched resource is the device-provided one!
 		std::function<std::wstring(std::wstring)> requestLocalizedString;
 
+		// Write a string to AME logs in %AppData%/Amethyst/logs/X
+		// Hint: use std::format for a nice message parsing
+		// Warning: you mustn't use this method before Loaded() is called
+		std::function<void(std::wstring)> logInfoMessage;
+		std::function<void(std::wstring)> logWarningMessage;
+		std::function<void(std::wstring)> logErrorMessage;
+
 		// To support settings daemon and register the layout root,
 		// the device must properly report it first
 		// -> will lead to showing an additional 'settings' button
@@ -1026,7 +1165,7 @@ namespace ktvr
 		//       and may use the K2AppData from the Paths' header
 		// Tip: you can hide your device's settings by marking this as 'false',
 		//      and change it back to 'true' when you're ready
-		[[nodiscard]] bool isSettingsDaemonSupported() const { return settingsSupported; }
+		[[nodiscard]] bool isSettingsDaemonSupported() const { return Flags_SettingsSupported; }
 
 		/*
 		 * A pointer to the default layout root registered for the device.
@@ -1063,12 +1202,41 @@ namespace ktvr
 		std::function<Interface::ProgressBar*()> CreateProgressBar;
 
 	protected:
+		// Return device's name (may repeat or overlap)
 		std::wstring deviceName = L"Name not set";
 
+		// After init, this should always return true
+		// (Unless the device isn't ready for some reason)
 		bool initialized = false;
+
+		// This should be updated on every frame,
+		// along with joint devices
+		// -> will lead to global tracking loss notification
+		//    if set to false at runtime somewhen
 		bool skeletonTracked = false;
 
-		bool settingsSupported = false;
+		// To support settings daemon and register the layout root,
+		// the device must properly report it first
+		// -> will lead to showing an additional 'settings' button
+		// Note: each device has to save its settings independently
+		//       and may use the K2AppData from the Paths' header
+		// Tip: you can hide your device's settings by marking this as 'false',
+		//      and change it back to 'true' when you're ready
+		bool Flags_SettingsSupported = false;
+
+		// Should be set up at construction
+		// This will tell Amethyst to disable all position filters on joints managed by this plugin
+		bool Flags_BlocksPositionFiltering = false;
+
+		// Should be set up at construction
+		// This will tell Amethyst not to auto-manage on joints managed by this plugin
+		// Includes: velocity, acceleration, angular velocity, angular acceleration
+		bool Flags_OverridesJointPhysics = false;
+
+		// Should be set up at construction
+		// This will tell Amethyst not to auto-update this device
+		// You should register some timer to update your device yourself
+		bool Flags_ForceSelfUpdate = false;
 
 		std::vector<K2TrackedJoint> trackedJoints = {
 			K2TrackedJoint() // owo, wat's this?
@@ -1099,24 +1267,24 @@ namespace ktvr
 		/* Helper functions which may be internally called by the device plugin */
 
 		// Get the raw openvr's HMD pose
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> getHMDPose;
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> getHMDPose;
 		// Get the openvr's HMD pose, but un-wrapped aka "calibrated" using the vr room center
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> getHMDPoseCalibrated;
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> getHMDPoseCalibrated;
 
 		// Get the raw openvr's left controller pose
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> getLeftControllerPose;
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> getLeftControllerPose;
 		// Get the openvr's left controller pose, but un-wrapped aka "calibrated" using the vr room center
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> getLeftControllerPoseCalibrated;
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> getLeftControllerPoseCalibrated;
 
 		// Get the raw openvr's right controller pose
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> getRightControllerPose;
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> getRightControllerPose;
 		// Get the openvr's right controller pose, but un-wrapped aka "calibrated" using the vr room center
-		std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> getRightControllerPoseCalibrated;
+		std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> getRightControllerPoseCalibrated;
 
 		// Get the HMD Yaw (exclusively)
-		std::function<float()> getHMDOrientationYaw;
+		std::function<double()> getHMDOrientationYaw;
 		// Get the HMD Yaw (exclusively), but un-wrapped aka "calibrated" using the vr room center
-		std::function<float()> getHMDOrientationYawCalibrated;
+		std::function<double()> getHMDOrientationYawCalibrated;
 
 		/*
 		 * Helper to get all joints' positions from the app,

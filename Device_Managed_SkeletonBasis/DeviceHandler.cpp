@@ -31,9 +31,7 @@ void DeviceHandler::update()
 		Amethyst_API_Managed::Update();
 
 		// Copy poses and states
-		jointPositions = Amethyst_API_Managed::GetJointPositions();
-		jointOrientations = Amethyst_API_Managed::GetJointOrientations();
-		trackingStates = Amethyst_API_Managed::GetJointTrackingStates();
+		trackedJoints = Amethyst_API_Managed::GetTrackedJoints();
 
 		// Mark if we see the user
 		skeletonTracked = Amethyst_API_Managed::GetIsSkeletonTracked();

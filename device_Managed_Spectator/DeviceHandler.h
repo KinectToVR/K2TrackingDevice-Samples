@@ -8,14 +8,14 @@ namespace Amethyst_API_Managed
 {
 	__declspec(dllimport) void RegisterLogger(std::function<void(std::wstring, unsigned)> handler);
 
-	__declspec(dllimport) void Register_getHMDPose(std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler);
-	__declspec(dllimport) void Register_getHMDPoseCalibrated(std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler);
-	__declspec(dllimport) void Register_getLeftControllerPose(std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler);
-	__declspec(dllimport) void Register_getLeftControllerPoseCalibrated(std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler);
-	__declspec(dllimport) void Register_getRightControllerPose(std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler);
-	__declspec(dllimport) void Register_getRightControllerPoseCalibrated(std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler);
-	__declspec(dllimport) void Register_getHMDOrientationYaw(std::function<float()> handler);
-	__declspec(dllimport) void Register_getHMDOrientationYawCalibrated(std::function<float()> handler);
+	__declspec(dllimport) void Register_getHMDPose(std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> handler);
+	__declspec(dllimport) void Register_getHMDPoseCalibrated(std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> handler);
+	__declspec(dllimport) void Register_getLeftControllerPose(std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> handler);
+	__declspec(dllimport) void Register_getLeftControllerPoseCalibrated(std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> handler);
+	__declspec(dllimport) void Register_getRightControllerPose(std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> handler);
+	__declspec(dllimport) void Register_getRightControllerPoseCalibrated(std::function<std::pair<Eigen::Vector3d, Eigen::Quaterniond>()> handler);
+	__declspec(dllimport) void Register_getHMDOrientationYaw(std::function<double()> handler);
+	__declspec(dllimport) void Register_getHMDOrientationYawCalibrated(std::function<double()> handler);
 	__declspec(dllimport) void Register_getAppJointPoses(std::function<std::vector<ktvr::K2TrackedJoint>()> handler);
 
 	__declspec(dllimport) void OnLoad();
@@ -43,7 +43,7 @@ inline void log_to_ame(const std::wstring& message, unsigned severity)
 class DeviceHandler : public ktvr::K2TrackingDeviceBase_Spectator
 {
 public:
-	/* K2API's things, which KTVR will make use of */
+	/* K2API's things, which Amethyst will make use of */
 
 	DeviceHandler()
 	{

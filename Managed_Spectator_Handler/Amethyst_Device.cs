@@ -1,16 +1,9 @@
-﻿using System;
-using System.Numerics;
-using System.Runtime.InteropServices;
-using Device_Managed_Spectator.API_Projection_Files;
+﻿using Managed_Spectator_Handler.API_Projection_Files;
 
-namespace Device_Managed_Spectator;
+namespace Managed_Spectator_Handler;
 
 public class AmethystDevice : AmethystManagedDevice_Spectator
 {
-    public AmethystDevice()
-    {
-    }
-
     public override void OnLoad()
     {
         // You can use everything from the managed API
