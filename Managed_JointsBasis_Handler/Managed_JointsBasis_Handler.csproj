@@ -8,6 +8,14 @@
     <Platforms>x64</Platforms>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <WarningLevel>7</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <WarningLevel>7</WarningLevel>
+  </PropertyGroup>
+
   <ItemGroup>
     <Folder Include="API Projection Files\" />
   </ItemGroup>

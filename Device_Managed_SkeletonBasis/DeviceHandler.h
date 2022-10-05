@@ -1,23 +1,10 @@
 #pragma once
 #include <Amethyst_API_Devices.h>
 
-#define GLOG_NO_ABBREVIATED_SEVERITIES
-#include <glog/logging.h>
-
 namespace Amethyst_API_Managed
 {
-	__declspec(dllimport) void RegisterLogger(std::function<void(std::wstring, unsigned)> handler);
-
-	__declspec(dllimport) void Register_getHMDPose(std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler);
-	__declspec(dllimport) void Register_getHMDPoseCalibrated(std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler);
-	__declspec(dllimport) void Register_getLeftControllerPose(std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler);
-	__declspec(dllimport) void Register_getLeftControllerPoseCalibrated(std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler);
-	__declspec(dllimport) void Register_getRightControllerPose(std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler);
-	__declspec(dllimport) void Register_getRightControllerPoseCalibrated(std::function<std::pair<Eigen::Vector3f, Eigen::Quaternionf>()> handler);
-	__declspec(dllimport) void Register_getHMDOrientationYaw(std::function<float()> handler);
-	__declspec(dllimport) void Register_getHMDOrientationYawCalibrated(std::function<float()> handler);
-	__declspec(dllimport) void Register_getAppJointPoses(std::function<std::vector<ktvr::K2TrackedJoint>()> handler);
-
+	__declspec(dllimport) void RegisterDevice(ktvr::K2TrackingDeviceBase_SkeletonBasis* handler);
+	
 	__declspec(dllimport) void OnLoad();
 
 	__declspec(dllimport) bool Initialize();
@@ -25,37 +12,21 @@ namespace Amethyst_API_Managed
 	__declspec(dllimport) bool Shutdown();
 
 	__declspec(dllimport) std::wstring GetDeviceName();
+	__declspec(dllimport) std::wstring GetDeviceGUID();
 
 	__declspec(dllimport) long GetDeviceStatus();
 	__declspec(dllimport) std::wstring GetDeviceStatusWString();
-
-	__declspec(dllimport) uint32_t GetDeviceType();
+	
 	__declspec(dllimport) uint32_t GetDeviceCharacteristics();
 
 	__declspec(dllimport) bool GetIsFlipSupported();
 	__declspec(dllimport) bool GetIsAppOrientationSupported();
+
 	__declspec(dllimport) bool GetIsSkeletonTracked();
+	__declspec(dllimport) bool GetIsSettingsDaemonSupported();
+	__declspec(dllimport) bool GetIsOverridesJointPhysicsEnabled();
 
-	__declspec(dllimport) std::array<Eigen::Vector3f, ktvr::ITrackedJointType::Joint_Total> GetJointPositions();
-	__declspec(dllimport) std::array<Eigen::Quaternionf, ktvr::ITrackedJointType::Joint_Total> GetJointOrientations();
-	__declspec(dllimport) std::array<ktvr::ITrackedJointState, ktvr::ITrackedJointType::Joint_Total> GetJointTrackingStates();
-}
-
-inline void log_to_ame(const std::wstring& message, unsigned severity)
-{
-	// GLOG_INFO = 0, GLOG_WARNING = 1, GLOG_ERROR = 2
-	switch (severity)
-	{
-	case 0:
-		LOG(INFO) << WStringToString(message);
-		return;
-	case 1:
-		LOG(WARNING) << WStringToString(message);
-		return;
-	case 2:
-		LOG(ERROR) << WStringToString(message);
-		return;
-	}
+	__declspec(dllimport) std::array<ktvr::K2TrackedBaseJoint, 25> GetTrackedJoints();
 }
 
 /* Not exported */
@@ -63,33 +34,34 @@ inline void log_to_ame(const std::wstring& message, unsigned severity)
 class DeviceHandler : public ktvr::K2TrackingDeviceBase_SkeletonBasis
 {
 public:
-	/* K2API's things, which KTVR will make use of */
+	/* K2API's things, which Amethyst will make use of */
 
 	DeviceHandler()
 	{
-		Amethyst_API_Managed::RegisterLogger(log_to_ame);
-		
+		Amethyst_API_Managed::RegisterDevice(this);
+
 		deviceName = Amethyst_API_Managed::GetDeviceName();
 		deviceCharacteristics = 
 			static_cast<ktvr::ITrackingDeviceCharacteristics>(
 				Amethyst_API_Managed::GetDeviceCharacteristics());
 
-		flipSupported = Amethyst_API_Managed::GetIsFlipSupported();
-		appOrientationSupported = Amethyst_API_Managed::GetIsAppOrientationSupported();
+		Flags_FlipSupported = Amethyst_API_Managed::GetIsFlipSupported();
+		Flags_AppOrientationSupported = Amethyst_API_Managed::GetIsAppOrientationSupported();
+
+		Flags_SettingsSupported =
+			Amethyst_API_Managed::GetIsSettingsDaemonSupported();
+		Flags_OverridesJointPhysics =
+			Amethyst_API_Managed::GetIsOverridesJointPhysicsEnabled();
+	}
+
+	std::wstring getDeviceGUID() override
+	{
+		// This ID is unique to this plugin!
+		return Amethyst_API_Managed::GetDeviceGUID();
 	}
 
 	void onLoad() override
 	{
-		Amethyst_API_Managed::Register_getHMDPose(getHMDPose);
-		Amethyst_API_Managed::Register_getHMDPoseCalibrated(getHMDPoseCalibrated);
-		Amethyst_API_Managed::Register_getLeftControllerPose(getLeftControllerPose);
-		Amethyst_API_Managed::Register_getLeftControllerPoseCalibrated(getLeftControllerPoseCalibrated);
-		Amethyst_API_Managed::Register_getRightControllerPose(getRightControllerPose);
-		Amethyst_API_Managed::Register_getRightControllerPoseCalibrated(getRightControllerPoseCalibrated);
-		Amethyst_API_Managed::Register_getHMDOrientationYaw(getHMDOrientationYaw);
-		Amethyst_API_Managed::Register_getHMDOrientationYawCalibrated(getHMDOrientationYawCalibrated);
-		Amethyst_API_Managed::Register_getAppJointPoses(getAppJointPoses);
-
 		Amethyst_API_Managed::OnLoad();
 	}
 

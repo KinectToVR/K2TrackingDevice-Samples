@@ -1,22 +1,31 @@
-﻿using System;
-using System.Numerics;
-using System.Runtime.InteropServices;
-using Device_Managed_SkeletonBasis.API_Projection_Files;
+﻿using Managed_SkeletonBasis_Handler.API_Projection_Files;
 
-namespace Device_Managed_SkeletonBasis;
+namespace Managed_SkeletonBasis_Handler;
 
 public class AmethystDevice : AmethystManagedDevice_Kinect
 {
+    // Has this plugin been loaded?
+    private bool _loaded;
+
+    // Status preset
+    private string _status = "Success!";
+
+    // Don't construct it yet!
+    private TextBox _statusTextBox;
+
     public AmethystDevice()
     {
         // Set up the device name
         DeviceName = "SkeletonBasis (Managed)";
-        
+        DeviceGUID = "KSAMPLES-VEND-API1-DVCE-DVCESKELTMGD";
+
         // Provide every joint possible in Amethyst API
         DeviceCharacteristics = (uint)TrackingDeviceCharacteristics.K2_Character_Full;
 
         IsFlipSupported = false; // No flip for us :(
         IsAppOrientationSupported = false; // Neither MathBased
+
+        IsSettingsDaemonSupported = true;
     }
 
     public override void OnLoad()
@@ -25,6 +34,33 @@ public class AmethystDevice : AmethystManagedDevice_Kinect
         // only after this function has been called
 
         Log("[Managed Kinect] Loading...", 0);
+
+        // Create a new text input
+        _statusTextBox = new TextBox
+        {
+            Text = _status, // Pre-apply text
+            OnEnterKeyDown = // Handler
+                text =>
+                {
+                    // Give up if pre-init
+                    if (!_loaded) return;
+
+                    // Overwrite status
+                    _status = text;
+                    // Force ame to refresh
+                    RefreshStatusUI();
+                }
+        };
+
+        // Add the created elements to the UI panel
+        AppendElementPairStack(
+            // The label
+            new TextBlock("Change status:") { IsPrimary = false },
+            // The text box
+            _statusTextBox);
+
+        // Mark our plugin as loaded
+        _loaded = true;
     }
 
     public override bool Initialize()
@@ -43,8 +79,6 @@ public class AmethystDevice : AmethystManagedDevice_Kinect
         // to mark if the user is tracked
         // use the IsSkeletonTracked BOOL
         IsSkeletonTracked = true;
-
-        return; // No proper return
     }
 
     public override bool Shutdown()
@@ -71,6 +105,7 @@ public class AmethystDevice : AmethystManagedDevice_Kinect
         // Format: "[SHORT STATUS]\n[ABBREVIATION]\n[MESSAGE]"
         // Note: A success status abbreviation MUST be "S_OK"
 
-        return "Success!\nS_OK\nEverything's good!";
+        // Return our custom status and the rest (r not shown)
+        return _status + "\nS_OK\nEverything's good!";
     }
 }

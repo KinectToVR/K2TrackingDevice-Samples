@@ -11,6 +11,11 @@ std::wstring DeviceHandler::statusResultWString(HRESULT stat)
 	// Parse your device's status into some nice text here,
 	// it has to be formatted like [HEADER]\n[TYPE]\n[MESSAGE]
 
+	Flags_SettingsSupported =
+		Amethyst_API_Managed::GetIsSettingsDaemonSupported();
+	Flags_OverridesJointPhysics =
+		Amethyst_API_Managed::GetIsOverridesJointPhysicsEnabled();
+
 	return Amethyst_API_Managed::GetDeviceStatusWString();
 }
 
@@ -18,6 +23,11 @@ void DeviceHandler::initialize()
 {
 	// Initialize your device here
 	initialized = Amethyst_API_Managed::Initialize();
+
+	Flags_SettingsSupported =
+		Amethyst_API_Managed::GetIsSettingsDaemonSupported();
+	Flags_OverridesJointPhysics =
+		Amethyst_API_Managed::GetIsOverridesJointPhysicsEnabled();
 }
 
 void DeviceHandler::update()
@@ -31,9 +41,7 @@ void DeviceHandler::update()
 		Amethyst_API_Managed::Update();
 
 		// Copy poses and states
-		jointPositions = Amethyst_API_Managed::GetJointPositions();
-		jointOrientations = Amethyst_API_Managed::GetJointOrientations();
-		trackingStates = Amethyst_API_Managed::GetJointTrackingStates();
+		trackedJoints = Amethyst_API_Managed::GetTrackedJoints();
 
 		// Mark if we see the user
 		skeletonTracked = Amethyst_API_Managed::GetIsSkeletonTracked();

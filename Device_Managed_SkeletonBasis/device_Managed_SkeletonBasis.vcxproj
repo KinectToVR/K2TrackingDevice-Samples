@@ -127,7 +127,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;DEVICESKELETONBASISFULL_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EIGEN_DONT_ALIGN_STATICALLY;_CRT_SECURE_NO_WARNINGS;_DEBUG;DEVICESKELETONBASISFULL_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -139,7 +139,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Amethyst_API_Managed_Kinect.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Amethyst_API_Managed_Skeleton.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>mkdir "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis"
@@ -150,9 +150,9 @@ xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\$(TargetName)$(TargetExt
 
 xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\glog*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"
 xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\gflags*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed_Kinect.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed_Kinect.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed_Kinect.runtimeconfig.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed_Skeleton.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed_Skeleton.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed_Skeleton.runtimeconfig.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"
 xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Managed_SkeletonBasis_Handler.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"
 xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Managed_SkeletonBasis_Handler.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"
 xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Ijwhost.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"</Command>
@@ -164,7 +164,7 @@ xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Ijwhost.dll" "$(Solution
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;DEVICESKELETONBASISFULL_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EIGEN_DONT_ALIGN_STATICALLY;_CRT_SECURE_NO_WARNINGS;NDEBUG;DEVICESKELETONBASISFULL_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -178,7 +178,7 @@ xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Ijwhost.dll" "$(Solution
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Amethyst_API_Managed_Kinect.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Amethyst_API_Managed_Skeleton.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>mkdir "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis"
@@ -189,9 +189,9 @@ xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\$(TargetName)$(TargetExt
 
 xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\glog*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"
 xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\gflags*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed_Kinect.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed_Kinect.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"
-xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed_Kinect.runtimeconfig.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed_Skeleton.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed_Skeleton.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"
+xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Amethyst_API_Managed_Skeleton.runtimeconfig.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"
 xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Managed_SkeletonBasis_Handler.deps.json" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"
 xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Managed_SkeletonBasis_Handler.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"
 xcopy /y /d "$(SolutionDir)$(Platform)\$(Configuration)\Ijwhost.dll" "$(SolutionDir)$(Platform)\$(Configuration)\devices\Managed_SkeletonBasis\bin\win64\"</Command>

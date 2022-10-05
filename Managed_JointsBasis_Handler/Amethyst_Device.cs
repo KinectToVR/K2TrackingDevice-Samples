@@ -1,16 +1,25 @@
-﻿using System;
-using System.Numerics;
-using System.Runtime.InteropServices;
-using Device_Managed_JointsBasis.API_Projection_Files;
+﻿using Managed_JointsBasis_Handler.API_Projection_Files;
 
-namespace Device_Managed_JointsBasis;
+namespace Managed_JointsBasis_Handler;
 
 public class AmethystDevice : AmethystManagedDevice_Joints
 {
+    // Has this plugin been loaded?
+    private bool _loaded;
+
+    // Status preset
+    private string _status = "Success!";
+
+    // Don't construct it yet!
+    private TextBox _statusTextBox;
+
     public AmethystDevice()
     {
         // Set up the device name
         DeviceName = "JointsBasis (Managed)";
+        DeviceGuid = "KSAMPLES-VEND-API1-DVCE-DVCEJOINTMGD";
+
+        IsSettingsDaemonSupported = true;
     }
 
     public override void OnLoad()
@@ -19,6 +28,33 @@ public class AmethystDevice : AmethystManagedDevice_Joints
         // only after this function has been called
 
         Log("[Managed Joints] Loading...", 0);
+
+        // Create a new text input
+        _statusTextBox = new TextBox
+        {
+            Text = _status, // Pre-apply text
+            OnEnterKeyDown = // Handler
+                text =>
+                {
+                    // Give up if pre-init
+                    if (!_loaded) return;
+
+                    // Overwrite status
+                    _status = text;
+                    // Force ame to refresh
+                    RefreshStatusUI();
+                }
+        };
+
+        // Add the created elements to the UI panel
+        AppendElementPairStack(
+            // The label
+            new TextBlock("Change status:") { IsPrimary = false },
+            // The text box
+            _statusTextBox);
+
+        // Mark our plugin as loaded
+        _loaded = true;
     }
 
     public override bool Initialize()
@@ -46,7 +82,7 @@ public class AmethystDevice : AmethystManagedDevice_Joints
 
         // Use a dummy random position for each joint
         var random = new Random();
-        
+
         foreach (var joint in JointsList)
         {
             // Random position (max 3sqrt2m from 0,0,0)
@@ -60,8 +96,6 @@ public class AmethystDevice : AmethystManagedDevice_Joints
 
         // Mark skeleton as tracked
         IsSkeletonTracked = true;
-
-        return; // No proper return
     }
 
     public override bool Shutdown()
@@ -86,8 +120,8 @@ public class AmethystDevice : AmethystManagedDevice_Joints
         // Either GetDeviceStatus() here or something else,
         // the goal is to string-ize the status result
         // Format: "[SHORT STATUS]\n[ABBREVIATION]\n[MESSAGE]"
-        // Note: A success status abbreviation MUST be "S_OK"
 
-        return "Success!\nS_OK\nEverything's good!";
+        // Return our custom status and the rest (r not shown)
+        return _status + "\nS_OK\nEverything's good!";
     }
 }
