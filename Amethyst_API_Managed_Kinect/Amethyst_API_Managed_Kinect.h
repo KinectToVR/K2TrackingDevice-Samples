@@ -88,15 +88,15 @@ namespace Interface
 		MarshalString(content, out);
 
 		_Button_Map.insert_or_assign(_m_guid_str,
-			std::shared_ptr<ktvr::Interface::Button>(
-				_this_Device->CreateButton(out)));
+		                             std::shared_ptr<ktvr::Interface::Button>(
+			                             _this_Device->CreateButton(out)));
 
 		_Button_Map[GUIDString(_m_guid)]->OnClick =
 			[_m_guid_str](auto)
-		{
-			Managed_SkeletonBasis_Handler::AmethystDevice::ExecuteButtonHandler(
-				StringGUID(_m_guid_str));
-		};
+			{
+				Managed_SkeletonBasis_Handler::AmethystDevice::ExecuteButtonHandler(
+					StringGUID(_m_guid_str));
+			};
 
 		return _m_guid;
 	}
@@ -107,15 +107,15 @@ namespace Interface
 		const auto _m_guid_str = GUIDString(_m_guid);
 
 		_NumberBox_Map.insert_or_assign(_m_guid_str,
-			std::shared_ptr<ktvr::Interface::NumberBox>(
-				_this_Device->CreateNumberBox(value)));
+		                                std::shared_ptr<ktvr::Interface::NumberBox>(
+			                                _this_Device->CreateNumberBox(value)));
 
 		_NumberBox_Map[GUIDString(_m_guid)]->OnValueChanged =
 			[_m_guid_str](auto, auto val)
-		{
-			Managed_SkeletonBasis_Handler::AmethystDevice::ExecuteNumberBoxHandler(
-				StringGUID(_m_guid_str), val);
-		};
+			{
+				Managed_SkeletonBasis_Handler::AmethystDevice::ExecuteNumberBoxHandler(
+					StringGUID(_m_guid_str), val);
+			};
 
 		return _m_guid;
 	}
@@ -126,7 +126,7 @@ namespace Interface
 		const auto _m_guid_str = GUIDString(_m_guid);
 
 		std::vector<std::wstring> out;
-		for each (const auto & item in items)
+		for each (const auto& item in items)
 		{
 			std::wstring _out; // Dummy placeholder
 			MarshalString(item, _out);
@@ -134,15 +134,15 @@ namespace Interface
 		}
 
 		_ComboBox_Map.insert_or_assign(_m_guid_str,
-			std::shared_ptr<ktvr::Interface::ComboBox>(
-				_this_Device->CreateComboBox(out)));
+		                               std::shared_ptr<ktvr::Interface::ComboBox>(
+			                               _this_Device->CreateComboBox(out)));
 
 		_ComboBox_Map[GUIDString(_m_guid)]->OnSelectionChanged =
 			[_m_guid_str](auto, auto val)
-		{
-			Managed_SkeletonBasis_Handler::AmethystDevice::ExecuteComboBoxHandler(
-				StringGUID(_m_guid_str), val);
-		};
+			{
+				Managed_SkeletonBasis_Handler::AmethystDevice::ExecuteComboBoxHandler(
+					StringGUID(_m_guid_str), val);
+			};
 
 		return _m_guid;
 	}
@@ -153,22 +153,22 @@ namespace Interface
 		const auto _m_guid_str = GUIDString(_m_guid);
 
 		_CheckBox_Map.insert_or_assign(_m_guid_str,
-			std::shared_ptr<ktvr::Interface::CheckBox>(
-				_this_Device->CreateCheckBox()));
+		                               std::shared_ptr<ktvr::Interface::CheckBox>(
+			                               _this_Device->CreateCheckBox()));
 
 		_CheckBox_Map[GUIDString(_m_guid)]->OnChecked =
 			[_m_guid_str](auto)
-		{
-			Managed_SkeletonBasis_Handler::AmethystDevice::ExecuteCheckBoxHandler(
-				StringGUID(_m_guid_str), true);
-		};
+			{
+				Managed_SkeletonBasis_Handler::AmethystDevice::ExecuteCheckBoxHandler(
+					StringGUID(_m_guid_str), true);
+			};
 
 		_CheckBox_Map[GUIDString(_m_guid)]->OnUnchecked =
 			[_m_guid_str](auto)
-		{
-			Managed_SkeletonBasis_Handler::AmethystDevice::ExecuteCheckBoxHandler(
-				StringGUID(_m_guid_str), false);
-		};
+			{
+				Managed_SkeletonBasis_Handler::AmethystDevice::ExecuteCheckBoxHandler(
+					StringGUID(_m_guid_str), false);
+			};
 
 		return _m_guid;
 	}
@@ -179,22 +179,22 @@ namespace Interface
 		const auto _m_guid_str = GUIDString(_m_guid);
 
 		_ToggleSwitch_Map.insert_or_assign(_m_guid_str,
-			std::shared_ptr<ktvr::Interface::ToggleSwitch>(
-				_this_Device->CreateToggleSwitch()));
+		                                   std::shared_ptr<ktvr::Interface::ToggleSwitch>(
+			                                   _this_Device->CreateToggleSwitch()));
 
 		_ToggleSwitch_Map[GUIDString(_m_guid)]->OnChecked =
 			[_m_guid_str](auto)
-		{
-			Managed_SkeletonBasis_Handler::AmethystDevice::ExecuteCheckBoxHandler(
-				StringGUID(_m_guid_str), true);
-		};
+			{
+				Managed_SkeletonBasis_Handler::AmethystDevice::ExecuteCheckBoxHandler(
+					StringGUID(_m_guid_str), true);
+			};
 
 		_ToggleSwitch_Map[GUIDString(_m_guid)]->OnUnchecked =
 			[_m_guid_str](auto)
-		{
-			Managed_SkeletonBasis_Handler::AmethystDevice::ExecuteCheckBoxHandler(
-				StringGUID(_m_guid_str), false);
-		};
+			{
+				Managed_SkeletonBasis_Handler::AmethystDevice::ExecuteCheckBoxHandler(
+					StringGUID(_m_guid_str), false);
+			};
 
 		return _m_guid;
 	}
@@ -205,16 +205,16 @@ namespace Interface
 		const auto _m_guid_str = GUIDString(_m_guid);
 
 		_TextBox_Map.insert_or_assign(_m_guid_str,
-			std::shared_ptr<ktvr::Interface::TextBox>(
-				_this_Device->CreateTextBox()));
+		                              std::shared_ptr<ktvr::Interface::TextBox>(
+			                              _this_Device->CreateTextBox()));
 
 		_TextBox_Map[GUIDString(_m_guid)]->OnEnterKeyDown =
 			[_m_guid_str](ktvr::Interface::TextBox* element)
-		{
-			Managed_SkeletonBasis_Handler::AmethystDevice::ExecuteTextBoxHandler(
-				StringGUID(_m_guid_str),
-				gcnew System::String(element->Text().c_str()));
-		};
+			{
+				Managed_SkeletonBasis_Handler::AmethystDevice::ExecuteTextBoxHandler(
+					StringGUID(_m_guid_str),
+					gcnew System::String(element->Text().c_str()));
+			};
 
 		return _m_guid;
 	}
@@ -484,7 +484,7 @@ namespace Interface
 		std::vector<ktvr::Interface::Element> _e;
 
 		// Loop over and cache
-		for each (const auto & element in elements)
+		for each (const auto& element in elements)
 		{
 			if (element->GetType() == Managed_SkeletonBasis_Handler::AmethystDevice::TextBlock::typeid &&
 				_TextBlock_Map.find(GUIDString(safe_cast<_TextBlock^>(element)->_guid)) != _TextBlock_Map.end())
@@ -534,7 +534,7 @@ namespace Interface
 		std::vector<ktvr::Interface::Element> _e;
 
 		// Loop over and cache
-		for each (const auto & element in elements)
+		for each (const auto& element in elements)
 		{
 			if (element->GetType() == Managed_SkeletonBasis_Handler::AmethystDevice::TextBlock::typeid &&
 				_TextBlock_Map.find(GUIDString(safe_cast<_TextBlock^>(element)->_guid)) != _TextBlock_Map.end())
@@ -707,10 +707,10 @@ namespace Interface
 	}
 
 	inline void ComboBox_SetItems(System::Guid guid,
-		System::Collections::Generic::List<System::String^>^ _values)
+	                              System::Collections::Generic::List<System::String^>^ _values)
 	{
 		std::vector<std::wstring> out;
-		for each (const auto & item in _values)
+		for each (const auto& item in _values)
 		{
 			std::wstring _out; // Dummy placeholder
 			MarshalString(item, _out);
@@ -1071,8 +1071,10 @@ namespace Amethyst_API_Managed_Wrapper
 			LoggerAction = gcnew System::Action<System::String^, unsigned>(&Helpers::LogToAme);
 			RefreshStatusUI = gcnew System::Action(&Helpers::RequestStatusUIRefresh);
 
-			SetLocalizationResourcesRoot = gcnew System::Func<System::String^, bool>(&Helpers::SetLocalizationResourcesRoot);
-			RequestLocalizedString = gcnew System::Func<System::String^, System::String^>(&Helpers::RequestLocalizedString);
+			SetLocalizationResourcesRoot = gcnew System::Func<System::String^, bool>(
+				&Helpers::SetLocalizationResourcesRoot);
+			RequestLocalizedString = gcnew System::Func<System::String^, System::String^>(
+				&Helpers::RequestLocalizedString);
 
 			GetHMDPose = gcnew System::Func<System::Tuple<
 				System::Numerics::Vector3, System::Numerics::Quaternion>^>(&Helpers::GetHMDPose);
@@ -1260,27 +1262,50 @@ namespace Amethyst_API_Managed
 		std::array<ktvr::K2TrackedBaseJoint, 25> cluster_joints;
 		const auto joints = IAmethyst_API_Managed::wrapper->JointsList;
 
-		for (size_t i = 0; i < joints->Count; i++)
+		for (size_t i = 0; i < std::min(
+			     static_cast<size_t>(joints->Count),
+			     cluster_joints.size()); i++)
 		{
 			std::wstring joint_name; // Dummy placeholder
 			MarshalString(joints[i]->JointName, joint_name);
 
-			Eigen::Vector3d joint_position;
-			joint_position.x() = joints[i]->Position.X;
-			joint_position.y() = joints[i]->Position.Y;
-			joint_position.z() = joints[i]->Position.Z;
-
-			Eigen::Quaterniond joint_orientation;
-			joint_orientation.w() = joints[i]->Orientation.W;
-			joint_orientation.x() = joints[i]->Orientation.X;
-			joint_orientation.y() = joints[i]->Orientation.Y;
-			joint_orientation.z() = joints[i]->Orientation.Z;
-
-			cluster_joints[0] = {
-				joint_position,
-				joint_orientation,
+			ktvr::K2TrackedBaseJoint _joint;
+			_joint.update(
+				{
+					static_cast<double>(joints[i]->Position.X),
+					static_cast<double>(joints[i]->Position.Y),
+					static_cast<double>(joints[i]->Position.Z)
+				},
+				{
+					static_cast<double>(joints[i]->Orientation.W),
+					static_cast<double>(joints[i]->Orientation.X),
+					static_cast<double>(joints[i]->Orientation.Y),
+					static_cast<double>(joints[i]->Orientation.Z),
+				},
+				{
+					static_cast<double>(joints[i]->Velocity.X),
+					static_cast<double>(joints[i]->Velocity.Y),
+					static_cast<double>(joints[i]->Velocity.Z),
+				},
+				{
+					static_cast<double>(joints[i]->Acceleration.X),
+					static_cast<double>(joints[i]->Acceleration.Y),
+					static_cast<double>(joints[i]->Acceleration.Z),
+				},
+				{
+					static_cast<double>(joints[i]->AngularVelocity.X),
+					static_cast<double>(joints[i]->AngularVelocity.Y),
+					static_cast<double>(joints[i]->AngularVelocity.Z),
+				},
+				{
+					static_cast<double>(joints[i]->AngularAcceleration.X),
+					static_cast<double>(joints[i]->AngularAcceleration.Y),
+					static_cast<double>(joints[i]->AngularAcceleration.Z),
+				},
 				static_cast<ktvr::ITrackedJointState>(joints[i]->TrackingState)
-			};
+			);
+
+			cluster_joints[i] = _joint;
 		}
 
 		return cluster_joints;

@@ -1069,8 +1069,10 @@ namespace Amethyst_API_Managed_Wrapper
 			LoggerAction = gcnew System::Action<System::String^, unsigned>(&Helpers::LogToAme);
 			RefreshStatusUI = gcnew System::Action(&Helpers::RequestStatusUIRefresh);
 
-			SetLocalizationResourcesRoot = gcnew System::Func<System::String^, bool>(&Helpers::SetLocalizationResourcesRoot);
-			RequestLocalizedString = gcnew System::Func<System::String^, System::String^>(&Helpers::RequestLocalizedString);
+			SetLocalizationResourcesRoot = gcnew System::Func<System::String^, bool>(
+				&Helpers::SetLocalizationResourcesRoot);
+			RequestLocalizedString = gcnew System::Func<System::String^, System::String^>(
+				&Helpers::RequestLocalizedString);
 
 			GetHMDPose = gcnew System::Func<System::Tuple<
 				System::Numerics::Vector3, System::Numerics::Quaternion>^>(&Helpers::GetHMDPose);
@@ -1248,23 +1250,43 @@ namespace Amethyst_API_Managed
 			std::wstring joint_name; // Dummy placeholder
 			MarshalString(joints[i]->JointName, joint_name);
 
-			Eigen::Vector3d joint_position;
-			joint_position.x() = joints[i]->Position.X;
-			joint_position.y() = joints[i]->Position.Y;
-			joint_position.z() = joints[i]->Position.Z;
+			ktvr::K2TrackedJoint _joint(joint_name);
+			_joint.update(
+				{
+					static_cast<double>(joints[i]->Position.X),
+					static_cast<double>(joints[i]->Position.Y),
+					static_cast<double>(joints[i]->Position.Z)
+				},
+				{
+					static_cast<double>(joints[i]->Orientation.W),
+					static_cast<double>(joints[i]->Orientation.X),
+					static_cast<double>(joints[i]->Orientation.Y),
+					static_cast<double>(joints[i]->Orientation.Z),
+				},
+				{
+					static_cast<double>(joints[i]->Velocity.X),
+					static_cast<double>(joints[i]->Velocity.Y),
+					static_cast<double>(joints[i]->Velocity.Z),
+				},
+				{
+					static_cast<double>(joints[i]->Acceleration.X),
+					static_cast<double>(joints[i]->Acceleration.Y),
+					static_cast<double>(joints[i]->Acceleration.Z),
+				},
+				{
+					static_cast<double>(joints[i]->AngularVelocity.X),
+					static_cast<double>(joints[i]->AngularVelocity.Y),
+					static_cast<double>(joints[i]->AngularVelocity.Z),
+				},
+				{
+					static_cast<double>(joints[i]->AngularAcceleration.X),
+					static_cast<double>(joints[i]->AngularAcceleration.Y),
+					static_cast<double>(joints[i]->AngularAcceleration.Z),
+				},
+				static_cast<ktvr::ITrackedJointState>(joints[i]->TrackingState)
+			);
 
-			Eigen::Quaterniond joint_orientation;
-			joint_orientation.w() = joints[i]->Orientation.W;
-			joint_orientation.x() = joints[i]->Orientation.X;
-			joint_orientation.y() = joints[i]->Orientation.Y;
-			joint_orientation.z() = joints[i]->Orientation.Z;
-
-			cluster_joints.push_back({
-				joint_position,
-				joint_orientation,
-				static_cast<ktvr::ITrackedJointState>(joints[i]->TrackingState),
-				joint_name
-			});
+			cluster_joints.push_back(_joint);
 		}
 
 		return cluster_joints;
