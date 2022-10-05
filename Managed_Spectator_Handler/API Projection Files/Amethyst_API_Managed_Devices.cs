@@ -5,16 +5,26 @@ namespace Managed_Spectator_Handler.API_Projection_Files;
 public class TrackedJoint
 {
     public string JointName = "[NAME NOT SET]";
+
     public Quaternion Orientation;
 
-    public Vector3 Position;
-    public uint TrackingState = 0; // State_NotTracked
+    public Vector3 Position,
+        Velocity,
+        Acceleration,
+        AngularVelocity,
+        AngularAcceleration;
+
+    public uint TrackingState =
+        (uint)TrackedJointState.State_NotTracked;
 
     public TrackedJoint()
     {
     }
 
-    public TrackedJoint(Vector3 position, Quaternion orientation, string name)
+    public TrackedJoint(
+        Vector3 position,
+        Quaternion orientation,
+        string name)
     {
         Position = position;
         Orientation = orientation;
@@ -35,16 +45,7 @@ public abstract class AmethystManagedDevice_Spectator
     public Func<Tuple<Vector3, Quaternion>>? GetRightControllerPose;
 
     public Func<Tuple<Vector3, Quaternion>>? GetRightControllerPoseCalibrated;
-
-    // Log a message to Amethyst logs : handler
-    public Action<string, uint>? LoggerAction;
-
-    // Log a message to Amethyst logs : wrapper
-    public void Log(string msg, LogSeverity sev)
-    {
-        LoggerAction?.Invoke(msg, (uint)sev);
-    }
-
+    
     public abstract void OnLoad();
 }
 

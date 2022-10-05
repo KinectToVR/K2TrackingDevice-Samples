@@ -7,8 +7,6 @@ public class AmethystDevice : AmethystManagedDevice_Spectator
     public override void OnLoad()
     {
         // You can use everything from the managed API
-        // only after this function has been called
-
-        Log("[Managed Spectator] Loading...", 0);
+        // (But only after this function has been called)
     }
 }
