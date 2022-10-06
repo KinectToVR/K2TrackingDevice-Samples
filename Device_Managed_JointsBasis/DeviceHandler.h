@@ -18,8 +18,10 @@ namespace Amethyst_API_Managed
 	__declspec(dllimport) std::wstring GetDeviceStatusWString();
 
 	__declspec(dllimport) bool GetIsSkeletonTracked();
+	__declspec(dllimport) bool GetIsPositionFilterBlockingEnabled();
+	__declspec(dllimport) bool GetIsPhysicsOverrideEnabled();
+	__declspec(dllimport) bool GetIsSelfUpdateEnabled();
 	__declspec(dllimport) bool GetIsSettingsDaemonSupported();
-	__declspec(dllimport) bool GetIsOverridesJointPhysicsEnabled();
 
 	__declspec(dllimport) std::vector<ktvr::K2TrackedJoint> GetTrackedJoints();
 }
@@ -37,10 +39,16 @@ public:
 
 		deviceName = Amethyst_API_Managed::GetDeviceName();
 
-		Flags_SettingsSupported = 
+		skeletonTracked =
+			Amethyst_API_Managed::GetIsSkeletonTracked();
+		Flags_BlocksPositionFiltering =
+			Amethyst_API_Managed::GetIsPositionFilterBlockingEnabled();
+		Flags_OverridesJointPhysics =
+			Amethyst_API_Managed::GetIsPhysicsOverrideEnabled();
+		Flags_ForceSelfUpdate =
+			Amethyst_API_Managed::GetIsSelfUpdateEnabled();
+		Flags_SettingsSupported =
 			Amethyst_API_Managed::GetIsSettingsDaemonSupported();
-		Flags_OverridesJointPhysics = 
-			Amethyst_API_Managed::GetIsOverridesJointPhysicsEnabled();
 	}
 
 	std::wstring getDeviceGUID() override

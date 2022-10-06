@@ -1230,14 +1230,24 @@ namespace Amethyst_API_Managed
 		return IAmethyst_API_Managed::wrapper->IsSkeletonTracked;
 	}
 
-	__declspec(dllexport) bool GetIsSettingsDaemonSupported()
+	__declspec(dllexport) bool GetIsPositionFilterBlockingEnabled()
 	{
-		return IAmethyst_API_Managed::wrapper->IsSettingsDaemonSupported;
+		return IAmethyst_API_Managed::wrapper->Flags_BlocksPositionFiltering;
 	}
 
-	__declspec(dllexport) bool GetIsOverridesJointPhysicsEnabled()
+	__declspec(dllexport) bool GetIsPhysicsOverrideEnabled()
 	{
-		return IAmethyst_API_Managed::wrapper->IsOverridesJointPhysicsEnabled;
+		return IAmethyst_API_Managed::wrapper->Flags_OverridesJointPhysics;
+	}
+
+	__declspec(dllexport) bool GetIsSelfUpdateEnabled()
+	{
+		return IAmethyst_API_Managed::wrapper->Flags_ForceSelfUpdate;
+	}
+
+	__declspec(dllexport) bool GetIsSettingsDaemonSupported()
+	{
+		return IAmethyst_API_Managed::wrapper->Flags_SettingsSupported;
 	}
 
 	__declspec(dllexport) std::vector<ktvr::K2TrackedJoint> GetTrackedJoints()

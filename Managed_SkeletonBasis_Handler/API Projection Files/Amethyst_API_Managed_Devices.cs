@@ -32,7 +32,7 @@ public class TrackedJoint
     }
 }
 
-public abstract class AmethystManagedDevice_Kinect
+public abstract class AmethystManagedDevice_Skeleton
 {
     // LayoutRoot appending enum:
     // when appending a single element,
@@ -72,6 +72,13 @@ public abstract class AmethystManagedDevice_Kinect
     public string DeviceGUID = "INVALID"; // Make sure you set this!
     public string DeviceName = "[NAME NOT SET]"; // Make sure you set this!
 
+    public bool Flags_FlipSupported = false; // No flip
+    public bool Flags_AppOrientationSupported = false; // No math-based
+    public bool Flags_BlocksPositionFiltering = false; // Allow filters
+    public bool Flags_ForceSelfUpdate = false; // Auto-update by ame
+    public bool Flags_OverridesJointPhysics = false; // No physics
+    public bool Flags_SettingsSupported = false; // No custom settings
+
     public Func<TrackedJoint[]>? GetAppJointPoses;
     public Func<double>? GetHMDOrientationYaw;
     public Func<double>? GetHMDOrientationYawCalibrated;
@@ -82,13 +89,7 @@ public abstract class AmethystManagedDevice_Kinect
     public Func<Tuple<Vector3, Quaternion>>? GetLeftControllerPoseCalibrated;
     public Func<Tuple<Vector3, Quaternion>>? GetRightControllerPose;
     public Func<Tuple<Vector3, Quaternion>>? GetRightControllerPoseCalibrated;
-    public bool IsOverridesJointPhysicsEnabled = false; // No physics
 
-    public bool IsSettingsDaemonSupported = false; // No custom settings
-
-    public bool IsAppOrientationSupported = false;
-
-    public bool IsFlipSupported = false;
     public bool IsSkeletonTracked = false;
 
     public List<TrackedJoint> JointsList = new();

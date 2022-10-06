@@ -71,6 +71,11 @@ public abstract class AmethystManagedDevice_Joints
     public string DeviceGuid = "INVALID"; // Make sure you set this!
     public string DeviceName = "[NAME NOT SET]"; // Make sure you set this!
 
+    public bool Flags_BlocksPositionFiltering = false; // Allow filters
+    public bool Flags_ForceSelfUpdate = false; // Auto-update by ame
+    public bool Flags_OverridesJointPhysics = false; // No physics
+    public bool Flags_SettingsSupported = false; // No custom settings
+
     public Func<TrackedJoint[]>? GetAppJointPoses;
     public Func<double>? GetHMDOrientationYaw;
     public Func<double>? GetHMDOrientationYawCalibrated;
@@ -81,11 +86,8 @@ public abstract class AmethystManagedDevice_Joints
     public Func<Tuple<Vector3, Quaternion>>? GetLeftControllerPoseCalibrated;
     public Func<Tuple<Vector3, Quaternion>>? GetRightControllerPose;
     public Func<Tuple<Vector3, Quaternion>>? GetRightControllerPoseCalibrated;
-    public bool IsOverridesJointPhysicsEnabled = false; // No physics
 
-    public bool IsSettingsDaemonSupported = false; // No custom settings
-
-    public bool IsSkeletonTracked = false;
+    public bool IsSkeletonTracked = false; // Skeleton not tracked yet
 
     public List<TrackedJoint> JointsList = new();
 

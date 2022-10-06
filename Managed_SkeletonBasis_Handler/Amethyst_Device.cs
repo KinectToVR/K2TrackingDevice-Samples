@@ -2,7 +2,7 @@
 
 namespace Managed_SkeletonBasis_Handler;
 
-public class AmethystDevice : AmethystManagedDevice_Kinect
+public class AmethystDevice : AmethystManagedDevice_Skeleton
 {
     // Has this plugin been loaded?
     private bool _loaded;
@@ -22,10 +22,12 @@ public class AmethystDevice : AmethystManagedDevice_Kinect
         // Provide every joint possible in Amethyst API
         DeviceCharacteristics = (uint)TrackingDeviceCharacteristics.K2_Character_Full;
 
-        IsFlipSupported = false; // No flip for us :(
-        IsAppOrientationSupported = false; // Neither MathBased
+        // Settings are supported
+        Flags_SettingsSupported = true;
 
-        IsSettingsDaemonSupported = true;
+        // For all the remaining flags, please see
+        // the AmethystManagedDevice_Skeleton class
+        // and Amethyst Dev docs / plugin docs
     }
 
     public override void OnLoad()

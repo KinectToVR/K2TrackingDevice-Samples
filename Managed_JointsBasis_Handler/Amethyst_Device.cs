@@ -19,7 +19,7 @@ public class AmethystDevice : AmethystManagedDevice_Joints
         DeviceName = "JointsBasis (Managed)";
         DeviceGuid = "KSAMPLES-VEND-API1-DVCE-DVCEJOINTMGD";
 
-        IsSettingsDaemonSupported = true;
+        Flags_SettingsSupported = true;
     }
 
     public override void OnLoad()

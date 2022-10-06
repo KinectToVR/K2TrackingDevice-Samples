@@ -19,12 +19,13 @@ namespace Amethyst_API_Managed
 	
 	__declspec(dllimport) uint32_t GetDeviceCharacteristics();
 
+	__declspec(dllimport) bool GetIsSkeletonTracked();
 	__declspec(dllimport) bool GetIsFlipSupported();
 	__declspec(dllimport) bool GetIsAppOrientationSupported();
-
-	__declspec(dllimport) bool GetIsSkeletonTracked();
+	__declspec(dllimport) bool GetIsPositionFilterBlockingEnabled();
+	__declspec(dllimport) bool GetIsPhysicsOverrideEnabled();
+	__declspec(dllimport) bool GetIsSelfUpdateEnabled();
 	__declspec(dllimport) bool GetIsSettingsDaemonSupported();
-	__declspec(dllimport) bool GetIsOverridesJointPhysicsEnabled();
 
 	__declspec(dllimport) std::array<ktvr::K2TrackedBaseJoint, 25> GetTrackedJoints();
 }
@@ -45,13 +46,20 @@ public:
 			static_cast<ktvr::ITrackingDeviceCharacteristics>(
 				Amethyst_API_Managed::GetDeviceCharacteristics());
 
-		Flags_FlipSupported = Amethyst_API_Managed::GetIsFlipSupported();
-		Flags_AppOrientationSupported = Amethyst_API_Managed::GetIsAppOrientationSupported();
-
+		skeletonTracked =
+			Amethyst_API_Managed::GetIsSkeletonTracked();
+		Flags_FlipSupported = 
+			Amethyst_API_Managed::GetIsFlipSupported();
+		Flags_AppOrientationSupported = 
+			Amethyst_API_Managed::GetIsAppOrientationSupported();
+		Flags_BlocksPositionFiltering =
+			Amethyst_API_Managed::GetIsPositionFilterBlockingEnabled();
+		Flags_OverridesJointPhysics =
+			Amethyst_API_Managed::GetIsPhysicsOverrideEnabled();
+		Flags_ForceSelfUpdate =
+			Amethyst_API_Managed::GetIsSelfUpdateEnabled();
 		Flags_SettingsSupported =
 			Amethyst_API_Managed::GetIsSettingsDaemonSupported();
-		Flags_OverridesJointPhysics =
-			Amethyst_API_Managed::GetIsOverridesJointPhysicsEnabled();
 	}
 
 	std::wstring getDeviceGUID() override
