@@ -167,6 +167,22 @@ All-device type flags:
   as seen in the [`owoTrackVR` wrapper plugin](https://github.com/KimihikoAkayasaki/device_owoTrackVR) and the [managed (C#) device samples](https://github.com/KinectToVR/K2TrackingDevice-Samples/tree/managed).
 <br> <br>
 
+## **Localization**
+Device plugins can localize their own statuses and settings,  
+letting Amethyst manage loading, parsing and getting the strings for them.  
+
+The default folder for your string resources is `[device root]\resources\Strings\[language-code].json`.  
+Please see where other (especially official) plugins put their string resources in.  
+Use `setLocalizationResourcesRoot(path)` to change the default folder to something else.  
+(Langauge codes are trimmed LCID: e.g. `en` (without -US or -GB), `de` (without -DE), etc.)
+
+To request a localized string from AME (depending on which language is it in currently)  
+call `requestLocalizedString(key)` and use its return as your string.  
+String with the requested key will first be searched for in your device resources,  
+(in the default folder or the one you set), then if it's not found for some reason,  
+repeat but w/ AME resources, aaand if that fails - the key itself will be returned.
+<br> <br>
+
 ## **OK, but what's actually in `external/vendor`?**
 Ah yes. For the sake of K2API's simplicity in its current state, it's been split into 3 parts.  
 The currently used part, `devices` part, allows us to make device plugins and provide the whole tracking.  
